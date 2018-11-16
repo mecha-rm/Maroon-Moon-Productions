@@ -10,9 +10,10 @@ References:
 #include <iostream>
 #include <string>
 
+
 void rules(); // the rules of the game
 
-
+Game game;
 
 void rules()
 {
