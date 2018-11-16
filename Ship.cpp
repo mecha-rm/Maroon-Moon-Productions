@@ -1,76 +1,81 @@
 #include <iostream>
 #include "Ship.h"
-using namespace std;
+
+// Constructors
+Ship::Ship() {}
 
 //Setters -------------------------------------------------------------------------------------------------------------------------------------------
 void Ship::setHull(int hull) {
-	hull = Ship::hull;
-
+	this->hull = hull;
 }
+
 void Ship::setShield(int shield) {
-	shield = Ship::shield;
-
+	this->shield = shield;
 }
+
 void Ship::setEvade(int evade) {
-	evade = Ship::evade;
+	this->evade = evade;
 
 }
 void Ship::setOxygen(int oxygen) {
-	oxygen = Ship::oxygen;
+	this->oxygen = oxygen;
 
 }
 void Ship::setCrewMembers(int crewMembers) {
-	crewMembers = Ship::crewMembers;
+	this->crewMembers = crewMembers;
 
 }
+
 void Ship::setScrap(int scrap) {
-	scrap = Ship::scrap;
-
+	this->scrap = scrap;
 }
+
 void Ship::setFTLDrive(int ftlDrive) {
-	ftlDrive = Ship::ftlDrive;
-
+	this->ftlDrive = ftlDrive;
 }
+
 void Ship::setFuel(int fuel) {
-	fuel = Ship::fuel;
-
+	this->fuel = fuel;
 }
+
 void Ship::setShieldLevel(int shieldLevel) {
-	shieldLevel = Ship::shieldLevel;
-
+	this->shieldLevel = shieldLevel;
 }
+
 void Ship::setEngineLevel(int engineLevel) {
-	engineLevel = Ship::engineLevel;
+	this->engineLevel = engineLevel;
 
 }
 void Ship::setOxygenLevel(int oxygenLevel) {
-	oxygenLevel = Ship::oxygenLevel;
-
+	
+	this->oxygenLevel = oxygenLevel;
 }
+
 void Ship::setWeaponControlLevel(int weaponControlLevel) {
-	weaponControlLevel = Ship::weaponControlLevel;
-
+	this->weaponControlLevel = weaponControlLevel;
 }
+
 void Ship::setMedbayLevel(int medbayLevel) {
-	medbayLevel = Ship::medbayLevel;
-
+	this->medbayLevel = medbayLevel;
 }
+
 void Ship::setPilotLevel(int pilotLevel) {
-	pilotLevel = Ship::pilotLevel;
-
+	this->pilotLevel = pilotLevel;
 }
+
 void Ship::setSensorLevel(int sensorLevel) {
-	sensorLevel = Ship::sensorLevel;
+	this->sensorLevel = sensorLevel;
 
 }
+
 void Ship::setDoorLevel(int doorLevel) {
-	doorLevel = Ship::doorLevel;
-
+	this->doorLevel = doorLevel;
 }
+
 void Ship::setRooms(int rooms) {
-	rooms = Ship::rooms;
-
+	this->rooms = rooms;
 }
+
 //Getters -------------------------------------------------------------------------------------------------------------------------------------------
 int Ship::getHull() {
 

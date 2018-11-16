@@ -6,10 +6,10 @@ References:
 
 // Game Development Workshop - Project 3 | Faster Than Light
 #include <iostream>
+#include <string>
 
 int main()
 {
-
   system("pause");
   return 0;
 }

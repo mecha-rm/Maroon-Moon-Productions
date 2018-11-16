@@ -1,12 +1,11 @@
 #pragma once
 #include <string>
 #include <iostream>
-using namespace std;
 
+using namespace std;
 class Ship {
 public:
-
-	string shipName;
+	Ship();
 
 	int getHull();
 	int getShield();
@@ -43,6 +42,8 @@ public:
 	void setSensorLevel(int);
 	void setDoorLevel(int);
 	void setRooms(int);
+
+	string shipName;
 
 private:
 

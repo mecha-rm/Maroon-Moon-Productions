@@ -21,13 +21,13 @@ void Hazard::asteroidField() {
 	//This hazard deals either removes 1 layer of shield if the player has one or takes 1
 	//damage off the hull's total hp
 
-	if (shield > 0) {
-		shield--;
+	// if (shield > 0) {
+	//	shield--;
 
-	}
-	else {
-		hull--;
-	}
+	//}
+	//else {
+	//	hull--;
+	//}
 
 }
 void Hazard::pulsar() {

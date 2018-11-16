@@ -3,17 +3,17 @@
 
 //Setters ------------------------------------------------------------------------------------------------------------
 void Weapon::setDamage(int damage) {
-	damage = Weapon::damage;
-	
+	this->damage = damage;
 }
+
 void Weapon::setHealth(int health) {
-	health = Weapon::health;
-
+	this->health = health;
 }
+
 void Weapon::setCooldown(int cooldown) {
-	cooldown = Weapon::cooldown;
-
+	this->cooldown = cooldown;
 }
+
 //Getters ------------------------------------------------------------------------------------------------------------
 int Weapon::getDamage() {
 
