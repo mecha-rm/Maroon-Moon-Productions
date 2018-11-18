@@ -1,14 +1,18 @@
 #pragma once
 #include <string>
 #include <iostream>
+#include <vector>
 
 using namespace std;
 class Ship {
 public:
 	Ship();
+	Ship(std::string); // setting the ship's name
 
+	// getters
 	int getHull();
 	int getShield();
+	int getReactor();
 	int getEvade();
 	int getOxygen();
 	int getCrewMembers();
@@ -25,8 +29,10 @@ public:
 	int getDoorLevel();
 	int getRooms();
 
+	// setters
 	void setHull(int);
 	void setShield(int);
+	void setReactor(int);
 	void setEvade(int);
 	void setOxygen(int);
 	void setCrewMembers(int);
@@ -43,13 +49,14 @@ public:
 	void setDoorLevel(int);
 	void setRooms(int);
 
-	string shipName;
+	const string shipName; // the ship's name
 
 private:
 
 	//resources
-	int hull;
-	int shield;
+	int hull; // the ship's physical health
+	int shield; // the ship's shield's health
+	int reactor; // the ship's reactor
 	int evade;
 	int oxygen;
 	int crewMembers;
@@ -72,5 +79,8 @@ private:
 
 	//reactor
 	int reactorPower;
+
+	// crew members
+	
 
 };

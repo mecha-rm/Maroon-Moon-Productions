@@ -6,12 +6,16 @@
 #include "Weapon.h";
 #include "Hazard.h";
 
+#include <string>
+
 class Game
 {
 public:
 	Game();
 	
-	bool gameLoop();
+	std::string toLower(std::string); // converts to lowercase
+	bool equalsIgnoreCase(std::string, std::string); // sees if two strings are equal to each other, ignoring case differences
+	bool gameLoop(); // game loop
 
 private:
 

@@ -1,8 +1,15 @@
 #include <iostream>
 #include "Ship.h"
 
-// Constructors
-Ship::Ship() {}
+// constructors
+// default constructor; the ship is named 'The Kestrel' by default
+Ship::Ship() : Ship("The Kestrel") {}
+
+// set the ship's name
+Ship::Ship(std::string name) : shipName(name)
+{
+	// Layout A
+}
 
 //Setters -------------------------------------------------------------------------------------------------------------------------------------------
 void Ship::setHull(int hull) {
