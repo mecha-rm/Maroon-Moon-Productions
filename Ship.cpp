@@ -1,10 +1,14 @@
 #include <iostream>
 #include "Ship.h"
+#include "Weapon.h"
+#include "CrewMember.h"
 
 
 // constructors
 // default constructor; the ship is named 'The Kestrel' by default
 Ship::Ship() : Ship("The Kestrel") {}
+Weapon weapon = Weapon("Missile","Physical",5,2,1);
+CrewMember crewMember = CrewMember("human");
 
 // set the ship's name
 Ship::Ship(std::string name) : shipName(name)
@@ -88,13 +92,24 @@ void Ship::addCrewMember(std::string species)
 // applies damage to the shield before the health of the ship
 void Ship::shieldToHealth(int damage) {
 
-	for (int count = damage; count > getShield(); count--) {
+	for (int count = damage; count > 0; count--) {
 
-		if (getShield() > 0) {
-			setShield(getShield() - 1);
+		if (weapon.getDamageType() == "lazer") {//is the weapon(initalized above) is a lazer
+			if (getShield() > 0) {				//could change it to Physical/NonPhysical damage instead of names of weapons
+				setShield(getShield() - 1);
+			}
 		}
-		else {
-			setHull(getHull() - 1);
+		if (weapon.getDamageType() == "missile") {
+			if (getShield() > 0) {
+				setShield(getShield() - 1);
+			}
+			else {
+				setHull(getHull() - 1);
+
+				if (weapon.getRoomHit() == crewMember.getPosition()) {//crewMember is a crewMemeber object i made above
+					crewMember.setHealth(crewMember.getHealth() - 1);//this just means that when the hull takes damage at a room that has a crew member in it the crew member will take the same amount of damage.
+				}													 //if we change all out ints to floats we can get like a ratio of 1 hull damage to 0.2 crew member damage.
+			}
 		}
 	}
 }

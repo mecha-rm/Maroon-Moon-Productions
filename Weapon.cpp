@@ -28,3 +28,10 @@ int Weapon::getCharge() { return charge; }
 
 //Setters
 void Weapon::setCharge(int charge) { this->charge = charge; }
+
+//Getters
+int Weapon::getDamage() { return damage; }
+int Weapon::getAmmo() {	return ammo; }
+int Weapon::getCharge() { return charge; }
+int Weapon::getChargeTime() { return chargeTime; }
+
