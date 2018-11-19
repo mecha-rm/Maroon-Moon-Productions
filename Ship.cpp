@@ -27,20 +27,6 @@ Ship::Ship(std::string name) : shipName(name)
 	
 }
 
-// converts a string to all lowercase
-std::string Ship::toLower(std::string str)
-{
-	std::string strL;
-	strL.assign(str); // copies original string
-
-	for (int i = 0; i < strL.length(); i++)
-	{
-		strL.at(i) = tolower(strL.at(i)); // converts each 'char' to its lowercase version if applicable
-	}
-
-	return strL;
-}
-
 //Setters -------------------------------------------------------------------------------------------------------------------------------------------
 void Ship::setHull(int hull) {
 	this->hull = hull;
@@ -164,8 +150,15 @@ std::vector<CrewMember> Ship::getCrew() { return crew; }
 // adds a crew member; make sure all letters are lowercase
 void Ship::addCrewMember(std::string species)
 {
-	species = toLower(species);
-	crew.push_back(CrewMember(species));
+	if (species == "human" || species == "h")
+	{
+		crew.push_back(CrewMember("Human"));
+	}
+	else
+	{
+		crew.push_back(CrewMember("Human"));
+	}
+	
 	crewMembers++;
 }
 
