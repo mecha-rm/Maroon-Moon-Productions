@@ -2,12 +2,13 @@
 #include "Ship.h"
 #include "Weapon.h"
 #include "CrewMember.h"
-
+#include "All_Weapons.cpp"
 
 // constructors
 // default constructor; the ship is named 'The Kestrel' by default
 Ship::Ship() : Ship("The Kestrel") {}
-Weapon weapon = Weapon("Missile","Physical",5,2,1);
+Weapon weapon = missile_test;
+
 CrewMember crewMember = CrewMember("human");
 
 // set the ship's name
@@ -94,7 +95,7 @@ void Ship::shieldToHealth(int damage) {
 
 	for (int count = damage; count > 0; count--) {
 
-		if (weapon.getDamageType() == "lazer") {//is the weapon(initalized above) is a lazer
+		if (weapon.getDamageType() == "laser") {//is the weapon(initalized above) is a laser
 			if (getShield() > 0) {				//could change it to Physical/NonPhysical damage instead of names of weapons
 				setShield(getShield() - 1);
 			}
