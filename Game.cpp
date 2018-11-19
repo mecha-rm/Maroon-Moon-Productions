@@ -11,9 +11,9 @@ std::string Game::toLower(std::string str)
 	std::string strL;
 	strL.assign(str); // copies original string
 
-	for (int i = 0; i < str.length(); i++)
+	for (int i = 0; i < strL.length(); i++)
 	{
-		strL.at(i) = tolower(str.at(i)); // converts each 'char' to its lowercase version if applicable
+		strL.at(i) = tolower(strL.at(i)); // converts each 'char' to its lowercase version if applicable
 	}
 
 	return strL;

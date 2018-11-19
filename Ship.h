@@ -1,13 +1,17 @@
 #pragma once
+#include "CrewMember.h"
+
 #include <string>
 #include <iostream>
 #include <vector>
+#include "Weapon.h"
 
 using namespace std;
 class Ship {
 public:
 	Ship();
 	Ship(std::string); // setting the ship's name
+	std::string toLower(std::string); // converts an entire string to lowercase
 
 	// getters
 	int getHull();
@@ -28,6 +32,8 @@ public:
 	int getSensorLevel();
 	int getDoorLevel();
 	int getRooms();
+	std::vector<CrewMember> getCrew();
+	std::vector<Weapon> getWeapon();
 
 	// setters
 	void setHull(int);
@@ -35,7 +41,7 @@ public:
 	void setReactor(int);
 	void setEvade(int);
 	void setOxygen(int);
-	void setCrewMembers(int);
+	// void setCrewMembers(int); // shouldn't be changed since it changes when the player adds 
 	void setScrap(int);
 	void setFTLDrive(int);
 	void setFuel(int);
@@ -48,39 +54,56 @@ public:
 	void setSensorLevel(int);
 	void setDoorLevel(int);
 	void setRooms(int);
+	void setCrew(std::vector<CrewMember>);
+	void setWeapon(std::vector<Weapon>);
+
+	// Other
+
+	// adds a crew member. By default, a human is added.
+	void addCrewMember(std::string); // adds a crew member
+	// removes a specific crew member; returns 'true' if successful
+	bool removeCrewMember(unsigned int);
+	// returns the crew member at the given index
+	CrewMember getCrewMember(unsigned int);
+
+	// Model these after the addCrewMember, removeCrewMber and getCrewMember Functions
+	// adds a weapon to the list
+	Weapon addWeapon();
+	// removes a weapon
+	bool removeWeapon(unsigned int);
+	// returns a weapon at the provided index
+	Weapon getWeapon(unsigned int);
 
 	const string shipName; // the ship's name
-
 private:
 
 	//resources
-	int hull; // the ship's physical health
-	int shield; // the ship's shield's health
-	int reactor; // the ship's reactor
-	int evade;
-	int oxygen;
-	int crewMembers;
-	int scrap;
-	int ftlDrive;
-	int fuel;
-	int rooms;
+	int hull = 0; // the ship's physical health
+	int shield = 0; // the ship's shield's health
+	int reactor = 0; // the ship's reactor
+	int evade = 0;
+	int oxygen = 0;
+	int crewMembers = 0;
+	int scrap = 0;
+	int ftlDrive = 0;
+	int fuel = 0;
+	int rooms = 0;
 
 	//systems
-	int shieldLevel;
-	int engineLevel;
-	int oxygenLevel;
-	int weaponControlLevel;
-	int medbayLevel;
+	int shieldLevel = 0;
+	int engineLevel = 0;
+	int oxygenLevel = 0;
+	int weaponControlLevel = 0;
+	int medbayLevel = 0;
 
 	//subsystems
-	int pilotLevel;
-	int sensorLevel;
-	int doorLevel;
+	int pilotLevel = 0;
+	int sensorLevel = 0;
+	int doorLevel = 0;
 
 	//reactor
-	int reactorPower;
-
+	int reactorPower = 0;
 	// crew members
-	
-
+	std::vector<CrewMember> crew; // crew member vector
+	std::vector<Weapon> weapons; // vector used for weapon storage
 };

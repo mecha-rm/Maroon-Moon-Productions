@@ -9,6 +9,8 @@ References:
 #include "Game.h"
 
 #include <iostream>
+#include <random>
+#include <ctime>
 #include <string>
 #include <ctype.h>
 
@@ -35,6 +37,8 @@ void rules(int res)
 
 int main() // main function
 {
+	srand(time(0)); // seeding the randomizer
+
 	std::string input(""); // gets user input
 	bool success; // determines whether the game was won or not.
 
