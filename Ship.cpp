@@ -1,6 +1,7 @@
 #include <iostream>
 #include "Ship.h"
 
+
 // constructors
 // default constructor; the ship is named 'The Kestrel' by default
 Ship::Ship() : Ship("The Kestrel") {}
@@ -44,6 +45,7 @@ void Ship::setSensorLevel(int sensorLevel) { this->sensorLevel = sensorLevel; }
 void Ship::setDoorLevel(int doorLevel) { this->doorLevel = doorLevel; }
 void Ship::setRooms(int rooms) { this->rooms = rooms; }
 void Ship::setCrew(std::vector<CrewMember> crew) { this->crew = crew; }
+void Ship::setSensor(bool sensor) { this->sensor = sensor; }
 
 //Getters
 int Ship::getHull() { return hull; }
@@ -64,6 +66,7 @@ int Ship::getPilotLevel() { return pilotLevel; }
 int Ship::getSensorLevel() { return sensorLevel; }
 int Ship::getDoorLevel() { return doorLevel; }
 int Ship::getRooms() { return rooms; }
+bool Ship::getSensor() { return sensor; }
 
 std::vector<CrewMember> Ship::getCrew() { return crew; }
 
@@ -80,6 +83,20 @@ void Ship::addCrewMember(std::string species)
 	}
 	
 	crewMembers++;
+}
+
+// applies damage to the shield before the health of the ship
+void Ship::shieldToHealth(int damage) {
+
+	for (int count = damage; count > getShield(); count--) {
+
+		if (getShield() > 0) {
+			setShield(getShield() - 1);
+		}
+		else {
+			setHull(getHull() - 1);
+		}
+	}
 }
 
 // removes a crew member at the provided index

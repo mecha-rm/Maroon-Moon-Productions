@@ -33,6 +33,7 @@ public:
 	int getRooms();
 	std::vector<CrewMember> getCrew();
 	std::vector<Weapon> getWeapon();
+	bool getSensor();
 
 	// setters
 	void setHull(int);
@@ -55,9 +56,12 @@ public:
 	void setRooms(int);
 	void setCrew(std::vector<CrewMember>);
 	void setWeapon(std::vector<Weapon>);
+	void setSensor(bool);
 
 	// Other
-
+	
+	//If the player has a shield the damage must be done to the shield first and then the health, this takes care fo that
+	void shieldToHealth(int);
 	// adds a crew member. By default, a human is added.
 	// MAKE SURE THE STRING IS IN ALL LOWERCASE
 	void addCrewMember(std::string); // adds a crew member
@@ -88,6 +92,7 @@ private:
 	int ftlDrive = 0;
 	int fuel = 0;
 	int rooms = 0;
+	bool sensor; 
 
 	//systems
 	int shieldLevel = 0;
