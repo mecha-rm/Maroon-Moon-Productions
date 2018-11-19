@@ -1,34 +1,50 @@
 #pragma once
 #include <iostream>
 #include <string>
-using namespace std;
 
 class Weapon {
 public:
-	// sets the weapon parameters
-	Weapon(std::string, std::string, int, int, int);
+	//Constructors
+	//Simple
+	Weapon(std::string name, std::string type, int chargeTime, int shots, int energy, int hullDam, int shieldDam); //Just includes the necessities, uses hullDam for sysDam and crewDam
+	//Full
+	Weapon(std::string name, std::string type, int chargeTime, int shots, int energy, int hullDam, int shieldDam, int crewDam, int sysDam, int chanceFire, int chanceBreach, int chanceStun);
 
-	int getDamage();
-	int getAmmo();
-	int getCharge();
+	//Getters
+	std::string getName();
+	std::string getType();
 	int getChargeTime();
+	int getShots();
+	int getEnergy();
+	int getHullDam();
+	int getShieldDam();
+	int getCrewDam();
+	int getSysDam();
+	int getChanceFire();
+	int getChanceBreach();
+	int getChanceStun();
+	int getCharge();
 
-	void setDamage(int);
-	void setAmmo(int);
-	void setCharge(int);
-	
-
+	//Setters
+	void setCharge(int charge);
 
 private:
-	const std::string type;
-	const std::string name;
-
-	// the amount of damage a weapon does
-	int damage = 1;
-	// the amount of ammunition a weapon has
-	int ammo = -1;
-	// the amount of charge the weapon currently has
-	int charge = 0;
-	const unsigned int chargeTime = 0; // the amount of time the weapon takes to charge
-
+	//Constants
+	const std::string name; //Name of weapon
+	const std::string type; //Weapon type. Defines ammo as well
+	const unsigned int chargeTime; //How long it takes to charge
+	const int shots; //Shots per charge
+	const unsigned int energy; //Energy drain required to use weapon
+	//Damage types
+	const int hullDam;
+	const int shieldDam;
+	const int crewDam;
+	const int sysDam;
+	//Effects - variable is 0-10, var * 5 = % of effect happening
+		//Example: chanceFire = 3; 15% chance of a fire starting
+	const int chanceFire;
+	const int chanceBreach;
+	const int chanceStun;
+	//Variables
+	int charge = 0; //Current charge
 };
