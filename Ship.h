@@ -11,7 +11,6 @@ class Ship {
 public:
 	Ship();
 	Ship(std::string); // setting the ship's name
-	std::string toLower(std::string); // converts an entire string to lowercase
 
 	// getters
 	int getHull();
@@ -60,6 +59,7 @@ public:
 	// Other
 
 	// adds a crew member. By default, a human is added.
+	// MAKE SURE THE STRING IS IN ALL LOWERCASE
 	void addCrewMember(std::string); // adds a crew member
 	// removes a specific crew member; returns 'true' if successful
 	bool removeCrewMember(unsigned int);

@@ -30,7 +30,6 @@ bool Game::equalsIgnoreCase(std::string str1, std::string str2)
 
 bool Game::gameLoop()
 {
-	
 	system("pause");
 	return false;
 }
