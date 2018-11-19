@@ -1,29 +1,34 @@
 #include <iostream>
 #include "Weapon.h"
 
-//Setters ------------------------------------------------------------------------------------------------------------
-void Weapon::setDamage(int damage) {
-	damage = Weapon::damage;
-	
-}
-void Weapon::setHealth(int health) {
-	health = Weapon::health;
+// Creates the weapon
+Weapon::Weapon(std::string name, std::string type, int damage, int ammo, int chargeTime) : name(name), type(type), damage(damage), ammo(ammo), chargeTime(chargeTime) {}
 
-}
-void Weapon::setCooldown(int cooldown) {
-	cooldown = Weapon::cooldown;
-
-}
-//Getters ------------------------------------------------------------------------------------------------------------
 int Weapon::getDamage() {
 
 	return damage;
 }
-int Weapon::getHealth() {
 
-	return health;
+void Weapon::setDamage(int damage) {
+	this->damage = damage;
 }
-int Weapon::getCooldown() {
 
-	return cooldown;
+int Weapon::getAmmo() {
+
+	return ammo;
 }
+
+void Weapon::setAmmo(int health) {
+	this->ammo = health;
+}
+
+int Weapon::getCharge() {
+	return charge;
+}
+
+void Weapon::setCharge(int charge) {
+	this->charge = charge;
+}
+
+int Weapon::getChargeTime() { return chargeTime; }
+

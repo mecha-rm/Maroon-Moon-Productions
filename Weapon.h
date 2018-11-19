@@ -5,19 +5,30 @@ using namespace std;
 
 class Weapon {
 public:
+	// sets the weapon parameters
+	Weapon(std::string, std::string, int, int, int);
 
 	int getDamage();
-	int getHealth();
-	int getCooldown();
+	int getAmmo();
+	int getCharge();
+	int getChargeTime();
 
 	void setDamage(int);
-	void setHealth(int);
-	void setCooldown(int);
+	void setAmmo(int);
+	void setCharge(int);
+	
+
 
 private:
+	const std::string type;
+	const std::string name;
 
-	int damage;
-	int health;
-	int cooldown;
+	// the amount of damage a weapon does
+	int damage = 1;
+	// the amount of ammunition a weapon has
+	int ammo = -1;
+	// the amount of charge the weapon currently has
+	int charge = 0;
+	const unsigned int chargeTime = 0; // the amount of time the weapon takes to charge
 
 };

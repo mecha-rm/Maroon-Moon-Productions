@@ -1,143 +1,198 @@
 #include <iostream>
 #include "Ship.h"
-using namespace std;
+
+// constructors
+// default constructor; the ship is named 'The Kestrel' by default
+Ship::Ship() : Ship("The Kestrel") {}
+
+// set the ship's name
+Ship::Ship(std::string name) : shipName(name)
+{
+	// Based on Layout A of the default ship, the Kestrel Cruiser (https://ftl.fandom.com/wiki/The_Kestrel_Cruiser)
+	// Layout A
+	setHull(30);
+	setShield(2);
+	setReactor(8);
+
+	for (int i = 0; i < crewMembers; i++) // making three human crew members
+		addCrewMember("human");
+
+	setOxygen(1);
+	setShield(2);
+	setEngineLevel(2);
+	setFuel(16);
+
+	
+
+	
+}
+
+// converts a string to all lowercase
+std::string Ship::toLower(std::string str)
+{
+	std::string strL;
+	strL.assign(str); // copies original string
+
+	for (int i = 0; i < strL.length(); i++)
+	{
+		strL.at(i) = tolower(strL.at(i)); // converts each 'char' to its lowercase version if applicable
+	}
+
+	return strL;
+}
 
 //Setters -------------------------------------------------------------------------------------------------------------------------------------------
 void Ship::setHull(int hull) {
-	hull = Ship::hull;
-
+	this->hull = hull;
 }
+
 void Ship::setShield(int shield) {
-	shield = Ship::shield;
-
+	this->shield = shield;
 }
+
+void Ship::setReactor(int reactor)
+{
+	this->reactor = reactor;
+}
+
 void Ship::setEvade(int evade) {
-	evade = Ship::evade;
+	this->evade = evade;
 
 }
+
 void Ship::setOxygen(int oxygen) {
-	oxygen = Ship::oxygen;
+	this->oxygen = oxygen;
 
 }
-void Ship::setCrewMembers(int crewMembers) {
-	crewMembers = Ship::crewMembers;
 
-}
+//void Ship::setCrewMembers(int crewMembers) {
+//	this->crewMembers = crewMembers;
+//}
+
 void Ship::setScrap(int scrap) {
-	scrap = Ship::scrap;
-
+	this->scrap = scrap;
 }
+
 void Ship::setFTLDrive(int ftlDrive) {
-	ftlDrive = Ship::ftlDrive;
-
+	this->ftlDrive = ftlDrive;
 }
+
 void Ship::setFuel(int fuel) {
-	fuel = Ship::fuel;
-
+	this->fuel = fuel;
 }
+
 void Ship::setShieldLevel(int shieldLevel) {
-	shieldLevel = Ship::shieldLevel;
-
+	this->shieldLevel = shieldLevel;
 }
+
 void Ship::setEngineLevel(int engineLevel) {
-	engineLevel = Ship::engineLevel;
+	this->engineLevel = engineLevel;
 
 }
+
 void Ship::setOxygenLevel(int oxygenLevel) {
-	oxygenLevel = Ship::oxygenLevel;
-
+	
+	this->oxygenLevel = oxygenLevel;
 }
+
 void Ship::setWeaponControlLevel(int weaponControlLevel) {
-	weaponControlLevel = Ship::weaponControlLevel;
-
+	this->weaponControlLevel = weaponControlLevel;
 }
+
 void Ship::setMedbayLevel(int medbayLevel) {
-	medbayLevel = Ship::medbayLevel;
-
+	this->medbayLevel = medbayLevel;
 }
+
 void Ship::setPilotLevel(int pilotLevel) {
-	pilotLevel = Ship::pilotLevel;
-
+	this->pilotLevel = pilotLevel;
 }
+
 void Ship::setSensorLevel(int sensorLevel) {
-	sensorLevel = Ship::sensorLevel;
+	this->sensorLevel = sensorLevel;
 
 }
+
 void Ship::setDoorLevel(int doorLevel) {
-	doorLevel = Ship::doorLevel;
-
+	this->doorLevel = doorLevel;
 }
+
 void Ship::setRooms(int rooms) {
-	rooms = Ship::rooms;
-
+	this->rooms = rooms;
 }
+
+void Ship::setCrew(std::vector<CrewMember> crew) { this->crew = crew; }
+
 //Getters -------------------------------------------------------------------------------------------------------------------------------------------
-int Ship::getHull() {
+int Ship::getHull() { return hull; }
 
-	return hull;
-}
-int Ship::getShield() {
+int Ship::getShield() { return shield; }
 
-	return shield;
-}
-int Ship::getEvade() {
+int Ship::getReactor() { return reactor; }
 
-	return evade;
-}
-int Ship::getOxygen() {
+int Ship::getEvade() { return evade; }
 
-	return oxygen;
-}
-int Ship::getCrewMembers() {
+int Ship::getOxygen() { return oxygen; }
 
-	return crewMembers;
-}
-int Ship::getScrap() {
+int Ship::getCrewMembers() { return crewMembers; }
 
-	return scrap;
-}
-int Ship::getFTLDrive() {
+int Ship::getScrap() { return scrap; }
 
-	return ftlDrive;
-}
-int Ship::getFuel() {
+int Ship::getFTLDrive() { return ftlDrive; }
 
-	return fuel;
-}
-int Ship::getShieldLevel() {
+int Ship::getFuel() { return fuel; }
 
-	return shieldLevel;
-}
-int Ship::getEngineLevel() {
+int Ship::getShieldLevel() { return shieldLevel; }
 
-	return engineLevel;
-}
-int Ship::getOxygenLevel() {
+int Ship::getEngineLevel() { return engineLevel; }
 
-	return oxygenLevel;
-}
-int Ship::getWeaponControlLevel() {
+int Ship::getOxygenLevel() { return oxygenLevel; }
 
-	return weaponControlLevel;
-}
-int Ship::getMedbayLevel() {
+int Ship::getWeaponControlLevel() { return weaponControlLevel; }
 
-	return medbayLevel;
-}
-int Ship::getPilotLevel() {
+int Ship::getMedbayLevel() { return medbayLevel; }
 
-	return pilotLevel;
-}
-int Ship::getSensorLevel() {
+int Ship::getPilotLevel() { return pilotLevel; }
 
-	return sensorLevel;
-}
-int Ship::getDoorLevel() {
+int Ship::getSensorLevel() { return sensorLevel; }
 
-	return doorLevel;
+int Ship::getDoorLevel() { return doorLevel; }
+
+int Ship::getRooms() { return rooms; }
+
+std::vector<CrewMember> Ship::getCrew() { return crew; }
+
+// adds a crew member; make sure all letters are lowercase
+void Ship::addCrewMember(std::string species)
+{
+	species = toLower(species);
+	crew.push_back(CrewMember(species));
+	crewMembers++;
 }
 
-int Ship::getRooms() {
+// removes a crew member at the provided index
+bool Ship::removeCrewMember(unsigned int i)
+{
+	// returns 'false' if the index is invalid, or if there are no crew members
+	if (crew.empty() == false && i < crew.size())
+	{
+		crew.erase(crew.begin() + i);
+		return true;
+	}
+	else
+	{
+		return false;
+	}
+}
 
-	return rooms;
+// gets a crew member at the provided index
+CrewMember Ship::getCrewMember(unsigned int i) // returns the crew member at the provided index
+{
+	if (i > crew.size()) // if it would cause an out-of-bounds exception
+	{
+		return crew.at(i);
+	}
+	else
+	{
+		return CrewMember();
+	}
 }
