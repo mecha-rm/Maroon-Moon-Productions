@@ -6,7 +6,7 @@ Weapon::Weapon(std::string name, std::string type, int chargeTime, int shots, in
 	name(name), type(type), chargeTime(chargeTime), shots(shots), energy(energy), hullDam(hullDam), shieldDam(shieldDam), crewDam(hullDam), sysDam(hullDam), chanceFire(0), chanceBreach(0), chanceStun(0) {
 	charge = 0;
 }
-Weapon::Weapon(std::string name, std::string type, int chargeTime, int shots, int energy, int hullDam, int shieldDam, int crewDam, int sysDam, int chanceFire, int chanceBreach, int chanceStun) : 
+Weapon::Weapon(std::string name, std::string type, int chargeTime, int shots, int energy, int hullDam, int shieldDam, int crewDam, int sysDam, int chanceFire, int chanceBreach, int chanceStun) :
 	name(name), type(type), chargeTime(chargeTime), shots(shots), energy(energy), hullDam(hullDam), shieldDam(shieldDam), crewDam(crewDam), sysDam(sysDam), chanceFire(chanceFire), chanceBreach(chanceBreach), chanceStun(chanceStun) {
 	charge = 0;
 }

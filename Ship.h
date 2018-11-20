@@ -79,6 +79,9 @@ public:
 	Weapon getWeapon(unsigned int);
 
 	const string shipName; // the ship's name
+
+	string roomType(string);
+	void printShip();
 private:
 
 	//resources
@@ -111,4 +114,15 @@ private:
 	// crew members
 	std::vector<CrewMember> crew; // crew member vector
 	std::vector<Weapon> weapons; // vector used for weapon storage
+
+
+	//The Map of the Ship
+	//Eventually this should become an external to the class which is inputted into the class rather than initialized within it.
+	const int shipMapWidth = 6;
+	const int shipMapLength = 15;
+	string shipMap[6][15]= {{"empty","empty","empty","empty","empty","empty","wdnwe","ndwde","empty","empty","empty","empty","empty","empty","empty"},
+							{"empty","wwnwe","nwdde","dwnwe","nwwde","block","wwnne","nddne","dwnne","nwwne","empty","empty","empty","empty","empty"},
+							{"dwdne","dwnne","ndwne","block","wdnne","nwdne","dnnwe","nnwwe","wnnde","nndwe","dwnwe","nwdwe","dwnne","nwwne","wwwne"},
+							{"empty","wwnwe","nddwe","dwnwe","ndwwe","block","wnnwe","nndde","dnnwe","nnwwe","empty","empty","empty","empty","empty"},
+							{"empty","empty","empty","empty","empty","empty","wwnde","ndwde","empty","empty","empty","empty","empty","empty","empty"} };
 };
