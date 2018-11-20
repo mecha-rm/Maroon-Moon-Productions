@@ -2,12 +2,12 @@
 #include "Ship.h"
 #include "Weapon.h"
 #include "CrewMember.h"
-#include "All_Weapons.cpp"
+#include "All_Weapons.h"
 
 // constructors
 // default constructor; the ship is named 'The Kestrel' by default
 Ship::Ship() : Ship("The Kestrel") {}
-Weapon weapon = Weapon("TEST_MISSILE", "Missile", 12, 1, 2, 2, 0, 20, 10, 2, 2, 0);
+// Weapon weapon(missile_test);
 
 CrewMember crewMember = CrewMember("human");
 
@@ -92,7 +92,7 @@ void Ship::addCrewMember(std::string species)
 
 // applies damage to the shield before the health of the ship
 void Ship::shieldToHealth(int damage) {
-
+	/*
 	for (int count = damage; count > 0; count--) {
 
 		if (weapon.getDamageType() == "missile") {//is the weapon(initalized above) is a laser
@@ -113,6 +113,7 @@ void Ship::shieldToHealth(int damage) {
 			}
 		}
 	}
+	*/
 }
 
 // removes a crew member at the provided index

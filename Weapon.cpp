@@ -11,6 +11,8 @@ Weapon::Weapon(std::string name, std::string type, int chargeTime, int shots, in
 	charge = 0;
 }
 
+Weapon::Weapon(Weapon * weapon) : Weapon(weapon->name, weapon->type, weapon->chargeTime, weapon->shots, weapon->energy, weapon->hullDam, weapon->shieldDam, weapon->crewDam, weapon->sysDam, weapon->chanceFire, weapon->chanceBreach, weapon->chanceStun) {}
+
 //Getters
 std::string Weapon::getName() { return name; }
 std::string Weapon::getType() { return type; }
