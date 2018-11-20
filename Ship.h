@@ -120,9 +120,35 @@ private:
 	//Eventually this should become an external to the class which is inputted into the class rather than initialized within it.
 	const int shipMapWidth = 6;
 	const int shipMapLength = 15;
+
+	/*The Map System!
+		
+		Each string within this 2D array represents a grid space of the ship. each string is a five-character array that represents the walls surrounding the grid space, and 
+		what is within the grid space.
+
+		The formatting is as follows [to the left, above, to the right, below, room type].
+
+		For example, an empty space with a door above it, a wall below it, and nothing to either side would be "ndnwe".
+		Conversely, a string that is "wwdne" would be an empty room with a wall to the left and above, nothing to the right, and a door below.
+
+		Wall Characters:
+			n - nothing
+			w - a wall
+			d - a door
+			o - an open door
+
+		Room Characters:
+			e - empty
+			*add more as room types become available
+
+		Additional Cases:
+			"empty" - this produces a space with nothing in it.
+			"block" - this produces a solid ship part that is not a room.
+	*/
 	string shipMap[6][15]= {{"empty","empty","empty","empty","empty","empty","wdnwe","ndwde","empty","empty","empty","empty","empty","empty","empty"},
 							{"empty","wwnwe","nwdde","dwnwe","nwwde","block","wwnne","nddne","dwnne","nwwne","empty","empty","empty","empty","empty"},
 							{"dwdne","dwnne","ndwne","block","wdnne","nwdne","dnnwe","nnwwe","wnnde","nndwe","dwnwe","nwdwe","dwnne","nwwne","wwwne"},
+							{"dndwe","dnnwe","nndwe","block","wnnde","nndwe","dwnne","nwwne","wdnne","nwdne","dwnwe","nwdwe","dnnwe","nndwe","dnwwe"},
 							{"empty","wwnwe","nddwe","dwnwe","ndwwe","block","wnnwe","nndde","dnnwe","nnwwe","empty","empty","empty","empty","empty"},
 							{"empty","empty","empty","empty","empty","empty","wwnde","ndwde","empty","empty","empty","empty","empty","empty","empty"} };
 };

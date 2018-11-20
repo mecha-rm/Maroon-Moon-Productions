@@ -177,49 +177,49 @@ void Ship::printShip() {
 					if (z == 0) {
 
 						if (shipMap[x][y].substr(1, 1) == "d") {
-							cout << "|--#-#--|";
+							std::cout << "|--#-#--|";
 						}
 						else if (shipMap[x][y].substr(1, 1) == "o") {
-							cout << "|--# #--|";
+							std::cout << "|--# #--|";
 						}
 						else if (shipMap[x][y].substr(1, 1) == "w") {
-							cout << "|-------|";
+							std::cout << "|-------|";
 						}
 						else if (shipMap[x][y].substr(1, 1) == "n") {
-							cout << "|       |";
+							std::cout << "|       |";
 						}
 
 					}
 					else if (z == 1 || z == 3) { //-----------------------------------------------------------------------------------------------------------------------------
 
 						if ((shipMap[x][y].substr(0, 1) == "d" || shipMap[x][y].substr(0, 1) == "o") && (shipMap[x][y].substr(2, 1) == "d" || shipMap[x][y].substr(2, 1) == "o")) {
-							cout << "#       #";
+							std::cout << "#       #";
 						}
 						else if ((shipMap[x][y].substr(0, 1) == "d" || shipMap[x][y].substr(0, 1) == "o") && shipMap[x][y].substr(2, 1) == "w") {
-							cout << "#       |";
+							std::cout << "#       |";
 						}
 						else if ((shipMap[x][y].substr(0, 1) == "d" || shipMap[x][y].substr(0, 1) == "o") && shipMap[x][y].substr(2, 1) == "n") {
-							cout << "#        ";
+							std::cout << "#        ";
 						}
 
 						else if ((shipMap[x][y].substr(0, 1) == "w" && shipMap[x][y].substr(2, 1) == "d") || shipMap[x][y].substr(2, 1) == "o") {
-							cout << "|       #";
+							std::cout << "|       #";
 						}
 						else if (shipMap[x][y].substr(0, 1) == "w" && shipMap[x][y].substr(2, 1) == "w") {
-							cout << "|       |";
+							std::cout << "|       |";
 						}
 						else if (shipMap[x][y].substr(0, 1) == "w" && shipMap[x][y].substr(2, 1) == "n") {
-							cout << "|        ";
+							std::cout << "|        ";
 						}
 
 						else if ((shipMap[x][y].substr(0, 1) == "n" && shipMap[x][y].substr(2, 1) == "d") || shipMap[x][y].substr(2, 1) == "o") {
-							cout << "        #";
+							std::cout << "        #";
 						}
 						else if (shipMap[x][y].substr(0, 1) == "n" && shipMap[x][y].substr(2, 1) == "w") {
-							cout << "        |";
+							std::cout << "        |";
 						}
 						else if (shipMap[x][y].substr(0, 1) == "n" && shipMap[x][y].substr(2, 1) == "n") {
-							cout << "         ";
+							std::cout << "         ";
 						}
 
 					}//----------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -245,16 +245,16 @@ void Ship::printShip() {
 					}//-----------------------------------------------------------------------------------------------------------------------------------------------------------
 					else if (z == count - 1) {
 						if (shipMap[x][y].substr(3, 1) == "d") {
-							cout << "|--#-#--|";
+							std::cout << "|--#-#--|";
 						}
 						else if (shipMap[x][y].substr(3, 1) == "o") {
-							cout << "|--# #--|";
+							std::cout << "|--# #--|";
 						}
 						else if (shipMap[x][y].substr(3, 1) == "w") {
-							cout << "|-------|";
+							std::cout << "|-------|";
 						}
 						else if (shipMap[x][y].substr(3, 1) == "n") {
-							cout << "|       |";
+							std::cout << "|       |";
 						}
 					}
 				}
