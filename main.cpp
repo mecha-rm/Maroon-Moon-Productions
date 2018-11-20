@@ -97,6 +97,7 @@ int main() // main function
 	{
 		std::cout << "\nNow that the rules are out of the way, are you ready proceed? When you are, press any key (except the power button) to start." << std::endl;
 		system("pause");
+
 		std::cout << std::endl;
 
 		success = game.gameLoop(); // gmae loop

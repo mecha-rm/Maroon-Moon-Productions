@@ -143,3 +143,124 @@ CrewMember Ship::getCrewMember(unsigned int i) // returns the crew member at the
 		return CrewMember();
 	}
 }
+
+
+//---- Below is used for mapping
+string Ship::roomType(string str) {
+
+	const int length = 1;
+	string arr1[length] = { "e" };
+	string arr2[length] = { " " };
+
+	for (int x = 0; x < length; x++) {
+		if (str == arr1[x]) {
+			return arr2[x];
+		}
+	}
+
+	return "ERR: no match";
+}
+
+void Ship::printShip() {
+	int count = 5;
+
+	for (int x = 0; x < shipMapWidth; x++) {
+		for (int z = 0; z < count; z++) {
+			for (int y = 0; y < shipMapLength; y++) {
+				if (shipMap[x][y] == "empty") {
+					cout << "         ";
+				}
+				else if (shipMap[x][y] == "block") {
+					cout << "[][]|[][]";
+				}
+				else {
+					if (z == 0) {
+
+						if (shipMap[x][y].substr(1, 1) == "d") {
+							std::cout << "|--#-#--|";
+						}
+						else if (shipMap[x][y].substr(1, 1) == "o") {
+							std::cout << "|--# #--|";
+						}
+						else if (shipMap[x][y].substr(1, 1) == "w") {
+							std::cout << "|-------|";
+						}
+						else if (shipMap[x][y].substr(1, 1) == "n") {
+							std::cout << "|       |";
+						}
+
+					}
+					else if (z == 1 || z == 3) { //-----------------------------------------------------------------------------------------------------------------------------
+
+						if ((shipMap[x][y].substr(0, 1) == "d" || shipMap[x][y].substr(0, 1) == "o") && (shipMap[x][y].substr(2, 1) == "d" || shipMap[x][y].substr(2, 1) == "o")) {
+							std::cout << "#       #";
+						}
+						else if ((shipMap[x][y].substr(0, 1) == "d" || shipMap[x][y].substr(0, 1) == "o") && shipMap[x][y].substr(2, 1) == "w") {
+							std::cout << "#       |";
+						}
+						else if ((shipMap[x][y].substr(0, 1) == "d" || shipMap[x][y].substr(0, 1) == "o") && shipMap[x][y].substr(2, 1) == "n") {
+							std::cout << "#        ";
+						}
+
+						else if ((shipMap[x][y].substr(0, 1) == "w" && shipMap[x][y].substr(2, 1) == "d") || shipMap[x][y].substr(2, 1) == "o") {
+							std::cout << "|       #";
+						}
+						else if (shipMap[x][y].substr(0, 1) == "w" && shipMap[x][y].substr(2, 1) == "w") {
+							std::cout << "|       |";
+						}
+						else if (shipMap[x][y].substr(0, 1) == "w" && shipMap[x][y].substr(2, 1) == "n") {
+							std::cout << "|        ";
+						}
+
+						else if ((shipMap[x][y].substr(0, 1) == "n" && shipMap[x][y].substr(2, 1) == "d") || shipMap[x][y].substr(2, 1) == "o") {
+							std::cout << "        #";
+						}
+						else if (shipMap[x][y].substr(0, 1) == "n" && shipMap[x][y].substr(2, 1) == "w") {
+							std::cout << "        |";
+						}
+						else if (shipMap[x][y].substr(0, 1) == "n" && shipMap[x][y].substr(2, 1) == "n") {
+							std::cout << "         ";
+						}
+
+					}//----------------------------------------------------------------------------------------------------------------------------------------------------------
+					else if (z == 2) {
+
+						string s = shipMap[x][y].substr(4, 1);
+						string temp = " ";
+						if ((shipMap[x][y].substr(0, 1) == "d" || shipMap[x][y].substr(0, 1) == "w") && (shipMap[x][y].substr(2, 1) == "d" || shipMap[x][y].substr(2, 1) == "w")) {
+							temp = "|   " + roomType(s) + "   |";
+						}
+						else if ((shipMap[x][y].substr(0, 1) == "d" || shipMap[x][y].substr(0, 1) == "w") && (shipMap[x][y].substr(2, 1) == "o" || shipMap[x][y].substr(2, 1) == "n")) {
+							temp = "|   " + roomType(s) + "    ";
+						}
+						else if ((shipMap[x][y].substr(0, 1) == "o" || shipMap[x][y].substr(0, 1) == "n") && (shipMap[x][y].substr(2, 1) == "d" || shipMap[x][y].substr(2, 1) == "w")) {
+							temp = "    " + roomType(s) + "   |";
+						}
+						else if ((shipMap[x][y].substr(0, 1) == "o" || shipMap[x][y].substr(0, 1) == "n") && (shipMap[x][y].substr(2, 1) == "o" || shipMap[x][y].substr(2, 1) == "n")) {
+							temp = "    " + roomType(s) + "    ";
+						}
+
+
+						printf("%s", temp.c_str());
+					}//-----------------------------------------------------------------------------------------------------------------------------------------------------------
+					else if (z == count - 1) {
+						if (shipMap[x][y].substr(3, 1) == "d") {
+							std::cout << "|--#-#--|";
+						}
+						else if (shipMap[x][y].substr(3, 1) == "o") {
+							std::cout << "|--# #--|";
+						}
+						else if (shipMap[x][y].substr(3, 1) == "w") {
+							std::cout << "|-------|";
+						}
+						else if (shipMap[x][y].substr(3, 1) == "n") {
+							std::cout << "|       |";
+						}
+					}
+				}
+			}
+
+			cout << endl;
+		}
+	}
+}

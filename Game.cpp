@@ -9,6 +9,7 @@ Game::Game()
 bool Game::gameLoop()
 {
 
+	pShip.printShip();
 	system("pause");
 	return false;
 }
