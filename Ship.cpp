@@ -7,7 +7,7 @@
 // constructors
 // default constructor; the ship is named 'The Kestrel' by default
 Ship::Ship() : Ship("The Kestrel") {}
-Weapon weapon = missile_test;
+Weapon weapon = Weapon("TEST_MISSILE", "Missile", 12, 1, 2, 2, 0, 20, 10, 2, 2, 0);
 
 CrewMember crewMember = CrewMember("human");
 
@@ -95,12 +95,12 @@ void Ship::shieldToHealth(int damage) {
 
 	for (int count = damage; count > 0; count--) {
 
-		if (weapon.getDamageType() == "laser") {//is the weapon(initalized above) is a laser
-			if (getShield() > 0) {				//could change it to Physical/NonPhysical damage instead of names of weapons
-				setShield(getShield() - 1);
+		if (weapon.getDamageType() == "missile") {//is the weapon(initalized above) is a laser
+			if (getHull() > 0) {				//could change it to Physical/NonPhysical damage instead of names of weapons
+				setHull(getHull() - 1);
 			}
 		}
-		if (weapon.getDamageType() == "missile") {
+		if (weapon.getDamageType() == "laser") {
 			if (getShield() > 0) {
 				setShield(getShield() - 1);
 			}

@@ -24,16 +24,16 @@ public:
 	int getChanceBreach();
 	int getChanceStun();
 	int getCharge();
-	int getRoomHit();
 	std::string getDamageType();	
+	int getRoomHit();
 
-	void setDamageType(std::string);
-	void setRoomHit(int);
 	//Setters
-	void setCharge(int charge);
+	void setCharge(int);
+	void setRoomHit(int);
+	void setDamageType(std::string);
+
 
 private:
-	std::string damageType;
 	//Constants
 	const std::string name; //Name of weapon
 	const std::string type; //Weapon type. Defines ammo as well
@@ -52,5 +52,6 @@ private:
 	const int chanceStun;
 	//Variables
 	int charge = 0; //Current charge
-	int room;
+	int roomHit;
+	std::string damageType;
 };
