@@ -13,8 +13,6 @@ class Game
 public:
 	Game();
 	
-	std::string toLower(std::string); // converts to lowercase
-	bool equalsIgnoreCase(std::string, std::string); // sees if two strings are equal to each other, ignoring case differences
 	bool gameLoop(); // game loop
 
 private:

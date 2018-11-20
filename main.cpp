@@ -1,12 +1,13 @@
 /*
 Developers: Alexander Da Costa (100704694), Caleb Birnie (100699828), Carter Menary (100700587), Devin Fitzpatrick (100709082), Nathan Tuck (100708651), Roderick “R.J.” Montague (100701758)
-Date: 11/16/2018
+Date: 11/18/2018
 References:
 	> TutorialsPoint.com/switch statements (https://www.tutorialspoint.com/cplusplus/cpp_switch_statement.htm), Cplusplus.com/tolower (http://www.cplusplus.com/reference/cctype/tolower/), FTL: Faster Than Light Wiki/Home (https://ftl.fandom.com/wiki/FTL:_Faster_Than_Light_Wiki)
 */
 
 // Game Development Workshop - Project 3 | FTL: Faster Than Light
 #include "Game.h"
+#include "Utilities.h"
 
 #include <iostream>
 #include <random>
@@ -115,7 +116,7 @@ int main() // main function
 			std::cout << "Choice: ";
 			
 			getline(std::cin, input);
-			input = game.toLower(input); // getting the input in all lowercase
+			input = util::Utilities::toLower(input); // getting the input in all lowercase
 			std::cout << std::endl;
 
 			if (input == "yes" || input == "y" || input == "1") // play again
