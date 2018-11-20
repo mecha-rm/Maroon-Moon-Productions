@@ -92,7 +92,7 @@ private:
 	int ftlDrive = 0;
 	int fuel = 0;
 	int rooms = 0;
-	bool sensor; 
+	bool sensor = false; 
 
 	//systems
 	int shieldLevel = 0;

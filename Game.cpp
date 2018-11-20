@@ -8,6 +8,7 @@ Game::Game()
 
 bool Game::gameLoop()
 {
+
 	system("pause");
 	return false;
 }

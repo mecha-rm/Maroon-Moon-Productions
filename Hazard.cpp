@@ -3,7 +3,7 @@
 #include "Hazard.h"
 #include "Ship.h"
 
-Ship playerShip = "SS SuckMyDick"; //the name can be changed to whatever the player wants it to be
+Ship playerShip; //the name can be changed to whatever the player wants it to be
 
 void Hazard::giantStar() {
 

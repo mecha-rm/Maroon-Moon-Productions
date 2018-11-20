@@ -10,6 +10,9 @@ public:
 	//Full
 	Weapon(std::string name, std::string type, int chargeTime, int shots, int energy, int hullDam, int shieldDam, int crewDam, int sysDam, int chanceFire, int chanceBreach, int chanceStun);
 
+	// Copy Constructor
+	Weapon(Weapon*);
+
 	//Getters
 	std::string getName();
 	std::string getType();
@@ -24,6 +27,7 @@ public:
 	int getChanceBreach();
 	int getChanceStun();
 	int getCharge();
+	// int getRoomHit();
 	std::string getDamageType();	
 	int getRoomHit();
 
