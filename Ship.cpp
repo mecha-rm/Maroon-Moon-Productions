@@ -1,9 +1,15 @@
 #include <iostream>
 #include "Ship.h"
+#include "Weapon.h"
+#include "CrewMember.h"
+#include "All_Weapons.cpp"
 
 // constructors
 // default constructor; the ship is named 'The Kestrel' by default
 Ship::Ship() : Ship("The Kestrel") {}
+Weapon weapon = missile_test;
+
+CrewMember crewMember = CrewMember("human");
 
 // set the ship's name
 Ship::Ship(std::string name) : shipName(name)
@@ -44,6 +50,7 @@ void Ship::setSensorLevel(int sensorLevel) { this->sensorLevel = sensorLevel; }
 void Ship::setDoorLevel(int doorLevel) { this->doorLevel = doorLevel; }
 void Ship::setRooms(int rooms) { this->rooms = rooms; }
 void Ship::setCrew(std::vector<CrewMember> crew) { this->crew = crew; }
+void Ship::setSensor(bool sensor) { this->sensor = sensor; }
 
 //Getters
 int Ship::getHull() { return hull; }
@@ -64,6 +71,7 @@ int Ship::getPilotLevel() { return pilotLevel; }
 int Ship::getSensorLevel() { return sensorLevel; }
 int Ship::getDoorLevel() { return doorLevel; }
 int Ship::getRooms() { return rooms; }
+bool Ship::getSensor() { return sensor; }
 
 std::vector<CrewMember> Ship::getCrew() { return crew; }
 
@@ -80,6 +88,31 @@ void Ship::addCrewMember(std::string species)
 	}
 	
 	crewMembers++;
+}
+
+// applies damage to the shield before the health of the ship
+void Ship::shieldToHealth(int damage) {
+
+	for (int count = damage; count > 0; count--) {
+
+		if (weapon.getDamageType() == "laser") {//is the weapon(initalized above) is a laser
+			if (getShield() > 0) {				//could change it to Physical/NonPhysical damage instead of names of weapons
+				setShield(getShield() - 1);
+			}
+		}
+		if (weapon.getDamageType() == "missile") {
+			if (getShield() > 0) {
+				setShield(getShield() - 1);
+			}
+			else {
+				setHull(getHull() - 1);
+
+				if (weapon.getRoomHit() == crewMember.getPosition()) {//crewMember is a crewMemeber object i made above
+					crewMember.setHealth(crewMember.getHealth() - 1);//this just means that when the hull takes damage at a room that has a crew member in it the crew member will take the same amount of damage.
+				}													 //if we change all out ints to floats we can get like a ratio of 1 hull damage to 0.2 crew member damage.
+			}
+		}
+	}
 }
 
 // removes a crew member at the provided index
