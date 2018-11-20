@@ -161,6 +161,7 @@ string Ship::roomType(string str) {
 	return "ERR: no match";
 }
 
+// Prints the ship
 void Ship::printShip() {
 	int count = 5;
 
@@ -263,4 +264,17 @@ void Ship::printShip() {
 			cout << endl;
 		}
 	}
+}
+
+// Prints the stats of the ship
+void Ship::printStats()
+{	
+	// prints the health (hull of the ship)
+	std::cout << "HULL (HP): [";
+	for (int i = 1; i <= hull; i++)
+	{
+		std::cout << "/";
+	}
+	std::cout << "]" << std::endl;
+
 }

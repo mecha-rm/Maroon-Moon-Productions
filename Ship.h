@@ -78,10 +78,14 @@ public:
 	// returns a weapon at the provided index
 	Weapon getWeapon(unsigned int);
 
-	const string shipName; // the ship's name
-
+	// saves the type of the room
 	string roomType(string);
+	// prints a map of the ship
 	void printShip();
+	// prints the stats of the ship
+	void printStats();
+
+	const string shipName; // the ship's name
 private:
 
 	//resources
