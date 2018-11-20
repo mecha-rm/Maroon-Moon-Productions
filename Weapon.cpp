@@ -25,13 +25,11 @@ int Weapon::getChanceFire() { return chanceFire; }
 int Weapon::getChanceBreach() { return chanceBreach; }
 int Weapon::getChanceStun() { return chanceStun; }
 int Weapon::getCharge() { return charge; }
+int Weapon::getRoomHit() { return roomHit; }
+std::string Weapon::getDamageType() { return damageType; }
 
 //Setters
 void Weapon::setCharge(int charge) { this->charge = charge; }
-
-//Getters
-int Weapon::getDamage() { return damage; }
-int Weapon::getAmmo() {	return ammo; }
-int Weapon::getCharge() { return charge; }
-int Weapon::getChargeTime() { return chargeTime; }
+void Weapon::setRoomHit(int roomHit) { this->roomHit = roomHit; }
+void Weapon::setDamageType(std::string damageType) { this->damageType = damageType; }
 
