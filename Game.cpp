@@ -9,8 +9,12 @@ Game::Game()
 bool Game::gameLoop()
 {
 
-	pShip.printShip();
+	pShip.printShip(); // prints the ship
+	std::cout << std::endl;
+	pShip.printStats(); // prints the stats of the ship
+
 	system("pause");
+	// system("CLS"); // clear's the screen	
 	return false;
 }
 
