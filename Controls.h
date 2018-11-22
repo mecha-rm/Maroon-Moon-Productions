@@ -42,6 +42,7 @@ public:
 	int getSelectRoomsRight();
 	int getSwitchSelectedShip();
 	int getPauseMenu();
+	int getMoveTo();
 
 	//Setters (if we want to implement changing the keybindings)
 	void setCrew1(unsigned int e);
@@ -80,6 +81,7 @@ public:
 	void setSelectRoomsRight(unsigned int e);
 	void setSwitchSelectedShip(unsigned int e);
 	void setPauseMenu(unsigned int e);
+	void setMoveTo(unsigned int e);
 
 private:
 	unsigned int Crew1 = 0;				 //Select Crew 1
@@ -118,4 +120,5 @@ private:
 	unsigned int SelectRoomsRight = 0;	 //Move between rooms right
 	unsigned int SwitchSelectedShip = 0; //Switches from one ship to another during combat
 	unsigned int PauseMenu = 0;			 //Pauses the game
+	unsigned int MoveTo = 0;			 //When on the room you want, press this to move a crew member here
 };

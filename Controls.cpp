@@ -38,6 +38,7 @@ Controls::Controls() {
 	setSelectRoomsRight(39); // Right Arrow
 	setSwitchSelectedShip(9); // Tab
 	setPauseMenu(27); // Esc
+	setMoveTo(101); //E
 }
 
 //Getters (for checking keystrokes and the like)
@@ -77,6 +78,7 @@ int Controls::getSelectRoomsLeft() { return SelectRoomsLeft; }
 int Controls::getSelectRoomsRight() { return SelectRoomsRight; }
 int Controls::getSwitchSelectedShip() { return SwitchSelectedShip; }
 int Controls::getPauseMenu() { return PauseMenu; }
+int Controls::getMoveTo() { return MoveTo; }
 
 //Setters (if we want to implement changing the keybindings)
 void Controls::setCrew1(unsigned int e) { Crew1 = e; }
@@ -115,3 +117,4 @@ void Controls::setSelectRoomsLeft(unsigned int e) { SelectRoomsLeft = e; }
 void Controls::setSelectRoomsRight(unsigned int e) { SelectRoomsRight = e; }
 void Controls::setSwitchSelectedShip(unsigned int e) { SwitchSelectedShip = e; }
 void Controls::setPauseMenu(unsigned int e) { PauseMenu = e; }
+void Controls::setMoveTo(unsigned int e) { MoveTo = e; }
