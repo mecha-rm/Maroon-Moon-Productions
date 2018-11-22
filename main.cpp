@@ -10,6 +10,7 @@ References:
 #include "Utilities.h"
 #include "GameWindow.h"
 #include "Sprite.h"
+#include "Controls.h"
 
 #include <iostream>
 #include <random>
@@ -30,10 +31,40 @@ void rules(int res)
 	switch (res)
 	{
 	case 1: // rules of FTL
-		std::cout << "RULES OF 'FTL: FASTER THAN LIGHT'\n**********************************" << std::endl;
+		std::cout << "RULES OF 'FTL: FASTER THAN LIGHT'\n**********************************\n" <<
+			"* Welcome to FTL! You are the captain of a Federation starship on a very important mission. \n" << 
+			"* The Federation is currently being torn apart by vicious Rebels. Your ship is carrying data\n" <<
+			"  vital to the defense of the Federation. \n" <<
+			"* You will be travelling through dangerous sectors of the galaxy with the Rebel fleet in hot\n" <<
+			"* pursuit. Make it to the exit beacon of each sector before the Rebels can catch you. \n" <<
+			"* Your ship, the Kestrel, is the focus of the typical game view."
+			<< std::endl;
 		break;
 	case 2: // rules of the program
-		std::cout << "RULES OF THE PROGRAM\n**********************************" << std::endl;
+		std::cout << "RULES OF THE PROGRAM\n**********************************\n" << 
+			"* The icons at the bottom left are your ship's primary systems. Systems use power from the  \n" <<
+			"  reactor (the bar at the bottom). \n" <<
+			"* The icons on the bottom right are your ship's subsystems. Unlike systems, they do not \n" <<
+			"  require power from the reactor. \n" <<
+			"* Hover your mouse over any system icon to get more information about the system. Each \n" <<
+			"  system's corresponding room will light up. \n" << //Just change the font colour of the room identifier
+			"* The Hull Meter, Shield Level, and current resources are in the top left. If your Hull \n" <<
+			"  Meter is reduced to zero, your ship will explode. \n" <<
+			"* Systems are unpowered when the boxes are white, and they are powered when they are green.\n" <<
+			"* By default, power systems using the following keys: \n" <<
+			"  A - Shields \tS - Engines \tF - Oxygen \n  D - Medbay \tW - Weapons \n" <<
+			"* Depower systems by pressing Shift (depower modifier) and the power key you want to depower. \n" <<
+			"* Select Crew Members by using F1 to F8, and select all Crew Members with Q \n" <<
+			"* Crew Members can be set to stations using / and if they are moved, you can send everyone back \n" <<
+			"  to their posts using Enter. They can also be moved to new rooms using E. \n" <<
+			"* Time can be toggled to make things easier to process using Space. If you need to escape a node, \n" <<
+			"  press J to make an FTL jump. " <<
+			"* Many menus are available, including Upgrades (U), Inventory (I), Store (K) [if available], \n" <<
+			"  Options (O), and the Pause Menu (Esc). \n" <<
+			"* Control Doors using Z to open them, and X to close them. Use the Arrow Keys to select rooms. \n" <<
+			"* For combat, use 1 to 4 to select a weapon, use V to toggle Autofire on the ship, and press \n" <<
+			"  Tab to switch selection on your ship or the enemy's ship."
+			<< std::endl;
 		break;
 	default:
 		std::cout << "There is nothing corresponding to that value" << std::endl;
