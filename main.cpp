@@ -1,6 +1,6 @@
 /*
 Developers: Alexander Da Costa (100704694), Caleb Birnie (100699828), Carter Menary (100700587), Devin Fitzpatrick (100709082), Nathan Tuck (100708651), Roderick “R.J.” Montague (100701758)
-Date: 11/18/2018
+Date: 11/22/2018
 References:
 	> TutorialsPoint.com/switch statements (https://www.tutorialspoint.com/cplusplus/cpp_switch_statement.htm), Cplusplus.com/tolower (http://www.cplusplus.com/reference/cctype/tolower/), FTL: Faster Than Light Wiki/Home (https://ftl.fandom.com/wiki/FTL:_Faster_Than_Light_Wiki)
 */
@@ -79,8 +79,6 @@ int main() // main function
 	std::string input(""); // gets user input
 	bool success; // determines whether the game was won or not.
 
-	
-
 	std::cout << "Game Development Workshop I - Project 3 by Maroon Moon Productions." << std::endl;
 	std::cout << "GAME: FTL: Faster Than Light" << std::endl;
 	std::cout << "*This program is based off 'FTL: Faster Than Light', which is owned by Subset Games. This is by no means meant to infringe on the original property, and exists only for non-profit, educational purposes.*" << std::endl;
@@ -139,7 +137,7 @@ int main() // main function
 		std::cout << std::endl;
 	
 		success = game.gameLoop(); // gmae loop
-	
+		
 		if (success) // starts the game. If a 'true' is returned, the player won. If a 'false' is returned, the player lost.
 		{
 			std::cout << "\nCongratulations! You have won the game!" << std::endl;
@@ -148,12 +146,12 @@ int main() // main function
 		{
 			std::cout << "\nGame Over. You have lost the game." << std::endl;
 		}
-	
+
 		do // asking the user if they want to play again
 		{
 			std::cout << "Do you wish to play again? Enter '1' for yes, and '2' for no." << std::endl;
 			std::cout << "Choice: ";
-			
+
 			getline(std::cin, input);
 			input = util::Utilities::toLower(input); // getting the input in all lowercase
 			std::cout << std::endl;
@@ -180,6 +178,7 @@ int main() // main function
 	
 	} while (input != "exit");
 	
+
 	//----------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 	std::cout << "Thank you for playing our game!" << std::endl;

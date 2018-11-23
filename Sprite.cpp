@@ -19,13 +19,15 @@ Sprite::Sprite(const Sprite &a_Other)
 Sprite::Sprite(const char *m_Characters, const unsigned int a_Width, const unsigned int a_Height)
 {
 	m_Buffer = new CHAR_INFO[a_Height * a_Width];
+	// Changes the colour
+	
 	for (unsigned int i = 0; i < a_Width * a_Height; i++)
 	{
 		m_Buffer[i].Char.AsciiChar = m_Characters[i];
-		m_Buffer[i].Attributes = BACKGROUND_BLUE | FOREGROUND_RED;
+		m_Buffer[i].Char.AsciiChar = 0x7; // black background, white foreground
+		// m_Buffer[i].Attributes = BACKGROUND_BLUE | FOREGROUND_RED;
 	}
-
-
+	
 
 	m_Size = Vec2(a_Width, a_Height);
 }
@@ -40,7 +42,8 @@ void Sprite::SetSprite(const char *m_Characters, const unsigned int a_Width, con
 	for (unsigned int i = 0; i < a_Width * a_Height; i++)
 	{
 		m_Buffer[i].Char.AsciiChar = m_Characters[i];
-		m_Buffer[i].Attributes = i;
+		m_Buffer[i].Attributes = 0x7; // black background, white foreground
+		// m_Buffer[i].Attributes = i;
 
 	}
 

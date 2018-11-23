@@ -38,7 +38,8 @@ void GameWindow::RenderSprite(Sprite a_Sprite)
 	l_TempRect.Right = a_Sprite.GetPosition().X + a_Sprite.GetSize().X;
 	l_TempRect.Top = a_Sprite.GetPosition().Y;
 
-	//a_Sprite.GetBuffer()->Attributes = FOREGROUND_GREEN | BACKGROUND_BLUE;
+
+	// a_Sprite.GetBuffer()->Attributes = FOREGROUND_GREEN | BACKGROUND_BLUE;
 
 	WriteConsoleOutputA(m_Buffer[!m_CurrentBuffer], a_Sprite.GetBuffer(),
 		a_Sprite.GetSize(), Vec2(0, 0), &l_TempRect);

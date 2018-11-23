@@ -16,7 +16,9 @@ public:
 	bool gameLoop(); // game loop
 
 private:
-
+	void bufferColourTest(); // print colour options
+	void bufferTypeTest(); // typing to the screen
+	void bufferColourTypeTest(); // typing and printing colour options
 	Ship pShip;
 
 };
