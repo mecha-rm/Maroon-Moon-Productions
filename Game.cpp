@@ -1,8 +1,6 @@
 // The class for the game loop
 #include "Game.h"
-#include "Game.h"
 #include "Utilities.h"
-#include "GameWindow.h"
 #include "Timer.h"
 #include "Sprite.h"
 
@@ -13,23 +11,52 @@
 #include <ctype.h>
 #include <windows.h>
 
-Game::Game()
-{
-}
+// Game is playing by default
+bool Game::play = true;
 
+Game::Game() { tw.ResizeScreenBuffers(twWidth, twHeight); }
+
+// Game Loop
 bool Game::gameLoop()
 {
 
+	std::string inputStr(""); // the string used for input
+	char * inputArr; // the input in array form
+	Sprite inputSprite; // input sprite
+	unsigned int inputWidth(0), inputHeight(1);
+	unsigned int inputPosX(1), inputPosY(10); // the position of the input
 
+	bool Continue = TRUE;
+	// pShip.printShip(); // prints the ship
+	// std::cout << std::endl;
+	// pShip.printStats(); // prints the stats of the ship
 
-	pShip.printShip(); // prints the ship
-	std::cout << std::endl;
-	pShip.printStats(); // prints the stats of the ship
+	createTextWindow(); // creates the buffer
+
+	// windowColourTest(); // colour test
+	// windowTypeTest(); // typing test
+	// windowColourTypeTest(); // colour and typing test
+
+	while (Continue) {
+
+		Timer::CalculateDeltaTime();
+		
 	
-	
-	// bufferColourTest(); // colour test
-	bufferTypeTest(); // typing test
-	// bufferColourTypeTest(); // colour and typing test
+		typeToWindow(inputStr); // called to see if something is being typed
+		if (play == false) // if the escape key is pressed, play is equal to false. If play is equal to false, the game ends.
+			return false;
+
+		inputArr = new char[sizeof(inputStr)];
+		memcpy(inputArr, inputStr.c_str(), sizeof(inputStr) / sizeof(char)); // puts the string into the array
+		
+		inputWidth = inputStr.length(); // gets the length of the string to know how many characters it should be
+		inputSprite.SetSprite(inputArr, inputWidth, inputHeight); // sets the new spriet
+		inputSprite.SetPosition(inputPosX, inputPosY); // sets the position of the sprite
+
+		tw.RenderSprite(inputSprite); // renders the sprite
+		tw.SwapBackBuffers(); // swaps buffers so that the sprite is visisble
+
+	}
 
 	// system("pause");
 	// system("CLS"); // clear's the screen	
@@ -37,13 +64,101 @@ bool Game::gameLoop()
 	return false;
 }
 
+// Makes the buffer
+void Game::createTextWindow()
+{
+	SetConsoleDisplayMode(GetStdHandle(STD_OUTPUT_HANDLE), CONSOLE_FULLSCREEN_MODE, 0); // makes the console full-screen
+	tw.ResizeScreenBuffers(twWidth, twHeight); // resizes the text window; the size of the window was set in the constructor.
+
+	hIn = GetStdHandle(STD_INPUT_HANDLE);
+	hOut = GetStdHandle(STD_OUTPUT_HANDLE);
+
+	Timer::InitializeDeltaTime(); // gets the system time
+}
+
+// Types ot the buffer screen; needs to be re-worked. A string is sent by reference for the input recieving. If a 'true' is returned, the user has decided to lock-in their input
+bool Game::typeToWindow(std::string & input)
+{
+	// Assumes the buffer has already been created and the initial time has been gotten
+	/*
+	SetConsoleDisplayMode(GetStdHandle(STD_OUTPUT_HANDLE), CONSOLE_FULLSCREEN_MODE, 0);
+	HANDLE hIn;
+	HANDLE hOut;
+
+	hIn = GetStdHandle(STD_INPUT_HANDLE);
+	hOut = GetStdHandle(STD_OUTPUT_HANDLE);
+
+	Timer::InitializeDeltaTime(); // gets the system time
+	*/
+	
+	static char key = NULL; // the key pressed down; the program needs to remeber if the key was ever let go.
+
+	ReadConsoleInput(hIn, &InRec, 1, &NumRead);
+
+	switch (InRec.EventType)
+	{
+
+	// Keyboard input
+	case KEY_EVENT:
+
+		if (InRec.Event.KeyEvent.bKeyDown && key == NULL) // if the key was just pressed
+		{
+			switch (InRec.Event.KeyEvent.uChar.AsciiChar) // gets the ASCII character of the key
+			{
+			// Backspace
+			case 8:
+				if(input.length() > 0) // removes one character from the string if there are characters to remove.
+					input.pop_back();
+				break;
+			
+			// Enter Key (Carriage Return)
+			case 13:
+				return true; // returns true to tell the program the user is done with their input.
+				break;
+
+			// Escape;
+			case 27:
+				// if 'escape' is pressed, the game ends.
+				play = false;
+				return false;
+				break;
+
+			// Delete Key
+			case 127:
+				// Removes all characters from the input
+				input = "";
+				break;
+
+			default:
+
+				key = InRec.Event.KeyEvent.uChar.AsciiChar; // gets the current character
+
+				if(input.length() < 28 && key >= 32) // blocks off empty characters, aside from spaces
+					input += key; // adds the  current character to the input string
+			
+			}
+		}
+		else if (!InRec.Event.KeyEvent.bKeyDown) // if no key is being held down.
+		{
+			key = NULL; // 'key' is set to 'NULL' to tell the program that there is no key being held down.
+		}
+
+	case MOUSE_EVENT:
+
+		break;
+	}
+
+	return false;
+}
+
+// NOTE: you need to comment out hte lines that change the colour in GameWindow and Sprite to work.
 // Colour Text Test
-void Game::bufferColourTest()
+void Game::windowColourTest()
 {
 	SetConsoleDisplayMode(GetStdHandle(STD_OUTPUT_HANDLE), CONSOLE_FULLSCREEN_MODE, 0);
 
 	GameWindow tw(1600, 800);
-
+	tw.setColor(4);
 	char myBuffer[4] = { 'l','a','a','l' };
 
 	Sprite mySprite(myBuffer, 2, 2);
@@ -60,6 +175,7 @@ void Game::bufferColourTest()
 
 	hIn = GetStdHandle(STD_INPUT_HANDLE);
 	hOut = GetStdHandle(STD_OUTPUT_HANDLE);
+
 
 	//A note on how to set cursor position, if it is ever useful again. 
 	//SetConsoleCursorPosition(hOut, 
@@ -143,7 +259,7 @@ void Game::bufferColourTest()
 }
 
 // Typing Test; the program gets the key pressed upon its release, which requires the user to press down hard. This will need to be revised for the game input.
-void Game::bufferTypeTest()
+void Game::windowTypeTest()
 {
 	// For some reason, when using a dynamic 'char' array, the console can only print out a total of '28' characters before the rest of the string starts getting glitchy.
 	// However, if a static 'char' array is used, all of the values will print out perfectly.
@@ -213,7 +329,8 @@ void Game::bufferTypeTest()
 			if (InRec.Event.KeyEvent.bKeyDown == false && key != NULL)
 			{
 				input += key; // key returns proper output, so what gives?
-				std::cout << input << std::endl;
+				// std::cout << key << std::endl;
+				// std::cout << input << std::endl;
 				key = NULL;
 			}
 			else
@@ -241,7 +358,8 @@ void Game::bufferTypeTest()
 	}
 }
 
-void Game::bufferColourTypeTest()
+// Colour and Type Test; typing text whilst also changing the colour.
+void Game::windowColourTypeTest()
 {
 	SetConsoleDisplayMode(GetStdHandle(STD_OUTPUT_HANDLE), CONSOLE_FULLSCREEN_MODE, 0);
 	GameWindow tw(1600, 800);

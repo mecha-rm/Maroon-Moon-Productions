@@ -19,8 +19,9 @@ GameWindow::GameWindow(unsigned int a_Width, unsigned int a_Height) : GameWindow
 
 void GameWindow::setColor(int num)
 {
-	SetConsoleTextAttribute(m_Buffer[0], FOREGROUND_GREEN);
-	SetConsoleTextAttribute(m_Buffer[1], 5);
+	// SetConsoleTextAttribute(m_Buffer[0], FOREGROUND_GREEN);
+	// SetConsoleTextAttribute(m_Buffer[1], 5);
+
 }
 
 void GameWindow::ResizeScreenBuffers(unsigned int a_Width, unsigned int a_Height)
