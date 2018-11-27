@@ -19,6 +19,8 @@ Game::Game() { tw.ResizeScreenBuffers(twWidth, twHeight); }
 // Game Loop
 bool Game::gameLoop()
 {
+	// Text-Version
+	/*
 
 	std::string inputStr(""); // the string used for input
 	char * inputArr; // the input in array form
@@ -60,8 +62,18 @@ bool Game::gameLoop()
 
 	// system("pause");
 	// system("CLS"); // clear's the screen	
+	*/
+
+	
 
 	return false;
+}
+
+Ship Game::createShip(int type)
+{
+	Ship tempShip;
+
+	return Ship();
 }
 
 // Makes the buffer

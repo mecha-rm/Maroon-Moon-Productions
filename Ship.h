@@ -70,11 +70,12 @@ public:
 	// returns the crew member at the given index
 	CrewMember getCrewMember(unsigned int);
 
-	// Model these after the addCrewMember, removeCrewMber and getCrewMember Functions
+	// Model these after the addCrewMember, removeCrewMember and getCrewMember Functions
 	// adds a weapon to the list
-	Weapon addWeapon();
+	void addWeapon(Weapon);
 	// removes a weapon
-	bool removeWeapon(unsigned int);
+	bool removeWeapon();
+	bool removeWeapon(unsigned int index);
 	// returns a weapon at the provided index
 	Weapon getWeapon(unsigned int);
 

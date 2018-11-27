@@ -1,7 +1,7 @@
 //Initializes all weapons
 #include "Weapon.h"
 
-struct WeaponType
+typedef struct WeaponType
 {
 public:
 	WeaponType();
@@ -29,4 +29,4 @@ public:
 	//Small Bomb
 	const Weapon bomb_small = Weapon("Small Bomb", "Bomb", 13, 1, 1, 0, 0, 30, 2, 1, 0, 0);
 	
-};
+} All_Weapons;

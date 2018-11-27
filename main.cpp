@@ -1,6 +1,6 @@
 /*
 Developers: Alexander Da Costa (100704694), Caleb Birnie (100699828), Carter Menary (100700587), Devin Fitzpatrick (100709082), Nathan Tuck (100708651), Roderick “R.J.” Montague (100701758)
-Date: 11/22A/2018
+Date: 12/04/2018
 References:
 	> TutorialsPoint.com/switch statements (https://www.tutorialspoint.com/cplusplus/cpp_switch_statement.htm), Cplusplus.com/tolower (http://www.cplusplus.com/reference/cctype/tolower/), FTL: Faster Than Light Wiki/Home (https://ftl.fandom.com/wiki/FTL:_Faster_Than_Light_Wiki)
 	> TutorialsPoint.com/Static Members of a C++ Class (https://www.tutorialspoint.com/cplusplus/cpp_static_members.htm)

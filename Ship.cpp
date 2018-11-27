@@ -144,6 +144,27 @@ CrewMember Ship::getCrewMember(unsigned int i) // returns the crew member at the
 	}
 }
 
+/*
+// add a weapon to the vector
+void Ship::addWeapon(Weapon weapon) { weapons.push_back(weapon); }
+
+// remove the last weapon in the vector
+bool Ship::removeWeapon() { return removeWeapon(weapons.size() - 1); }
+
+// remove a weapon
+bool Ship::removeWeapon(unsigned int index)
+{
+	if (index >= weapons.size() || weapons.empty())
+	{
+		return false;
+	}
+	else
+	{
+		weapons.erase(weapons.begin() + index);
+		return true;
+	}
+}
+*/
 
 //---- Below is used for mapping
 string Ship::roomType(string str) {

@@ -1,11 +1,8 @@
 #include <iostream>
 #include "Systems.h"
-#include "Room.h"
-
-Room room;
 
 //Getters
-std::string Systems::getName() { return name };
+std::string Systems::getName() { return name; };
 std::string Systems::getType() { return type; }
 bool Systems::getBuff() { return buff; }
 int Systems::getMaxPower() { return maxPower; }

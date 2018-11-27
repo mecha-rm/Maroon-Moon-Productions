@@ -1,4 +1,5 @@
 #pragma once
+#include "Room.h"
 
 class Systems {
 
@@ -28,5 +29,7 @@ private:
 	int maxPower;
 	int cost;
 	int health;
+
+	Room room = Room(3, "pilot", 100);
 
 };

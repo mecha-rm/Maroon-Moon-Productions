@@ -4,6 +4,7 @@
 
 #include "Ship.h";
 #include "Weapon.h";
+#include "All_Weapons.h"
 #include "Hazard.h";
 #include "GameWindow.h"
 
@@ -16,6 +17,8 @@ public:
 
 	// Game Loop
 	bool gameLoop(); // game loop
+	Ship createShip(int type); // creates a ship based on the number provided.
+
 
 	// creates the buffer for the user input, and initalizes timer
 	void createTextWindow();
@@ -41,7 +44,9 @@ private:
 	DWORD NumRead;
 
 	Ship pShip;
+	Ship enemy;
 
+	All_Weapons weapon = All_Weapons();
 };
 
 #endif

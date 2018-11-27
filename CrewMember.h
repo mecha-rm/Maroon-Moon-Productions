@@ -1,6 +1,7 @@
 #ifndef CREWMEMBER_H
 #define CREWMEMBER_H
 
+#include "Room.h"
 #include <string>
 
 class CrewMember
@@ -30,7 +31,7 @@ private:
 	bool oxygen;
 	int position;
 	std::string crewType;
-
+	Room room = Room(1, "pilot", 100); // causes error
 };
 
 #endif

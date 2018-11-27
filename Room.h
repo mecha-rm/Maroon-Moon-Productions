@@ -1,10 +1,10 @@
 #pragma once
 
+#include <string>
+
 class Room {
-
-	Room(int amountOfCrewMemebers, std::string system, int oxygen);
-
 public:
+	Room(int amountOfCrewMemebers, std::string system, int oxygen);
 	int getAmountOfCrewMembers();
 	std::string getSystem();
 	int getOxygen();

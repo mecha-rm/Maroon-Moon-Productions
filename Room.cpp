@@ -1,6 +1,8 @@
 #include <iostream>
 #include "Room.h"
-#include "CrewMember.h"
+
+// constructor
+Room::Room(int amountOfCrewMemebers, std::string system, int oxygen) : amountOfCrewMembers(amountOfCrewMembers), system(system), oxygen(oxygen) {}
 
 //Getters
 int Room::getAmountOfCrewMembers() { return amountOfCrewMembers; }
