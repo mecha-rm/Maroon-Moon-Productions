@@ -1,5 +1,5 @@
 // The class for the game loop
-#include "Game.h"
+#include "Gameplay.h"
 #include "Utilities.h"
 #include "Timer.h"
 #include "Sprite.h"
