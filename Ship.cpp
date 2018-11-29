@@ -4,12 +4,12 @@
 #include "CrewMember.h"
 #include "All_Weapons.h"
 
+// Weapon weapon(missile_test);
+// CrewMember crewMember = CrewMember("human");
+
 // constructors
 // default constructor; the ship is named 'The Kestrel' by default
 Ship::Ship() : Ship("The Kestrel") {}
-// Weapon weapon(missile_test);
-
-CrewMember crewMember = CrewMember("human");
 
 // set the ship's name
 Ship::Ship(std::string name) : shipName(name)
@@ -17,11 +17,15 @@ Ship::Ship(std::string name) : shipName(name)
 	// Based on Layout A of the default ship, the Kestrel Cruiser (https://ftl.fandom.com/wiki/The_Kestrel_Cruiser)
 	// Layout A
 	setHull(30);
+	maxHull = hull; // getting the starting hull value, treating it as the maximum.
 	setShield(2);
 	setReactor(8);
 
 	for (int i = 0; i < crewMembers; i++) // making three human crew members
 		addCrewMember("human");
+
+	weapons.push_back(All_Weapons().missile_artemis);
+	weapons.push_back(All_Weapons().laser_burst_ii);
 
 	setOxygen(1);
 	setShield(2);
@@ -29,6 +33,14 @@ Ship::Ship(std::string name) : shipName(name)
 	setFuel(16);
 
 }
+
+
+/*
+Ship::Ship(Ship & ship) : shipMapWidth(6), shipMapLength(15)
+{
+	*this = ship;
+}
+*/
 
 //Setters 
 void Ship::setHull(int hull) { this->hull = hull; }
@@ -90,32 +102,6 @@ void Ship::addCrewMember(std::string species)
 	crewMembers++;
 }
 
-// applies damage to the shield before the health of the ship
-void Ship::shieldToHealth(int damage) {
-	/*
-	for (int count = damage; count > 0; count--) {
-
-		if (weapon.getDamageType() == "missile") {//is the weapon(initalized above) is a laser
-			if (getHull() > 0) {				//could change it to Physical/NonPhysical damage instead of names of weapons
-				setHull(getHull() - 1);
-			}
-		}
-		if (weapon.getDamageType() == "laser") {
-			if (getShield() > 0) {
-				setShield(getShield() - 1);
-			}
-			else {
-				setHull(getHull() - 1);
-
-				if (weapon.getRoomHit() == crewMember.getPosition()) {//crewMember is a crewMemeber object i made above
-					crewMember.setHealth(crewMember.getHealth() - 1);//this just means that when the hull takes damage at a room that has a crew member in it the crew member will take the same amount of damage.
-				}													 //if we change all out ints to floats we can get like a ratio of 1 hull damage to 0.2 crew member damage.
-			}
-		}
-	}
-	*/
-}
-
 // removes a crew member at the provided index
 bool Ship::removeCrewMember(unsigned int i)
 {
@@ -165,6 +151,33 @@ bool Ship::removeWeapon(unsigned int index)
 	}
 }
 */
+
+// applies damage to the shield before the health of the ship
+void Ship::shieldToHealth(int damage) {
+	/*
+	for (int count = damage; count > 0; count--) {
+
+		if (weapon.getDamageType() == "missile") {//is the weapon(initalized above) is a laser
+			if (getHull() > 0) {				//could change it to Physical/NonPhysical damage instead of names of weapons
+				setHull(getHull() - 1);
+			}
+		}
+		if (weapon.getDamageType() == "laser") {
+			if (getShield() > 0) {
+				setShield(getShield() - 1);
+			}
+			else {
+				setHull(getHull() - 1);
+
+				if (weapon.getRoomHit() == crewMember.getPosition()) {//crewMember is a crewMemeber object i made above
+					crewMember.setHealth(crewMember.getHealth() - 1);//this just means that when the hull takes damage at a room that has a crew member in it the crew member will take the same amount of damage.
+				}													 //if we change all out ints to floats we can get like a ratio of 1 hull damage to 0.2 crew member damage.
+			}
+		}
+	}
+	*/
+}
+
 
 //---- Below is used for mapping
 string Ship::roomType(string str) {
@@ -290,13 +303,35 @@ void Ship::printShip() {
 // Prints the stats of the ship
 void Ship::printStats()
 {	
+	/*
 	// prints the health (hull of the ship)
+	std::string tempString(" ", 30);
+	for (int i = 0; i < maxHull & i < hull; i++)
+	{
+		tempString.at(i) = '/';
+	}
+
+	std::cout << "HULL (HP) [" << tempString << "]" << std::endl;
+	*/
+
+	std::string tempStr = "";
+	for (int i = 0; i < maxHull; i++)
+		i < hull ? tempStr += "/" : tempStr += " ";
+	
+	std::cout << "HULL HP (" << hull << "/" << maxHull << ") [" << tempStr << "]" << std::endl;
+
+	/*
+	std::cout << "/HL: " << hull << std::endl;
 	std::cout << "HULL (HP): [";
 	for (int i = 1; i <= hull; i++)
 	{
 		std::cout << "/";
 	}
+
 	std::cout << "]" << std::endl;
 
-	
+	for (int i = 0; i < weapons.size(); i++)
+		std::cout << weapons.at(i).toString() << std::endl;
+
+	*/
 }

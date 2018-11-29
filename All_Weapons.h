@@ -8,7 +8,7 @@ public:
 
 	//Laser Weapons - Infinite ammo, spend one shot on a layer of shields
 	
-	// Weapon(std::string name, std::string type, int chargeTime, int shots, int energy, int hullDam, int shieldDam, int crewDam, int sysDam, int chanceFire, int chanceBreach, int chanceStun);
+	// Weapon(std::string name, std::string type, int CHARGETIME, int shots, int energy, int hullDam, int shieldDam, int crewDam, int sysDam, int chanceFire, int chanceBreach, int chanceStun);
 	//Test Laser
 	
 	const Weapon laser_test = Weapon("TEST_LASER", "Laser", 10, 3, 2, 1, 1, 0, 0, 1, 0, 0);

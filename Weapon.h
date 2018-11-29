@@ -6,9 +6,9 @@ class Weapon {
 public:
 	//Constructors
 	//Simple
-	Weapon(std::string name, std::string type, int chargeTime, int shots, int energy, int hullDam, int shieldDam); //Just includes the necessities, uses hullDam for sysDam and crewDam
+	Weapon(std::string name, std::string type, int CHARGETIME, int shots, int energy, int hullDam, int shieldDam); //Just includes the necessities, uses hullDam for sysDam and crewDam
 	//Full
-	Weapon(std::string name, std::string type, int chargeTime, int shots, int energy, int hullDam, int shieldDam, int crewDam, int sysDam, int chanceFire, int chanceBreach, int chanceStun);
+	Weapon(std::string name, std::string type, int CHARGETIME, int shots, int energy, int hullDam, int shieldDam, int crewDam, int sysDam, int chanceFire, int chanceBreach, int chanceStun);
 
 	// Copy Constructor
 	Weapon(Weapon*);
@@ -35,13 +35,13 @@ public:
 	void setCharge(int);
 	void setRoomHit(int);
 	void setDamageType(std::string);
-
+	std::string toString();
 
 private:
 	//Constants
 	const std::string name; //Name of weapon
 	const std::string type; //Weapon type. Defines ammo as well
-	const unsigned int chargeTime; //How long it takes to charge
+	const unsigned int CHARGETIME; //How long it takes to charge
 	const int shots; //Shots per charge
 	const unsigned int energy; //Energy drain required to use weapon
 	//Damage types

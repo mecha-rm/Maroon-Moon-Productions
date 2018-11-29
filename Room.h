@@ -18,5 +18,6 @@ private:
 	int amountOfCrewMembers;
 	std::string system;
 	int oxygen;
-
+	// shield health
+	// int room = 100; // room health
 };

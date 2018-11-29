@@ -11,6 +11,7 @@ class Ship {
 public:
 	Ship();
 	Ship(std::string); // setting the ship's name
+	// Ship(Ship&); // copy constructor
 
 	// getters
 	int getHull();
@@ -31,8 +32,6 @@ public:
 	int getSensorLevel();
 	int getDoorLevel();
 	int getRooms();
-	std::vector<CrewMember> getCrew();
-	std::vector<Weapon> getWeapon();
 	bool getSensor();
 
 	// setters
@@ -71,6 +70,8 @@ public:
 	CrewMember getCrewMember(unsigned int);
 
 	// Model these after the addCrewMember, removeCrewMember and getCrewMember Functions
+	std::vector<CrewMember> getCrew();
+	std::vector<Weapon> getWeapons();
 	// adds a weapon to the list
 	void addWeapon(Weapon);
 	// removes a weapon
@@ -87,10 +88,14 @@ public:
 	void printStats();
 
 	const string shipName; // the ship's name
+	// Moved from private.
+	std::vector<CrewMember> crew; // crew member vector
+	std::vector<Weapon> weapons; // vector used for weapon storage
 private:
 
 	//resources
 	int hull = 0; // the ship's physical health
+	int maxHull = 30;
 	int shield = 0; // the ship's shield's health
 	int reactor = 0; // the ship's reactor
 	int evade = 0;
@@ -117,8 +122,8 @@ private:
 	//reactor
 	int reactorPower = 0;
 	// crew members
-	std::vector<CrewMember> crew; // crew member vector
-	std::vector<Weapon> weapons; // vector used for weapon storage
+	// std::vector<CrewMember> crew; // crew member vector
+	// std::vector<Weapon> weapons; // vector used for weapon storage
 
 
 	//The Map of the Ship

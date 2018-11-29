@@ -19,7 +19,7 @@ Game::Game() { tw.ResizeScreenBuffers(twWidth, twHeight); }
 // Game Loop
 bool Game::gameLoop()
 {
-	// Text-Version
+	// Text-Version (GRID)
 	/*
 
 	std::string inputStr(""); // the string used for input
@@ -64,14 +64,49 @@ bool Game::gameLoop()
 	// system("CLS"); // clear's the screen	
 	*/
 
-	
+
+	std::string input("");
+	int eWeapon(0); // saves index of ship's chosen weapon
+
+	while (enemy.getHull() > 0)
+	{
+		std::cout << "PLAYER\n******************************************************" << std::endl;
+		pShip.printShip();
+		std::cout << std::endl;
+		pShip.printStats();
+
+
+		std::cout << "\nENEMY\n******************************************************" << std::endl;
+		enemy.printShip();
+		std::cout << std::endl;
+		enemy.printStats();
+
+		std::cout << std::endl;
+		std::cout << "Select a weapon to use \n-----------------------------------------" << std::endl;
+		for (int i = 0; i < pShip.weapons.size(); i++)
+			std::cout << i + 1 << ") " << pShip.weapons.at(i).toString() << std::endl;
+		
+		std::cout << "DECIDE: ";
+		getline(std::cin, input);
+
+		// enemy.setHull(enemy.getHull() - 10);
+		enemy.setHull(enemy.getHull() - pShip.weapons.at(std::stoi(input) - 1).getHullDam());
+
+		// Enemy Attack
+		eWeapon = rand() % enemy.weapons.size();
+		pShip.setHull(pShip.getHull() - enemy.weapons.at(eWeapon).getHullDam()); // damanging the player
+
+		system("pause");
+		system("CLS");
+	}
+
 
 	return false;
 }
 
 Ship Game::createShip(int type)
 {
-	Ship tempShip;
+	Ship tempShip = Ship();
 
 	return Ship();
 }
