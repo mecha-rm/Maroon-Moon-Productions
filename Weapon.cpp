@@ -35,30 +35,10 @@ void Weapon::setCharge(int charge) { this->charge = charge; }
 void Weapon::setRoomHit(int roomHit) { this->roomHit = roomHit; }
 void Weapon::setDamageType(std::string damageType) { this->damageType = damageType; }
 
-// charges the weapon by the provided amount; '1' by default
-void Weapon::increaseCharge(unsigned int amount)
-{
-	charge += amount;
-	// If the 'charge' is greater than the CHARGETIME, the 'charge' is set to the charge time
-	if (charge > CHARGETIME)
-		charge = CHARGETIME;
-}
-
-// checks to see if anything's happening with this weapon
-bool Weapon::isAvailable() { return charge == 0; }
-
-// checks to see if the weapon is charging.
-bool Weapon::isCharging() { return (charge != 0 && charge < CHARGETIME); }
-
-// returns 'true' if the weapon is charged, false otherwise.
-bool Weapon::isCharged() { return (charge >= CHARGETIME); }
-
 // toString()
 std::string Weapon::toString()
 {
 	std::string str;
-	str = "Weapon - Type: " + getType() + ", " + getName() + " | Energy: " + std::to_string(getEnergy()) + ", Charge Time: " + std::to_string(getChargeTime()) + ", Current Charge: " + std::to_string(charge) + " | ";
-	str += " Hull Damage: " + std::to_string(getHullDam()) + " , Shield Damage: " + std::to_string(getShieldDam()) + " , " + std::to_string(getSysDam());
-	
+	str = "Weapon - Type: " + getType() + ", " + getName() + " | Energy: " + std::to_string(getEnergy()) + ", Charge Time: " + std::to_string(getChargeTime());
 	return str;
 }

@@ -16,7 +16,6 @@ public:
 	//Getters
 	std::string getName();
 	std::string getType();
-	// the time a weapon takes to charge
 	int getChargeTime();
 	int getShots();
 	int getEnergy();
@@ -36,16 +35,6 @@ public:
 	void setCharge(int);
 	void setRoomHit(int);
 	void setDamageType(std::string);
-
-	// tells the weapon to start charging. The weapon stops charging once it's fully chaged. A parameter exists to tell the program by how much to charge the weapon.
-	void increaseCharge(unsigned int amount = 1);
-	// returns 'true' if the weapon is available for a selection. It would return false if the weapon is charging, or doesn't exist.
-	bool isAvailable();
-	// checks to see if the wepaon is currently charging. If not, it's selectible as a weapon.
-	bool isCharging();
-	// returns 'true' if the weapon has been charged, and false if it has yet to be charged.
-	bool isCharged();
-
 	std::string toString();
 
 private:

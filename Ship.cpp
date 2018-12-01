@@ -130,9 +130,7 @@ CrewMember Ship::getCrewMember(unsigned int i) // returns the crew member at the
 	}
 }
 
-// sets a vector of weapons
-void Ship::setWeapons(std::vector<Weapon>newWeapons) { this->weapons = newWeapons; }
-
+/*
 // add a weapon to the vector
 void Ship::addWeapon(Weapon weapon) { weapons.push_back(weapon); }
 
@@ -152,21 +150,7 @@ bool Ship::removeWeapon(unsigned int index)
 		return true;
 	}
 }
-
-// gets a specific weapon
-Weapon Ship::getWeapon(unsigned int index) 
-{
-	// returns an enmpty 'weapon' if there was no weapon to get.
-	if (weapons.empty() || index >= weapons.size())
-	{
-		return All_Weapons().laser_test; // sends the test laser
-	}
-
-	return weapons.at(index); // returns the requested weapons.
-}
-
-// gets all weapons
-std::vector<Weapon> Ship::getWeapons() { return weapons; }
+*/
 
 // applies damage to the shield before the health of the ship
 void Ship::shieldToHealth(int damage) {

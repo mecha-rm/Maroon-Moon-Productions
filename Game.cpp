@@ -1,8 +1,5 @@
 #include "Game.h"
 #include "drawPrimitives.h"
-
-#include "Gameplay.h" // text vesion
-
 using namespace std;
 
 /* this is called by std::sort to sort the list based on layerID 
@@ -202,8 +199,7 @@ void Game::update()
 	testSprite->update(updateTimer->getElapsedTimeSeconds());
 	//anotherSprite->update(updateTimer->getElapsedTimeSeconds());
 
-	// game loop test
-	Gameplay().gameLoop();
+
 	// check collisions below here!
 	
 }

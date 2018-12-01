@@ -1,11 +1,10 @@
 #pragma once
 #include "CrewMember.h"
-#include "Weapon.h"
-#include "Room.h"
 
 #include <string>
 #include <iostream>
 #include <vector>
+#include "Weapon.h"
 
 using namespace std;
 class Ship {
@@ -55,7 +54,7 @@ public:
 	void setDoorLevel(int);
 	void setRooms(int);
 	void setCrew(std::vector<CrewMember>);
-	void setWeapons(std::vector<Weapon>);
+	void setWeapon(std::vector<Weapon>);
 	void setSensor(bool);
 
 	// Other
@@ -72,17 +71,14 @@ public:
 
 	// Model these after the addCrewMember, removeCrewMember and getCrewMember Functions
 	std::vector<CrewMember> getCrew();
-
+	std::vector<Weapon> getWeapons();
 	// adds a weapon to the list
 	void addWeapon(Weapon);
-	// removes a weapon. Returns 'true' if successful.
+	// removes a weapon
 	bool removeWeapon();
-	// removes a weapon at a given index.
 	bool removeWeapon(unsigned int index);
-	// returns a weapon at the provided index. If there is no weapon there, a 'TEST WEAPON' is provided.
-	Weapon getWeapon(unsigned int index);
-	// returns all weapons
-	std::vector<Weapon> getWeapons();
+	// returns a weapon at the provided index
+	Weapon getWeapon(unsigned int);
 
 	// saves the type of the room
 	string roomType(string);
