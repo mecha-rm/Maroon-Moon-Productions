@@ -1,9 +1,9 @@
 #include "CrewMember.h"
 
-CrewMember::CrewMember() : CrewMember("Human") {}
+CrewMember::CrewMember() : CrewMember("Human", 'A') {}
 
 // sets the species of the crew member. Make sure that all letters are lowercase.
-CrewMember::CrewMember(std::string species) : species(species) {}
+CrewMember::CrewMember(std::string species, char room) : species(species) {}
 
 //Setters
 void CrewMember::setHealth(int health) { this->health = health; }

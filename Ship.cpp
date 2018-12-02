@@ -1,8 +1,10 @@
 #include <iostream>
+#include "Utilities.h"
 #include "Ship.h"
 #include "Weapon.h"
 #include "CrewMember.h"
 #include "All_Weapons.h"
+
 
 // Weapon weapon(missile_test);
 // CrewMember crewMember = CrewMember("human");
@@ -22,7 +24,10 @@ Ship::Ship(std::string name) : shipName(name)
 	setReactor(8);
 
 	for (int i = 0; i < crewMembers; i++) // making three human crew members
-		addCrewMember("human");
+	{
+		addCrewMember("human", 'A');
+	}
+		
 
 	weapons.push_back(All_Weapons().missile_artemis);
 	weapons.push_back(All_Weapons().laser_burst_ii);
@@ -65,6 +70,7 @@ void Ship::setCrew(std::vector<CrewMember> crew) { this->crew = crew; }
 void Ship::setSensor(bool sensor) { this->sensor = sensor; }
 
 //Getters
+std::string Ship::getName() { return shipName; }
 int Ship::getHull() { return hull; }
 int Ship::getShield() { return shield; }
 int Ship::getReactor() { return reactor; }
@@ -85,38 +91,6 @@ int Ship::getDoorLevel() { return doorLevel; }
 int Ship::getRooms() { return rooms; }
 bool Ship::getSensor() { return sensor; }
 
-std::vector<CrewMember> Ship::getCrew() { return crew; }
-
-// adds a crew member; make sure all letters are lowercase
-void Ship::addCrewMember(std::string species)
-{
-	if (species == "human" || species == "h")
-	{
-		crew.push_back(CrewMember("Human"));
-	}
-	else
-	{
-		crew.push_back(CrewMember("Human"));
-	}
-	
-	crewMembers++;
-}
-
-// removes a crew member at the provided index
-bool Ship::removeCrewMember(unsigned int i)
-{
-	// returns 'false' if the index is invalid, or if there are no crew members
-	if (crew.empty() == false && i < crew.size())
-	{
-		crew.erase(crew.begin() + i);
-		return true;
-	}
-	else
-	{
-		return false;
-	}
-}
-
 // gets a crew member at the provided index
 CrewMember Ship::getCrewMember(unsigned int i) // returns the crew member at the provided index
 {
@@ -130,27 +104,102 @@ CrewMember Ship::getCrewMember(unsigned int i) // returns the crew member at the
 	}
 }
 
-/*
-// add a weapon to the vector
-void Ship::addWeapon(Weapon weapon) { weapons.push_back(weapon); }
+std::vector<CrewMember> Ship::getCrew() { return crew; }
 
-// remove the last weapon in the vector
-bool Ship::removeWeapon() { return removeWeapon(weapons.size() - 1); }
-
-// remove a weapon
-bool Ship::removeWeapon(unsigned int index)
+// adds a crew member; make sure all letters are lowercase
+void Ship::addCrewMember(std::string species, char room)
 {
-	if (index >= weapons.size() || weapons.empty())
+	// Makes the species name lowercase for string checking.
+	species = util::Utilities::toLower(species);
+
+	// Making a human crew member
+	if (species == "human" || species == "h")
 	{
-		return false;
+		crew.push_back(CrewMember("Human", room));
+
 	}
 	else
 	{
-		weapons.erase(weapons.begin() + index);
+		crew.push_back(CrewMember("Human", room));
+	}
+	
+	
+	crewMembers++;
+}
+
+/*
+// removes a crew member at the provided index
+bool Ship::removeCrewMember(unsigned int index)
+{
+	// returns 'false' if the index is invalid, or if there are no crew members
+	if (crew.empty() == false && index < crew.size())
+	{
+		crew.erase(crew.begin() + index);
 		return true;
+	}
+	else
+	{
+		return false;
 	}
 }
 */
+
+// returns a weapon at a given index.
+Weapon Ship::getWeapon(unsigned int index)
+{
+	// Checks to see if the index is valid.
+	if (index >= weapons.size() || weapons.empty())
+	{
+		return weapons.at(index);
+	}
+}
+
+/**/
+// returns all weapons
+std::vector<Weapon> Ship::getWeapons() { return weapons; }
+
+// add a weapon to the vector
+void Ship::addWeapon(Weapon weapon) { weapons.push_back(weapon); }
+
+void Ship::setWeapons(std::vector<Weapon> newWeapons) 
+{ 
+	weapons.clear();
+	for (int i = 0; i < newWeapons.size(); i++)
+	{
+		weapons.push_back(newWeapons.at(i));
+	}
+}
+
+
+// remove the last weapon in the vector
+void Ship::removeWeapon() 
+{ 
+	if (!weapons.empty()) // if the vector isn't empty, the weapon at the back of the stack is removed.
+		weapons.pop_back();
+}
+
+
+// remove a weapon
+void Ship::removeWeapon(unsigned int index)
+{
+	// using vector.erase() caused an error, so while this is less efficient, it's the best we could do in our time frame.
+	std::vector<Weapon> tempVec;
+
+	// puts the weapons into the tempVec.
+	for (int i = 0; i < weapons.size(); i++)
+	{
+		// If it's the index to be deleted, this weapon is skipped.
+		if (i != index)
+			tempVec.push_back(weapons.at(i));
+	}
+	
+	weapons.clear();
+	for (int i = 0; i < tempVec.size(); i++)
+	{
+		weapons.push_back(tempVec.at(i));
+	}
+}
+
 
 // applies damage to the shield before the health of the ship
 void Ship::shieldToHealth(int damage) {
@@ -314,12 +363,15 @@ void Ship::printStats()
 	std::cout << "HULL (HP) [" << tempString << "]" << std::endl;
 	*/
 
+	/*
 	std::string tempStr = "";
 	for (int i = 0; i < maxHull; i++)
 		i < hull ? tempStr += "/" : tempStr += " ";
 	
 	std::cout << "HULL HP (" << hull << "/" << maxHull << ") [" << tempStr << "]" << std::endl;
+	*/
 
+	std::cout << getHealthBar() << std::endl;
 	/*
 	std::cout << "/HL: " << hull << std::endl;
 	std::cout << "HULL (HP): [";
@@ -334,4 +386,22 @@ void Ship::printStats()
 		std::cout << weapons.at(i).toString() << std::endl;
 
 	*/
+}
+
+// Gets a health bar for the ship.
+std::string Ship::getHealthBar()
+{
+	std::string tempStr = "";
+	for (int i = 0; i < maxHull; i++)
+		i < hull ? tempStr += "/" : tempStr += " ";
+
+	tempStr = "HULL HP (" + std::to_string(hull) + "/" + std::to_string(maxHull) + ") [" + tempStr + "]";
+	return tempStr;
+}
+// Ship toString
+std::string Ship::toString()
+{
+	std::string str = "";
+	str += "Name: " + shipName + ", HULL(HP): " + std::to_string(getHull()) + ", Shield: " + std::to_string(getShield());
+	return str;
 }

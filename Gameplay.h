@@ -6,7 +6,6 @@
 #include "Weapon.h";
 #include "All_Weapons.h"
 #include "Hazard.h";
-// #include "GameWindow.h"
 
 #include <string>
 
@@ -15,36 +14,25 @@ class Gameplay
 public:
 	Gameplay();
 
+	// prints the rules of the game
+	void rules(int res);
+
 	// Game Loop
 	bool gameLoop(); // game loop
-	Ship createShip(int type); // creates a ship based on the number provided.
-
-
-	// creates the buffer for the user input, and initalizes timer
-	// void createTextWindow();
-	// allows the user to type to the screen; if a 'true' boolean is returned, then the user has decided to enter in their input.
-	// bool typeToWindow(std::string &);
+	
+	// gets the player data
+	static Ship * getPlayer();
+	// gets the enemy data
+	static Ship * getEnemy();
 
 private:
-	void windowColourTest(); // print colour options
-	void windowTypeTest(); // typing to the screen
-	void windowColourTypeTest(); // typing and printing colour options
-	
+	Ship * createShip(int type); // creates a ship based on the number provided.
+
 	// Determines if the game is still being played
 	static bool play;
 
-	// Text Buffer Window Variables
-	// Original: twWidth = 1600, twHeight = 800
-	float twWidth = 1920; // text window length
-	float twHeight = 1080; // text window height
-	// GameWindow tw; // university text window size; gets set in constructor
-	//HANDLE hIn;
-	//HANDLE hOut;
-	//INPUT_RECORD InRec;
-	//DWORD NumRead;
-
-	Ship pShip;
-	Ship enemy;
+	static Ship * pShip;
+	static Ship * enemy;
 
 	All_Weapons weapon = All_Weapons();
 };

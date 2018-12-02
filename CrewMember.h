@@ -8,8 +8,8 @@ class CrewMember
 {
 public:
 	CrewMember();
-	// sets the species of the crew member. Make sure that all letters are lowercase.
-	CrewMember(std::string);
+	// sets the species of the crew member, as well as the room they're in. Make sure that all letters are lowercase.
+	CrewMember(std::string, char);
 
 	void setHealth(int);
 	void setDamage(int);
@@ -31,7 +31,7 @@ private:
 	bool oxygen;
 	int position;
 	std::string crewType;
-	Room room = Room(1, "pilot", 100); // causes error
+	// Room room = Room('A', 1, "pilot", 100); // causes error
 };
 
 #endif

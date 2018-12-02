@@ -28,6 +28,7 @@ void Sprite::addForce(Vector3 f)
 */
 void Sprite::update(float dt)
 {
+
 	// physics update goes here!!!!
 
 	// compute our acceleration
@@ -38,18 +39,18 @@ void Sprite::update(float dt)
 	// compute direction to a particular point in the scene
 	// point is (500,300);
 
-	acceleration.x = force.x;
-	acceleration.y = force.y;
+	//acceleration.x = force.x;
+	//acceleration.y = force.y;
 
 
-	// v_i = v_(i-1) + g*dt
-	velocity.x = velocity.x + acceleration.x*dt;
-	velocity.y = velocity.y + acceleration.y*dt;
+	//// v_i = v_(i-1) + g*dt
+	//velocity.x = velocity.x + acceleration.x*dt;
+	//velocity.y = velocity.y + acceleration.y*dt;
 
 
-	// p_i = p_(i-1) + v*dt
-	position.x = position.x + velocity.x * dt;
-	position.y = position.y + velocity.y * dt;
+	//// p_i = p_(i-1) + v*dt
+	//position.x = position.x + velocity.x * dt;
+	//position.y = position.y + velocity.y * dt;
 
 	setCenter();
 
@@ -218,6 +219,9 @@ void Sprite::draw2()
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	glPushMatrix();
+
+	/* position the sprite into the particular pixel location */
+	glTranslatef(position.x, position.y, 0); // not originally in draw2
 
 	/* get the texture coordinate from the sprite so we know which frame to draw */
 	SpriteAnimation *anim = animations[currentAnimation];

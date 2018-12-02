@@ -17,6 +17,8 @@
 #include <algorithm>
 #include <cmath>
 
+#include "Gameplay.h" // text vesion
+
 #ifndef M_PI
 #define M_PI 3.14159265358979323846
 #endif
@@ -122,6 +124,8 @@ public:
 	void drawSprites(); // draw the sprite list
 	void drawTestPrimitives(); // test function
 
+	// starts the battle, switching user input to the text window.
+	void startBattle(bool battle);
 	/* update routines, the game loop */
 	void update(); // called from main frequently
 
@@ -138,9 +142,20 @@ public:
 	/* game state info */
 	GameStateInfo stateInfo;
 
+	Gameplay gp; // the gameplay variable
+	Sprite * textBox; // the text box sprite
+	bool battle = false; // becomes 'true' when a battle is going on.
+
 	// here is the sprite to draw to the screen
-	Sprite *testSprite;
-	Sprite *anotherSprite;
+	Sprite *player; // the sprite of the player
+	Sprite *opponent; // the sprite of the opponent
+	
+
+	Sprite * hud; // an overlay for the player
+	Sprite * doors; // another overlay for the player
+	Sprite * overlay2; // another overlay for the player
+
+
 
 	// the background scroller
 	HorizontalScrollingBackground *bg;

@@ -30,6 +30,6 @@ private:
 	int cost;
 	int health;
 
-	Room room = Room(3, "pilot", 100);
+	Room room = Room('A', 3, "pilot", 100);
 
 };

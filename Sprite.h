@@ -100,6 +100,12 @@ public:
 	}
 	float getOrientation() {return theta;}
 
+	// the hieght of the sprite
+	float getHeight() { return sz.height; }
+
+	// the width of the sprite
+	float getWidth() { return sz.width; }
+
 	/* drawing */
 	virtual void draw();
 	virtual void draw2();

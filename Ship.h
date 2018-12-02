@@ -1,19 +1,21 @@
 #pragma once
 #include "CrewMember.h"
+#include "Weapon.h"
+#include "Room.h"
 
 #include <string>
 #include <iostream>
 #include <vector>
-#include "Weapon.h"
 
 using namespace std;
 class Ship {
 public:
 	Ship();
-	Ship(std::string); // setting the ship's name
+	Ship(std::string name); // setting the ship's name
 	// Ship(Ship&); // copy constructor
 
 	// getters
+	std::string getName();
 	int getHull();
 	int getShield();
 	int getReactor();
@@ -54,7 +56,6 @@ public:
 	void setDoorLevel(int);
 	void setRooms(int);
 	void setCrew(std::vector<CrewMember>);
-	void setWeapon(std::vector<Weapon>);
 	void setSensor(bool);
 
 	// Other
@@ -63,22 +64,27 @@ public:
 	void shieldToHealth(int);
 	// adds a crew member. By default, a human is added.
 	// MAKE SURE THE STRING IS IN ALL LOWERCASE
-	void addCrewMember(std::string); // adds a crew member
+	void addCrewMember(std::string species, char room); // adds a crew member
 	// removes a specific crew member; returns 'true' if successful
-	bool removeCrewMember(unsigned int);
+	// bool removeCrewMember(unsigned int index);
 	// returns the crew member at the given index
-	CrewMember getCrewMember(unsigned int);
+	CrewMember getCrewMember(unsigned int index);
 
 	// Model these after the addCrewMember, removeCrewMember and getCrewMember Functions
 	std::vector<CrewMember> getCrew();
+
+	// returns a weapon at the provided index. If there is no weapon there, a 'TEST WEAPON' is provided.
+	Weapon getWeapon(unsigned int index);
+	// returns all weapons
 	std::vector<Weapon> getWeapons();
 	// adds a weapon to the list
 	void addWeapon(Weapon);
-	// removes a weapon
-	bool removeWeapon();
-	bool removeWeapon(unsigned int index);
-	// returns a weapon at the provided index
-	Weapon getWeapon(unsigned int);
+	// sets a new vector of weapons
+	void setWeapons(std::vector<Weapon> newWeapons);
+	// removes the last lesson in the vector.
+	void removeWeapon();
+	// removes a weapon at a given index.
+	void removeWeapon(unsigned int index);
 
 	// saves the type of the room
 	string roomType(string);
@@ -86,11 +92,18 @@ public:
 	void printShip();
 	// prints the stats of the ship
 	void printStats();
+	
+	// gets a health bar of the ship.
+	std::string getHealthBar();
+	// prints data about the ship
+	std::string toString();
 
 	const string shipName; // the ship's name
 	// Moved from private.
 	std::vector<CrewMember> crew; // crew member vector
 	std::vector<Weapon> weapons; // vector used for weapon storage
+	std::vector<Room *> areas; // the room of the ship
+
 private:
 
 	//resources
