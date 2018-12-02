@@ -12,6 +12,7 @@ namespace util
 		static std::string toLower(std::string); // converts to lowercase
 		static std::string toUpper(std::string); // converts to uppercase
 		static std::string captialize(std::string); // capitalizes a string
+		static bool isNum(std::string); //checks if a string is a number
 		static bool equalsIgnoreCase(std::string, std::string); // sees if two strings are equal to each other, ignoring case differences
 	private:
 	};

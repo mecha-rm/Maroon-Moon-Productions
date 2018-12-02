@@ -1,6 +1,5 @@
 #include "Game.h"
 #include "drawPrimitives.h"
-
 using namespace std;
 
 /* this is called by std::sort to sort the list based on layerID 
@@ -40,88 +39,30 @@ Game::~Game(void)
  */
 void Game::initializeGame()
 {
-	// The player's sprite
 	/* this is a sprite without any animations, it is just an image */
-	player = new Sprite("images/ImgDmp/GDW3-FTL-Kestrel Labeled.png");
-	player->setNumberOfAnimations(1);
-	player->setSpriteFrameSize(1400, 876);
-	player->addSpriteAnimFrame(0,0,0);
-	player->setPosition(-168.0F, 62.0F);
-	player->setCenter(player->sz.width/2, player->sz.height/2); // center of the sprites origin for rotation
-	player->setLayerID(2);
-	player->setCenter();
-	player->setRadius(player->sz.width / 2);
+	testSprite = new Sprite("images/GDW3-FTL-Kestrel.png");
+	testSprite->setNumberOfAnimations(1);
+	testSprite->setSpriteFrameSize(1400,876);
+	testSprite->addSpriteAnimFrame(0,0,0);
+	testSprite->setPosition(0,1080 - testSprite->height);
+	testSprite->setCenter(148/2,125/2); // center of the sprites origin for rotation
+	testSprite->setLayerID(3);
+	testSprite->setCenter();
+	testSprite->setRadius(148 / 2);
 
 	/* add it to our list so we can draw it */
-	this->addSpriteToDrawList(player);
-	
-	// Ship dooes
-	/*
-	opponent = new Sprite("images/ImgDmp/spaceship.png");
-	opponent->setNumberOfAnimations(1);
-	opponent->setSpriteFrameSize(595, 438);
-	opponent->addSpriteAnimFrame(0, 0, 0);
-	opponent->setPosition(400, 200);
-	opponent->setCenter(495 / 2, 438 / 2); // center of the sprites origin for rotation
-	opponent->setLayerID(2);
-	opponent->setCenter();
-	opponent->setRadius(148 / 2);
-	*/
+	this->addSpriteToDrawList(testSprite);
 
-	doors = new Sprite("images/ImgDmp/GDW3-FTL-Doors-Closed.png");
-	doors->setNumberOfAnimations(1);
-	doors->setSpriteFrameSize(1400, 876);
-	doors->addSpriteAnimFrame(0, 0, 0);
-	doors->setPosition(-142.0F, 62.0F);
-	doors->setCenter(doors->sz.width / 2, doors->sz.height / 2); // center of the sprites origin for rotation
-	doors->setLayerID(2);
-	doors->setCenter();
-	doors->setRadius(doors->sz.width / 2);
-
-	this->addSpriteToDrawList(doors);
-
-	opponent = new Sprite("images/ImgDmp/GDW3-FTL-Enemy-Scout Labeled.png");
-	opponent->setNumberOfAnimations(1);
-	opponent->setSpriteFrameSize(438, 700);
-	opponent->addSpriteAnimFrame(0, 0, 0);
-	opponent->setPosition(1400, 140);
-	opponent->setCenter(opponent->sz.width / 2, opponent->sz.height / 2); // center of the sprites origin for rotation
-	opponent->setLayerID(2);
-	opponent->setCenter();
-	opponent->setRadius(opponent->sz.width / 2);
-
-	this->addSpriteToDrawList(opponent);
-
-	
-	hud = new Sprite("images/ImgDmp/GDW3-FTL-HUD.png");
-	hud->setNumberOfAnimations(1);
-	hud->setSpriteFrameSize(1920, 1080);
-	hud->setPosition(0, 0);
-	hud->addSpriteAnimFrame(0, 0, 0);
-	hud->setLayerID(3);
-	hud->setCenter();
-	hud->setRadius(hud->sz.width / 1);
-	
-	// this->addSpriteToDrawList(hud);
-	
-	/* add it to our list so we can draw it */
-	//this->addSpriteToDrawList(opponent);
-
-	// load the text box
-	textBox = new Sprite("images/ImgDmp/FTL - Rules Textbox.png");
-	textBox->setNumberOfAnimations(1);
-	textBox->setSpriteFrameSize(1750, 949);
-	textBox->setPosition(80, 25);
-	textBox->addSpriteAnimFrame(0, 0, 0);
-	textBox->setLayerID(3);
-	textBox->setCenter();
-
-	// this->addSpriteToDrawList(textBox);
 
 	///* load the background */
-	bg = new HorizontalScrollingBackground("images/Backgrounds/backGround.jpg",stateInfo.windowWidth,stateInfo.windowHeight);
+	bg = new HorizontalScrollingBackground("images/Backgrounds/GDW3-FTL-Background-Nebula.png",stateInfo.windowWidth,stateInfo.windowHeight);
 	this->addSpriteToDrawList(bg);
 	bg->setLayerID(0);
+
+	COORD c; c.X = 6; c.Y = 0; COORD c2; c2.X = 2; c2.Y = 4;
+	pShip.setCrewCurrent(0, c);
+	pShip.setCrewDestination(0, c2);
+	pShip.pathfind(0);
 
 }
 
@@ -176,21 +117,9 @@ void Game::DrawGame()
 	drawSprites();
 
 	glDisable(GL_TEXTURE_2D);
-	drawTestPrimitives(); 
-	setColor(255, 255, 255);
-	// printing player stats
-	drawText("Name: " + Gameplay::getPlayer()->getName(), 600.0F, 180.0F);
-	drawText("Hull: " + Gameplay::getPlayer()->getHealthBar(), 600.0, 156.0F);
-	drawText("Shield: " + std::to_string(Gameplay::getPlayer()->getShield()), 600.0F, 132.0F);
-	
-	// printing enemy stats
-	drawText("Name: " + Gameplay::getEnemy()->getName(), 1200.0F, 180.0F); // printing the player stats
-	drawText("Hull: " + Gameplay::getEnemy()->getHealthBar(), 1200.0, 156.0F);
-	drawText("Shield: " + std::to_string(Gameplay::getEnemy()->getShield()), 1200.0F, 132.0F);
-
-	setColor(255, 0, 0);
-	//drawCircle(10, player->radius, player->center.x, player->center.y);
-	//drawCircle(10, opponent->radius, opponent->center.x, opponent->center.y);
+	drawTestPrimitives();  
+	//drawCircle(10, testSprite->radius, testSprite->center.x, testSprite->center.y);
+//	drawCircle(10, anotherSprite->radius, anotherSprite->center.x, anotherSprite->center.y);
 
 	/* this makes it actually show up on the screen */
 	glutSwapBuffers();
@@ -223,7 +152,7 @@ void Game::drawSprites()
 	for(it=spriteListToDraw.begin(); it != spriteListToDraw.end();it++)
 	{
 		Sprite *s = (*it);
-		s->draw2(); // use draw '1' for mouse input
+		s->draw();
 	}
 
 }
@@ -240,14 +169,6 @@ void Game::drawTestPrimitives()
 		drawLine(input.clickX, input.clickY, input.currentX, input.currentY);
 		setLineWidth(1.f);
 	}
-}
-
-// starts the battle if 'true'
-void Game::startBattle(bool battle)
-{
-	// Removes the textbox by hiding it behind the background.
-	// textBox->setLayerID(0);
-	this->battle = battle;
 }
 
 /* update()
@@ -267,12 +188,17 @@ void Game::update()
 
 	/* you should probably update all of the sprites in a list just like the drawing */
 	/* maybe two lists, one for physics updates and another for sprite animation frame update */
-	player->update(updateTimer->getElapsedTimeSeconds());
-	//opponent->update(updateTimer->getElapsedTimeSeconds());
+	testSprite->update(updateTimer->getElapsedTimeSeconds());
+	//anotherSprite->update(updateTimer->getElapsedTimeSeconds());
+	
+	
 
-	// calls gp to continue the loop for the game.
-	if (battle) // loads up the graphics before the game loop starts
-		gp.gameLoop();
+	if (press) {
+		cout << pShip.getCrew()[0].nextMove.empty() << endl;
+		pShip.crewMove();
+		pShip.printShip();
+		press = false;
+	}
 
 
 	// check collisions below here!
@@ -303,29 +229,27 @@ void Game::addSpriteToDrawList(Sprite *s)
 */
 void Game::keyboardDown(unsigned char key, int mouseX, int mouseY)
 {
+	press = true;
 	float f = 100;
 	switch(key)
 	{
 	case 'w':
-		player->addForce(Vector3(0, f, 0));
+		testSprite->addForce(Vector3(0, f, 0));
 		break;
 	case 'a':
-		player->addForce(Vector3(-f, 0, 0));
+		testSprite->addForce(Vector3(-f, 0, 0));
 		break;
 	case 's':
-		player->addForce(Vector3(0, -f, 0));
+		testSprite->addForce(Vector3(0, -f, 0));
 		break;
 	case 'd':
-		player->addForce(Vector3(f, 0, 0));
+		testSprite->addForce(Vector3(f, 0, 0));
 		break;
 	case 'r':  // reset position, velocity, and force
-		player->position.set(100, 100, 0);
-		player->velocity.set(0, 0, 0);
-		player->acceleration.set(0, 0, 0);
-		player->force.set(0, 0, 0);
-		break;
-	case 13: // enter key
-		startBattle(true);
+		testSprite->position.set(100, 100, 0);
+		testSprite->velocity.set(0, 0, 0);
+		testSprite->acceleration.set(0, 0, 0);
+		testSprite->force.set(0, 0, 0);
 		break;
 	case 32: // the space bar
 		break;
@@ -385,7 +309,7 @@ void Game::mouseClicked(int button, int state, int x, int y)
 		Vector3 f;
 		f.set(input.currentX - input.clickX, input.currentY - input.clickY, 0);
 		f = f * 20.f;
-		player->addForce(f);
+		testSprite->addForce(f);
 		
 		input.mouseDown = false;
 	}

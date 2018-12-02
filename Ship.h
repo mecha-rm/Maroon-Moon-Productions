@@ -1,21 +1,18 @@
 #pragma once
 #include "CrewMember.h"
-#include "Weapon.h"
-#include "Room.h"
 
 #include <string>
 #include <iostream>
 #include <vector>
+#include "Weapon.h"
 
 using namespace std;
 class Ship {
 public:
 	Ship();
-	Ship(std::string name); // setting the ship's name
-	// Ship(Ship&); // copy constructor
+	Ship(std::string); // setting the ship's name
 
 	// getters
-	std::string getName();
 	int getHull();
 	int getShield();
 	int getReactor();
@@ -34,6 +31,8 @@ public:
 	int getSensorLevel();
 	int getDoorLevel();
 	int getRooms();
+	std::vector<CrewMember> getCrew();
+	std::vector<Weapon> getWeapon();
 	bool getSensor();
 
 	// setters
@@ -56,7 +55,10 @@ public:
 	void setDoorLevel(int);
 	void setRooms(int);
 	void setCrew(std::vector<CrewMember>);
+	void setWeapon(std::vector<Weapon>);
 	void setSensor(bool);
+	void setCrewCurrent(int, COORD);
+	void setCrewDestination(int, COORD);
 
 	// Other
 	
@@ -64,27 +66,20 @@ public:
 	void shieldToHealth(int);
 	// adds a crew member. By default, a human is added.
 	// MAKE SURE THE STRING IS IN ALL LOWERCASE
-	void addCrewMember(std::string species, char room); // adds a crew member
+	void addCrewMember(std::string); // adds a crew member
 	// removes a specific crew member; returns 'true' if successful
-	// bool removeCrewMember(unsigned int index);
+	bool removeCrewMember(unsigned int);
 	// returns the crew member at the given index
-	CrewMember getCrewMember(unsigned int index);
+	CrewMember getCrewMember(unsigned int);
 
 	// Model these after the addCrewMember, removeCrewMember and getCrewMember Functions
-	std::vector<CrewMember> getCrew();
-
-	// returns a weapon at the provided index. If there is no weapon there, a 'TEST WEAPON' is provided.
-	Weapon getWeapon(unsigned int index);
-	// returns all weapons
-	std::vector<Weapon> getWeapons();
 	// adds a weapon to the list
 	void addWeapon(Weapon);
-	// sets a new vector of weapons
-	void setWeapons(std::vector<Weapon> newWeapons);
-	// removes the last lesson in the vector.
-	void removeWeapon();
-	// removes a weapon at a given index.
-	void removeWeapon(unsigned int index);
+	// removes a weapon
+	bool removeWeapon();
+	bool removeWeapon(unsigned int index);
+	// returns a weapon at the provided index
+	Weapon getWeapon(unsigned int);
 
 	// saves the type of the room
 	string roomType(string);
@@ -92,28 +87,24 @@ public:
 	void printShip();
 	// prints the stats of the ship
 	void printStats();
-	
-	// gets a health bar of the ship.
-	std::string getHealthBar();
-	// prints data about the ship
-	std::string toString();
+
+	void crewMove();
+
+	bool pathfind(int num);
+
+	bool pathfindRec(int, int, int, int);
 
 	const string shipName; // the ship's name
-	// Moved from private.
-	std::vector<CrewMember> crew; // crew member vector
-	std::vector<Weapon> weapons; // vector used for weapon storage
-	std::vector<Room *> areas; // the room of the ship
 
 private:
 
 	//resources
 	int hull = 0; // the ship's physical health
-	int maxHull = 30;
 	int shield = 0; // the ship's shield's health
 	int reactor = 0; // the ship's reactor
 	int evade = 0;
 	int oxygen = 0;
-	int crewMembers = 0;
+	int crewMembers = 3; //number of crewmembers
 	int scrap = 0;
 	int ftlDrive = 0;
 	int fuel = 0;
@@ -135,8 +126,8 @@ private:
 	//reactor
 	int reactorPower = 0;
 	// crew members
-	// std::vector<CrewMember> crew; // crew member vector
-	// std::vector<Weapon> weapons; // vector used for weapon storage
+	std::vector<CrewMember> crew; // crew member vector
+	std::vector<Weapon> weapons; // vector used for weapon storage
 
 
 	//The Map of the Ship
@@ -176,5 +167,12 @@ private:
 							{"empty","wwnwe","nddwe","dwnwe","ndwwe","block","wnnwe","nndde","dnnwe","nnwwe","empty","empty","empty","empty","empty"},
 							{"empty","empty","empty","empty","empty","empty","wwnde","ndwde","empty","empty","empty","empty","empty","empty","empty"} };
 
+	string flipMap[6][15] = {  {"empty","empty","empty","empty","empty","empty","wwndc","ndwde","empty","empty","empty","empty","empty","empty","empty"},
+								{"empty","wwnwe","nddwe","dwnwe","ndwwe","block","wnnwe","nndde","dnnwe","nnwwe","empty","empty","empty","empty","empty"},
+								{"dndwe","dnnwe","nndwe","block","wnnde","nndwe","dwnne","nwwne","wdnne","nwdne","dwnwe","nwdwe","dnnwe","nndwe","dnwwe"},
+								{"dwdne","dwnne","ndwne","block","wdnne","nwdne","dnnwe","nnwwe","wnnde","nndwe","dwnwe","nwdwe","dwnne","nwwne","wwwne"},
+								{"empty","wwnwe","nwdde","dwnwe","nwwde","block","wwnne","nddne","dwnne","nwwne","empty","empty","empty","empty","empty"},
+								{"empty","empty","empty","empty","empty","empty","wdnwe","ndwde","empty","empty","empty","empty","empty","empty","empty"}, };
 	
+	bool dynamicMap[6][15];
 };
