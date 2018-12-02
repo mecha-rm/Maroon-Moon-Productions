@@ -287,6 +287,8 @@ void Game::update()
 	// textBox->setPosition(-3000, -3000);
 	// textBox->setPosition(textBox->position.x += 1, textBox->position.y += 1);
 
+	drawText("bungle", 100, 100);
+
 	// check collisions below here!
 	// ???
 	if (press) {
