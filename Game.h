@@ -17,19 +17,11 @@
 #include <algorithm>
 #include <cmath>
 
-// EX
-#include "Ship.h";
-#include "Weapon.h";
-#include "All_Weapons.h"
-#include "Hazard.h";
-#include "CrewMember.h"
-#include <string>
+#include "Gameplay.h" // text vesion
 
 #ifndef M_PI
 #define M_PI 3.14159265358979323846
 #endif
-
-#include <string>
 
 /* these are enumerated types (just names) of game states
    that the game can be in at any moment.  These help you
@@ -132,6 +124,8 @@ public:
 	void drawSprites(); // draw the sprite list
 	void drawTestPrimitives(); // test function
 
+	// starts the battle, switching user input to the text window.
+	void startBattle(bool battle);
 	/* update routines, the game loop */
 	void update(); // called from main frequently
 
@@ -148,9 +142,25 @@ public:
 	/* game state info */
 	GameStateInfo stateInfo;
 
+	Gameplay gp; // the gameplay variable
+	Sprite * textBox; // the text box sprite
+	bool battle = false; // becomes 'true' when a battle is going on.
+
 	// here is the sprite to draw to the screen
-	Sprite *testSprite;
-	Sprite *anotherSprite;
+	Sprite *player; // the sprite of the player
+	Sprite *opponent; // the sprite of the opponent
+	
+
+	Sprite * hud; // an overlay for the player
+	Sprite * doors; // another overlay for the player
+	Sprite * overlay2; // another overlay for the player
+
+	// EX 
+	// bool play;
+	bool press = false;
+	Ship pShip;
+	// Ship enemy;
+	// All_Weapons weapon = All_Weapons();
 
 	// the background scroller
 	HorizontalScrollingBackground *bg;
@@ -169,11 +179,4 @@ public:
 	/* timer's for rendering and animation/physics update */
 	Timer *renderingTimer;
 	Timer *updateTimer; // for physics/collisions etc.
-
-	// EX
-	bool play;
-	bool press = false;
-	Ship pShip;
-	Ship enemy;
-	All_Weapons weapon = All_Weapons();
 };

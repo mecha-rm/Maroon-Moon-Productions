@@ -1,7 +1,6 @@
 #pragma once
 #include "Room.h"
 
-
 class Systems {
 
 	Systems(std::string type, bool bonus, int maxPower, int health);
@@ -31,6 +30,6 @@ private:
 	int cost;
 	int health;
 
-	Room room = Room(1, "pilot", 100);
+	Room room = Room('A', 3, "pilot", 100);
 
 };

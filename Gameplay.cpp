@@ -110,9 +110,14 @@ bool Gameplay::gameLoop()
 			if (pShip->weapons.at(i).isCharged())
 			{
 				// This does direct damage to the hull, and needs to be changed.
-				std::cout << "Weapon " << pShip->weapons.at(i).getName() << " has been fired! " << std::endl;
-				enemy->setHull(enemy->getHull() - pShip->weapons.at(i).getHullDam());
-				pShip->weapons.at(i).setCharge(0);
+				// fires the weapon 'x' amount of times based on how many shots there are.
+				for (int shot = 1; shot <= pShip->weapons.at(i).getShots(); shot++)
+				{
+					std::cout << "Weapon " << pShip->weapons.at(i).getName() << " has been fired! " << std::endl;
+					enemy->setHull(enemy->getHull() - pShip->weapons.at(i).getHullDam());
+					pShip->weapons.at(i).setCharge(0);
+				}
+				
 			}
 			
 		}
@@ -275,14 +280,48 @@ Ship * Gameplay::createShip(int type)
 		// Returns the player ship
 	case 1:
 		tempShip = new Ship("Enemy Scout");
+		tempShip->setShield(2);
+		tempShip->setHull(15);
+		tempShip->setMaxHull(tempShip->getHull()); // getting the starting hull value, treating it as the maximum.
+		tempShip->setShield(2);
+		tempShip->setReactor(8);
+		
 		break;
 
 	case 2:
 		tempShip = new Ship();
 		break;
 
+	// Player Ship
 	default:
+		// Based on Layout A of the Kestrel
 		tempShip = new Ship("The Kestrel"); // the default ship is the player's ship
+			// Based on Layout A of the default ship, the Kestrel Cruiser (https://ftl.fandom.com/wiki/The_Kestrel_Cruiser)
+		// Layout A
+		tempShip->setHull(30);
+		tempShip->setMaxHull(tempShip->getHull()); // getting the starting hull value, treating it as the maximum.
+		tempShip->setShield(2);
+		tempShip->setReactor(8);
+
+		for (int i = 0; i < tempShip->getCrewMembers(); i++) // making three human crew members
+		{
+			tempShip->addCrewMember("human", 'A');
+		}
+
+
+		tempShip->weapons.push_back(All_Weapons().missile_artemis);
+		tempShip->weapons.push_back(All_Weapons().laser_burst_ii);
+
+		for (int i = 0; i < 16; i++) // making 16 rooms, starting at 'A'.
+		{
+			tempShip->areas.push_back(new Room(65 + i, 0, "NULL", 1));
+		}
+
+		tempShip->setOxygen(1);
+		tempShip->setShield(2);
+		tempShip->setEngineLevel(2);
+		tempShip->setFuel(16);
+
 		break;
 	}
 

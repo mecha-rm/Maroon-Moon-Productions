@@ -55,9 +55,18 @@ namespace util
 		return strL;
 	}
 
+	// compares two strings to see if they're equal, ignoring any case differences
+	bool Utilities::equalsIgnoreCase(std::string str1, std::string str2)
+	{
+		// making both strings lowercase
+		str1 = toLower(str1);
+		str2 = toLower(str2);
+		return str1 == str2; // returning whether the two are equal
+	}
+
 	//checks to see if a string is numeric
 	bool Utilities::isNum(std::string str) {
-		std::string arr[10] = { "1","2","3","4","5","6","7","8","9","0"};
+		std::string arr[10] = { "1","2","3","4","5","6","7","8","9","0" };
 		for (int x = 0; x < str.length(); x++) {
 			for (int y = 0; y < 10; y++) {
 				if (str.substr(x, 1) == arr[y]) {
@@ -71,13 +80,4 @@ namespace util
 		return true;
 	}
 
-
-	// compares two strings to see if they're equal, ignoring any case differences
-	bool Utilities::equalsIgnoreCase(std::string str1, std::string str2)
-	{
-		// making both strings lowercase
-		str1 = toLower(str1);
-		str2 = toLower(str2);
-		return str1 == str2; // returning whether the two are equal
-	}
 }

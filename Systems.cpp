@@ -1,8 +1,5 @@
 #include <iostream>
 #include "Systems.h"
-#include "Room.h"
-
-
 
 //Getters
 std::string Systems::getName() { return name; };

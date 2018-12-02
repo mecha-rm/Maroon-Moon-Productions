@@ -1,19 +1,23 @@
 #pragma once
 #include "CrewMember.h"
+#include "Weapon.h"
+#include "Room.h"
 
 #include <string>
 #include <iostream>
 #include <vector>
-#include "Weapon.h"
 
 using namespace std;
 class Ship {
 public:
 	Ship();
-	Ship(std::string); // setting the ship's name
+	Ship(std::string name); // setting the ship's name
+	// Ship(Ship&); // copy constructor
 
 	// getters
+	std::string getName();
 	int getHull();
+	int getMaxHull();
 	int getShield();
 	int getReactor();
 	int getEvade();
@@ -31,12 +35,11 @@ public:
 	int getSensorLevel();
 	int getDoorLevel();
 	int getRooms();
-	std::vector<CrewMember> getCrew();
-	std::vector<Weapon> getWeapon();
 	bool getSensor();
 
 	// setters
 	void setHull(int);
+	void setMaxHull(int);
 	void setShield(int);
 	void setReactor(int);
 	void setEvade(int);
@@ -55,56 +58,72 @@ public:
 	void setDoorLevel(int);
 	void setRooms(int);
 	void setCrew(std::vector<CrewMember>);
-	void setWeapon(std::vector<Weapon>);
 	void setSensor(bool);
-	void setCrewCurrent(int, COORD);
-	void setCrewDestination(int, COORD);
 
 	// Other
 	
 	//If the player has a shield the damage must be done to the shield first and then the health, this takes care fo that
 	void shieldToHealth(int);
 	// adds a crew member. By default, a human is added.
-	// MAKE SURE THE STRING IS IN ALL LOWERCASE
-	void addCrewMember(std::string); // adds a crew member
+	void addCrewMember(std::string species, char room); // adds a crew member
 	// removes a specific crew member; returns 'true' if successful
-	bool removeCrewMember(unsigned int);
+	// bool removeCrewMember(unsigned int index);
 	// returns the crew member at the given index
-	CrewMember getCrewMember(unsigned int);
+	CrewMember getCrewMember(unsigned int index);
 
 	// Model these after the addCrewMember, removeCrewMember and getCrewMember Functions
+	std::vector<CrewMember> getCrew();
+
+	// returns a weapon at the provided index. If there is no weapon there, a 'TEST WEAPON' is provided.
+	Weapon getWeapon(unsigned int index);
+	// returns all weapons
+	std::vector<Weapon> getWeapons();
 	// adds a weapon to the list
 	void addWeapon(Weapon);
-	// removes a weapon
-	bool removeWeapon();
-	bool removeWeapon(unsigned int index);
-	// returns a weapon at the provided index
-	Weapon getWeapon(unsigned int);
+	// sets a new vector of weapons
+	void setWeapons(std::vector<Weapon> newWeapons);
+	// removes the last lesson in the vector.
+	void removeWeapon();
+	// removes a weapon at a given index.
+	void removeWeapon(unsigned int index);
 
 	// saves the type of the room
 	string roomType(string);
-	// prints a map of the ship
-	void printShip();
-	// prints the stats of the ship
-	void printStats();
-
+	
+	// makes a crew member move (x) amount of spaces if they're already moving.
 	void crewMove();
-
+	// 
 	bool pathfind(int num);
 
 	bool pathfindRec(int, int, int, int);
 
+
+	// prints a map of the ship
+	void printShip();
+	// prints the stats of the ship
+	void printStats();
+	
+	// gets a health bar of the ship.
+	std::string getHealthBar();
+	// prints data about the ship
+	std::string toString();
+
 	const string shipName; // the ship's name
+	// Moved from private.
+	std::vector<CrewMember> crew; // crew member vector
+	std::vector<Weapon> weapons; // vector used for weapon storage
+	std::vector<Room *> areas; // the room of the ship
 
 private:
 
 	//resources
 	int hull = 0; // the ship's physical health
+	int maxHull = 30;
 	int shield = 0; // the ship's shield's health
 	int reactor = 0; // the ship's reactor
 	int evade = 0;
 	int oxygen = 0;
-	int crewMembers = 3; //number of crewmembers
+	int crewMembers = 0;
 	int scrap = 0;
 	int ftlDrive = 0;
 	int fuel = 0;
@@ -126,8 +145,8 @@ private:
 	//reactor
 	int reactorPower = 0;
 	// crew members
-	std::vector<CrewMember> crew; // crew member vector
-	std::vector<Weapon> weapons; // vector used for weapon storage
+	// std::vector<CrewMember> crew; // crew member vector
+	// std::vector<Weapon> weapons; // vector used for weapon storage
 
 
 	//The Map of the Ship
@@ -160,19 +179,20 @@ private:
 			"block" - this produces a solid ship part that is not a room.
 	*/
 
-	string shipMap[6][15]= {{"empty","empty","empty","empty","empty","empty","wdnwe","ndwde","empty","empty","empty","empty","empty","empty","empty"},
-							{"empty","wwnwe","nwdde","dwnwe","nwwde","block","wwnne","nddne","dwnne","nwwne","empty","empty","empty","empty","empty"},
-							{"dwdne","dwnne","ndwne","block","wdnne","nwdne","dnnwe","nnwwe","wnnde","nndwe","dwnwe","nwdwe","dwnne","nwwne","wwwne"},
-							{"dndwe","dnnwe","nndwe","block","wnnde","nndwe","dwnne","nwwne","wdnne","nwdne","dwnwe","nwdwe","dnnwe","nndwe","dnwwe"},
-							{"empty","wwnwe","nddwe","dwnwe","ndwwe","block","wnnwe","nndde","dnnwe","nnwwe","empty","empty","empty","empty","empty"},
-							{"empty","empty","empty","empty","empty","empty","wwnde","ndwde","empty","empty","empty","empty","empty","empty","empty"} };
+	string shipMap[6][15] = { {"empty","empty","empty","empty","empty","empty","wdnwe","ndwde","empty","empty","empty","empty","empty","empty","empty"},
+						{"empty","wwnwe","nwdde","dwnwe","nwwde","block","wwnne","nddne","dwnne","nwwne","empty","empty","empty","empty","empty"},
+						{"dwdne","dwnne","ndwne","block","wdnne","nwdne","dnnwe","nnwwe","wnnde","nndwe","dwnwe","nwdwe","dwnne","nwwne","wwwne"},
+						{"dndwe","dnnwe","nndwe","block","wnnde","nndwe","dwnne","nwwne","wdnne","nwdne","dwnwe","nwdwe","dnnwe","nndwe","dnwwe"},
+						{"empty","wwnwe","nddwe","dwnwe","ndwwe","block","wnnwe","nndde","dnnwe","nnwwe","empty","empty","empty","empty","empty"},
+						{"empty","empty","empty","empty","empty","empty","wwnde","ndwde","empty","empty","empty","empty","empty","empty","empty"} };
 
-	string flipMap[6][15] = {  {"empty","empty","empty","empty","empty","empty","wwndc","ndwde","empty","empty","empty","empty","empty","empty","empty"},
+	string flipMap[6][15] = { {"empty","empty","empty","empty","empty","empty","wwndc","ndwde","empty","empty","empty","empty","empty","empty","empty"},
 								{"empty","wwnwe","nddwe","dwnwe","ndwwe","block","wnnwe","nndde","dnnwe","nnwwe","empty","empty","empty","empty","empty"},
 								{"dndwe","dnnwe","nndwe","block","wnnde","nndwe","dwnne","nwwne","wdnne","nwdne","dwnwe","nwdwe","dnnwe","nndwe","dnwwe"},
 								{"dwdne","dwnne","ndwne","block","wdnne","nwdne","dnnwe","nnwwe","wnnde","nndwe","dwnwe","nwdwe","dwnne","nwwne","wwwne"},
 								{"empty","wwnwe","nwdde","dwnwe","nwwde","block","wwnne","nddne","dwnne","nwwne","empty","empty","empty","empty","empty"},
 								{"empty","empty","empty","empty","empty","empty","wdnwe","ndwde","empty","empty","empty","empty","empty","empty","empty"}, };
-	
+
 	bool dynamicMap[6][15];
+	
 };
