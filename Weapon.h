@@ -6,9 +6,9 @@ class Weapon {
 public:
 	//Constructors
 	//Simple
-	Weapon(std::string name, std::string type, int CHARGETIME, int shots, int energy, int hullDam, int shieldDam); //Just includes the necessities, uses hullDam for sysDam and crewDam
+	Weapon(std::string name, std::string type, int CHARGETIME, int shots, int accuracy, int hullDam, int shieldDam); //Just includes the necessities, uses hullDam for sysDam and crewDam
 	//Full
-	Weapon(std::string name, std::string type, int CHARGETIME, int shots, int energy, int hullDam, int shieldDam, int crewDam, int sysDam, int chanceFire, int chanceBreach, int chanceStun);
+	Weapon(std::string name, std::string type, int CHARGETIME, int shots, int accuracy, int hullDam, int shieldDam, int crewDam, int sysDam, int chanceFire, int chanceBreach, int chanceStun);
 
 	// Copy Constructor
 	Weapon(Weapon*);
@@ -19,7 +19,8 @@ public:
 	// the time a weapon takes to charge
 	int getChargeTime();
 	int getShots();
-	int getEnergy();
+	char getTarget(); // the room being targeted
+	int getAccuracy();
 	int getHullDam();
 	int getShieldDam();
 	int getCrewDam();
@@ -33,9 +34,12 @@ public:
 	int getRoomHit();
 
 	//Setters
+	void setTarget(char target);
+	void setAccuracy(int);
 	void setCharge(int);
 	void setRoomHit(int);
 	void setDamageType(std::string);
+	
 
 	// tells the weapon to start charging. The weapon stops charging once it's fully chaged. A parameter exists to tell the program by how much to charge the weapon.
 	void increaseCharge(unsigned int amount = 1);
@@ -49,12 +53,14 @@ public:
 	std::string toString();
 
 private:
+	char target = '0'; // the target room. If 'char' is anything other than a letter, it targets the ship itself.
+
 	//Constants
 	const std::string name; //Name of weapon
 	const std::string type; //Weapon type. Defines ammo as well
 	const unsigned int CHARGETIME; //How long it takes to charge
 	const int shots; //Shots per charge
-	const unsigned int energy; //Energy drain required to use weapon
+	unsigned int accuracy; // the accurary of the weapon (out of 10)
 	//Damage types
 	const int hullDam;
 	const int shieldDam;

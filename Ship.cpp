@@ -30,6 +30,7 @@ Ship::Ship(Ship & ship) : shipMapWidth(6), shipMapLength(15)
 void Ship::setHull(int hull) { this->hull = hull; }
 void Ship::setMaxHull(int maxHull) { this->maxHull = maxHull; }
 void Ship::setShield(int shield) { this->shield = shield; }
+void Ship::setShieldMax(int shieldMax) { this->shieldMax = shieldMax; }
 void Ship::setReactor(int reactor) { this->reactor = reactor; }
 void Ship::setEvade(int evade) { this->evade = evade; }
 void Ship::setOxygen(int oxygen) { this->oxygen = oxygen; }
@@ -54,6 +55,7 @@ std::string Ship::getName() { return shipName; }
 int Ship::getHull() { return hull; }
 int Ship::getMaxHull() { return maxHull; }
 int Ship::getShield() { return shield; }
+int Ship::getShieldMax() { return shieldMax; }
 int Ship::getReactor() { return reactor; }
 int Ship::getEvade() { return evade; }
 int Ship::getOxygen() { return oxygen; }

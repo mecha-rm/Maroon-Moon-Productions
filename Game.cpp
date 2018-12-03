@@ -178,15 +178,24 @@ void Game::DrawGame()
 	glDisable(GL_TEXTURE_2D);
 	drawTestPrimitives(); 
 	setColor(255, 255, 255);
-	// printing player stats
-	drawText("Name: " + Gameplay::getPlayer()->getName(), 600.0F, 180.0F);
-	drawText("Hull: " + Gameplay::getPlayer()->getHealthBar(), 600.0, 156.0F);
-	drawText("Shield: " + std::to_string(Gameplay::getPlayer()->getShield()), 600.0F, 132.0F);
-	
-	// printing enemy stats
-	drawText("Name: " + Gameplay::getEnemy()->getName(), 1200.0F, 180.0F); // printing the player stats
-	drawText("Hull: " + Gameplay::getEnemy()->getHealthBar(), 1200.0, 156.0F);
-	drawText("Shield: " + std::to_string(Gameplay::getEnemy()->getShield()), 1200.0F, 132.0F);
+
+	if (battle)
+	{
+		// printing player stats
+		drawText("Name: " + Gameplay::getPlayer()->getName(), 600.0F, 180.0F);
+		drawText("Hull: " + Gameplay::getPlayer()->getHealthBar(), 600.0, 156.0F);
+		drawText("Shield: " + std::to_string(Gameplay::getPlayer()->getShield()), 600.0F, 132.0F);
+
+		for (int i = 0; i < Gameplay::getPlayer()->areas.size(); i++)
+		{
+
+		}
+
+		// printing enemy stats
+		drawText("Name: " + Gameplay::getEnemy()->getName(), 1200.0F, 180.0F); // printing the player stats
+		drawText("Hull: " + Gameplay::getEnemy()->getHealthBar(), 1200.0, 156.0F);
+		drawText("Shield: " + std::to_string(Gameplay::getEnemy()->getShield()), 1200.0F, 132.0F);
+	}
 
 	setColor(255, 0, 0);
 	//drawCircle(10, player->radius, player->center.x, player->center.y);
@@ -286,8 +295,6 @@ void Game::update()
 	}
 	// textBox->setPosition(-3000, -3000);
 	// textBox->setPosition(textBox->position.x += 1, textBox->position.y += 1);
-
-	drawText("bungle", 100, 100);
 
 	// check collisions below here!
 	// ???

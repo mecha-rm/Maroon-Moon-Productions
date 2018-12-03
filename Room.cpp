@@ -3,9 +3,11 @@
 
 // constructor
 // Room::Room(char ID, int amountOfCrewMemebers, std::string system, int oxygen) : ID(ID), amountOfCrewMembers(amountOfCrewMembers), system(system), oxygen(oxygen) {}
-Room::Room(char ID, int amountOfCrewMemebers, std::string system, int oxygen) : ID(ID), system(system), oxygen(oxygen) {}
+Room::Room(char ID, int shield, std::string system, int oxygen) : ID(ID), shield(shield), system(system), oxygen(oxygen) {}
 
 //Getters
+
+char Room::getID() { return ID; }
 // Returns the amount of people in the room.
 int Room::getAmountOfCrewMembers() 
 { 
@@ -13,13 +15,26 @@ int Room::getAmountOfCrewMembers()
 	// return crew.size(); 
 }
 
+
 std::string Room::getSystem() { return system; }
 int Room::getOxygen() { return oxygen; }
+int Room::getShield() { return shield; }
 
 //Setters
-// void Room::setAmountOfCrewMemebers(int amountOfCrewMembers) { this->amountOfCrewMembers = amountOfCrewMembers; }
-void Room::setSystem(std::string system) { this->system = system; }
+void Room::setAmountOfCrewMemebers(int amountOfCrewMembers) { this->amountOfCrewMembers = amountOfCrewMembers; }
+void Room::setSystem(std::string system) { this->system = system; } // sets the shield over the room
 void Room::setOxygen(int oxygen) { this->oxygen = oxygen; }
+void Room::setShield(int shield) 
+{ 
+	if (shield < this->shield) // making the shield equal to 'zero' if it would be brought below zero.
+	{
+		this->shield = 0;
+	}
+	else
+	{
+		this->shield = shield;
+	}
+}
 
 /*
 // adds a crew member pointer

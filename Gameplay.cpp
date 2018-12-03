@@ -79,10 +79,14 @@ bool Gameplay::gameLoop()
 	std::stringstream strStream; // gets strigns as streams
 	int index = -1; // the selected index by the player.
 	
-	int eWeapon(0); // saves index of ship's chosen weapon
+	int eIndex; // an index relating to the enemy.
+
 	bool noOptions(true); // sees if there's an available option.
 	vector<Weapon *>availableWeapons; // used by the enemy to determine what weapons can be used.
 	
+	int randInt; // a random integer
+	int multiply = 1; // multiplies the damage done under certian conditions
+
 	bool pause = false; // toggle for system("pause") at the end of the loop.
 	bool textShip = false; // prints the ships out in text.
 	bool battleLoop = false; // if true, the text window loops the battle here, rather than going back for graphical upates.
@@ -114,23 +118,111 @@ bool Gameplay::gameLoop()
 				for (int shot = 1; shot <= pShip->weapons.at(i).getShots(); shot++)
 				{
 					std::cout << "Weapon " << pShip->weapons.at(i).getName() << " has been fired! " << std::endl;
-					enemy->setHull(enemy->getHull() - pShip->weapons.at(i).getHullDam());
-					pShip->weapons.at(i).setCharge(0);
+
+					// If the weapon's accuracy is less than what the randomizer gets, the weapon misses.
+					if (pShip->weapons.at(i).getAccuracy() < rand() % 10 + 1)
+					{
+						std::cout << "The " << pShip->weapons.at(i).getName() << " missed! " << std::endl;
+						pShip->weapons.at(i).setCharge(0);
+						continue;
+					}
+
+					randInt = rand() % 10 + 1; // generated a random number for seeing if a certain chance event happens.
+					// Causes extra damage if true
+					if (pShip->weapons.at(i).getChanceFire() >= randInt)
+					{
+						std::cout << "A brief fire was started! The damage was increased!" << std::endl;
+						multiply = 2;
+					}
+					// Causes the shield to be destroyed in that area.
+					if (pShip->weapons.at(i).getChanceBreach() >= randInt)
+					{
+						for (int j = 0; j < enemy->areas.size(); j++)
+						{
+							// If the target has been found
+							if (pShip->weapons.at(i).getTarget() == enemy->areas.at(j)->getID())
+							{
+								enemy->areas.at(j)->setShield(0);
+								std::cout << "The shield in area " << enemy->areas.at(j)->getID() << " of the enemy's ship has been breached! It's gone!" << std::endl;
+								break;
+							}
+						
+						}
+
+					}
+					// Causes one of the enemy's weapons to lose its charge.
+					if (pShip->weapons.at(i).getChanceStun() >= randInt)
+					{
+						std::cout << "A power surge has occurred!";
+						randInt = rand() % enemy->weapons.size(); // chooses a random weapon
+						enemy->weapons.at(randInt).setCharge(0);
+						std::cout << "The enemy's " << enemy->weapons.at(randInt).getName() << " lost its charge!" << std::endl;
+
+					}
+
+					for (int j = 0;  j < enemy->areas.size(); j++)
+					{
+						// If the target has been found
+						if (pShip->weapons.at(i).getTarget() == enemy->areas.at(j)->getID())
+						{
+							// Damaging the shield.
+							if (enemy->areas.at(j)->getShield() > 0)
+							{
+								enemy->areas.at(j)->setShield(enemy->areas.at(j)->getShield() - pShip->weapons.at(i).getShieldDam());
+								
+								std::cout << "Your attack was blocked by a shield! You did " << pShip->weapons.at(i).getShieldDam() << " damage to it!" << std::endl;
+								if (enemy->areas.at(j)->getShield() <= 0)
+								{
+									std::cout << "The shield was destroyed!" << std::endl;
+								}
+							
+							}
+							// Damaging the hull
+							else if (enemy->areas.at(j)->getShield() <= 0)
+							{
+								enemy->setHull(enemy->getHull() - pShip->weapons.at(i).getHullDam() * multiply);
+								std::cout << std::to_string(pShip->weapons.at(i).getHullDam() * multiply) << " damage has been done to te hull!" << std::endl;
+							}
+
+							break;
+						}
+					}
+					
+					
+					pShip->weapons.at(i).setCharge(0); // setting the charge of the weapon to zero.
+					multiply = 1;
 				}
 				
 			}
+			std::cout << std::endl;
 			
 		}
+
+		std::cout << std::endl;
 
 		// Fires off enenmy weapons that are charged
 		for (int i = 0; i < enemy->weapons.size(); i++)
 		{
 			if (enemy->weapons.at(i).isCharged())
 			{
-				std::cout << "The enemy has used " << enemy->weapons.at(i).getName() << "!" << std::endl;
-				// Once again, neesd to be changed.
-				pShip->setHull(pShip->getHull() - enemy->weapons.at(i).getHullDam()); // damanging the player
-				enemy->weapons.at(i).setCharge(0);
+				for (int shot = 1; shot <= enemy->weapons.at(i).getShots(); shot++)
+				{
+					std::cout << "The enemy has used " << enemy->weapons.at(i).getName() << "!" << std::endl;
+					pShip->setHull(pShip->getHull() - enemy->weapons.at(i).getHullDam()); // damanging the player
+					enemy->weapons.at(i).setCharge(0);
+
+					/*
+					for (int j = 0; j < enemy->areas.size(); j++)
+					{
+						pShip->setHull(pShip->getHull() - enemy->weapons.at(i).getHullDam()); // damanging the player
+						enemy->weapons.at(i).setCharge(0);
+
+					}
+					*/
+				}
+				
+
+				
 			}
 			
 		}
@@ -216,7 +308,43 @@ bool Gameplay::gameLoop()
 				// starts charging the weapon for use.
 				std::cout << "Charging of Weapon #" << input << " (" << pShip->weapons.at(index - 1).getName() << ") has begun!" << std::endl;
 				pShip->weapons.at(index - 1).increaseCharge(); // increases the charge by '1'.
+				// asking the user what room they want to target
+				do
+				{
+					// Asking the user to target a room.
+					std::cout << "\nSelect a room to target: " << std::endl;
+					for (int i = 0; i < enemy->areas.size(); i++)
+					{
+						std::cout << enemy->areas.at(i)->getID();
+						if (i != enemy->areas.size() - 1)
+							std::cout << ", ";
+					}
+					std::cout << std::endl;
 
+					std::cout << "Room: ";
+					std::getline(std::cin, input);
+					
+					input = util::Utilities::toUpper(input); // making the input all uppercase.
+					pShip->weapons.at(index - 1).setTarget('0');
+
+					for (int i = 0; i < enemy->areas.size(); i++)
+					{
+						// If the user's input is a valid room that they can target.
+						// if (input == std::to_string(enemy->areas.at(i)->getID()))
+						if (input[0] == enemy->areas.at(i)->getID())
+						{
+							pShip->weapons.at(index - 1).setTarget(enemy->areas.at(i)->getID());
+							std::cout << "Target Aquired: Room " << pShip->weapons.at(index - 1).getTarget() << "!" << std::endl;
+							input = "exit"; // tells the progrma to exit the loop because a valid index has been found
+							break;
+						}
+					}
+
+					// If the room selection failed.
+					if (input != "exit")
+						std::cout << "That is not a valid room choice." << std::endl;
+
+				} while (input != "exit");
 
 			} while (input == "");
 		}
@@ -285,6 +413,27 @@ Ship * Gameplay::createShip(int type)
 		tempShip->setMaxHull(tempShip->getHull()); // getting the starting hull value, treating it as the maximum.
 		tempShip->setShield(2);
 		tempShip->setReactor(8);
+
+		// Adding all of the rooms for the ship (A to F)
+		for (int i = 0; i < 7; i++) // making 16 rooms, starting at 'A'.
+		{
+			tempShip->areas.push_back(new Room(65 + i, 3, "NULL", 1));
+		}
+
+		// Adding all the crew members.
+		for (int i = 0; i < tempShip->getCrewMembers(); i++) // making three human crew members
+		{
+			tempShip->addCrewMember("human", 'A');
+		}
+
+
+		tempShip->weapons.push_back(All_Weapons().missile_artemis);
+		tempShip->weapons.push_back(All_Weapons().laser_burst_ii);
+
+		tempShip->setOxygen(1);
+		tempShip->setShield(2);
+		tempShip->setEngineLevel(2);
+		tempShip->setFuel(16);
 		
 		break;
 
@@ -302,7 +451,14 @@ Ship * Gameplay::createShip(int type)
 		tempShip->setMaxHull(tempShip->getHull()); // getting the starting hull value, treating it as the maximum.
 		tempShip->setShield(2);
 		tempShip->setReactor(8);
+		
+		// Adding all of the rooms for the Kestrel.
+		for (int i = 0; i < 17; i++) // making 16 rooms, starting at 'A' and going to 'P'.
+		{
+			tempShip->areas.push_back(new Room(65 + i, 0, "NULL", 1));
+		}
 
+		// Adding all the crew members.
 		for (int i = 0; i < tempShip->getCrewMembers(); i++) // making three human crew members
 		{
 			tempShip->addCrewMember("human", 'A');
@@ -311,11 +467,6 @@ Ship * Gameplay::createShip(int type)
 
 		tempShip->weapons.push_back(All_Weapons().missile_artemis);
 		tempShip->weapons.push_back(All_Weapons().laser_burst_ii);
-
-		for (int i = 0; i < 16; i++) // making 16 rooms, starting at 'A'.
-		{
-			tempShip->areas.push_back(new Room(65 + i, 0, "NULL", 1));
-		}
 
 		tempShip->setOxygen(1);
 		tempShip->setShield(2);

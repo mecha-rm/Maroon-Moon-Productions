@@ -19,6 +19,7 @@ public:
 	int getHull();
 	int getMaxHull();
 	int getShield();
+	int getShieldMax();
 	int getReactor();
 	int getEvade();
 	int getOxygen();
@@ -41,6 +42,7 @@ public:
 	void setHull(int);
 	void setMaxHull(int);
 	void setShield(int);
+	void setShieldMax(int);
 	void setReactor(int);
 	void setEvade(int);
 	void setOxygen(int);
@@ -120,6 +122,7 @@ private:
 	int hull = 0; // the ship's physical health
 	int maxHull = 30;
 	int shield = 0; // the ship's shield's health
+	int shieldMax = 0; // the maximum protection the shield gives the user.
 	int reactor = 0; // the ship's reactor
 	int evade = 0;
 	int oxygen = 0;
@@ -180,11 +183,11 @@ private:
 	*/
 
 	string shipMap[6][15] = { {"empty","empty","empty","empty","empty","empty","wdnwe","ndwde","empty","empty","empty","empty","empty","empty","empty"},
-								{"empty","wwnwe","nwdde","dwnwe","nwwde","block","wwnne","nddne","dwnne","nwwne","empty","empty","empty","empty","empty"},
-								{"dwdne","dwnne","ndwne","block","wdnne","nwdne","dnnwe","nnwwe","wnnde","nndwe","dwnwe","nwdwe","dwnne","nwwne","wwwne"},
-								{"dndwe","dnnwe","nndwe","block","wnnde","nndwe","dwnne","nwwne","wdnne","nwdne","dwnwe","nwdwe","dnnwe","nndwe","dnwwe"},
-								{"empty","wwnwe","nddwe","dwnwe","ndwwe","block","wnnwe","nndde","dnnwe","nnwwe","empty","empty","empty","empty","empty"},
-								{"empty","empty","empty","empty","empty","empty","wwnde","ndwde","empty","empty","empty","empty","empty","empty","empty"} };
+						{"empty","wwnwe","nwdde","dwnwe","nwwde","block","wwnne","nddne","dwnne","nwwne","empty","empty","empty","empty","empty"},
+						{"dwdne","dwnne","ndwne","block","wdnne","nwdne","dnnwe","nnwwe","wnnde","nndwe","dwnwe","nwdwe","dwnne","nwwne","wwwne"},
+						{"dndwe","dnnwe","nndwe","block","wnnde","nndwe","dwnne","nwwne","wdnne","nwdne","dwnwe","nwdwe","dnnwe","nndwe","dnwwe"},
+						{"empty","wwnwe","nddwe","dwnwe","ndwwe","block","wnnwe","nndde","dnnwe","nnwwe","empty","empty","empty","empty","empty"},
+						{"empty","empty","empty","empty","empty","empty","wwnde","ndwde","empty","empty","empty","empty","empty","empty","empty"} };
 
 	string flipMap[6][15] = { {"empty","empty","empty","empty","empty","empty","wwndc","ndwde","empty","empty","empty","empty","empty","empty","empty"},
 								{"empty","wwnwe","nddwe","dwnwe","ndwwe","block","wnnwe","nndde","dnnwe","nnwwe","empty","empty","empty","empty","empty"},
