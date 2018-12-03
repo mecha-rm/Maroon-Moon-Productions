@@ -1,5 +1,6 @@
 #include "Game.h"
 #include "drawPrimitives.h"
+#include "Gameplay.h"
 
 using namespace std;
 
@@ -119,7 +120,7 @@ void Game::initializeGame()
 	this->addSpriteToDrawList(textBox);
 
 	///* load the background */
-	bg = new HorizontalScrollingBackground("images/Backgrounds/backGround.jpg",stateInfo.windowWidth,stateInfo.windowHeight);
+	bg = new HorizontalScrollingBackground("images/Backgrounds/backGround.png",stateInfo.windowWidth,stateInfo.windowHeight);
 	this->addSpriteToDrawList(bg);
 	bg->setLayerID(0);
 
@@ -176,8 +177,71 @@ void Game::DrawGame()
 	drawSprites();
 
 	glDisable(GL_TEXTURE_2D);
-	drawTestPrimitives(); 
-	setColor(255, 255, 255);
+	drawTestPrimitives();
+	setColor(0, 0, 255);
+
+	Hazard hazard;
+	//random event text!
+	if (nebula) {
+		drawText(hazard.nebulaText, 200.0, 900.0F);//printing the text to the screen
+		enemyShip = false;//turning the other texts off just in case
+		giantStar = false;
+		antiShipBattery = false;
+		pulsar = false;
+		asteroidField = false;
+		ionStorm = false;
+		//nebula = false;
+	}
+	if (ionStorm) {
+		drawText(hazard.ionStormText, 200.0, 900.0F);
+		enemyShip = false;
+		giantStar = false;
+		antiShipBattery = false;
+		pulsar = false;
+		asteroidField = false;
+		//ionStorm = false;
+		nebula = false;
+	}
+	if (asteroidField) {
+		drawText(hazard.asteroidFieldText, 200.0, 1000.0F);
+		enemyShip = false;
+		giantStar = false;
+		antiShipBattery = false;
+		pulsar = false;
+		//asteroidField = false;
+		ionStorm = false;
+		nebula = false;
+	}
+	if (pulsar) {
+		drawText(hazard.pulsarText, 200.0, 900.0F);
+		enemyShip = false;
+		giantStar = false;
+		antiShipBattery = false;
+		//pulsar = false;
+		asteroidField = false;
+		ionStorm = false;
+		nebula = false;
+	}
+	if (antiShipBattery) {
+		drawText(hazard.antiShipBatteryText, 200.0, 900.0F);
+		enemyShip = false;
+		giantStar = false;
+		//antiShipBattery = false;
+		pulsar = false;
+		asteroidField = false;
+		ionStorm = false;
+		nebula = false;
+	}
+	if (giantStar) {
+		drawText(hazard.giantStarText, 200.0, 900.0F);
+		enemyShip = false;
+		//giantStar = false;
+		antiShipBattery = false;
+		pulsar = false;
+		asteroidField = false;
+		ionStorm = false;
+		nebula = false;
+	}
 
 	if (battle)
 	{
@@ -279,9 +343,58 @@ void Game::startBattle(bool battle)
 */
 void Game::update()
 {
+	float dt = updateTimer->getElapsedTimeSeconds();
 	// update our clock so we have the delta time since the last update
+	elapsedTime = elapsedTime + (dt * 1000);//my own makeshift timer
 	updateTimer->tick();
 
+	if (elapsedTime % 300 == 10) {//stays on screen for a certain amount of time
+		enemyShip = false;//turns all the texts off the screen
+		giantStar = false;
+		antiShipBattery = false;
+		pulsar = false;
+		asteroidField = false;
+		ionStorm = false;
+		nebula = false;
+	
+	}
+
+	//Random Event Text
+	if (elapsedTime % 600 == 1) { //after 80 seconds? I think about that
+
+		int rng = rand() % 10 + 1;//rng is fun
+
+		if (rng == 1) {
+			Hazard().giantStar(pShip);//sending the player's ship object to Hazard.cpp where the hull's health is changed
+			giantStar = true;//turning the text for the giant star event on in the draw() method
+
+		}
+		if (rng == 2) {
+			Hazard().nebula(pShip);
+			nebula = true;//turning the text for the nebula event on
+		
+		}
+		if (rng == 3) {
+			Hazard().plasmaStorm(pShip);
+			ionStorm = true;//turning the text for the plasma/ion storm event on
+			
+		}
+		if (rng == 4) {
+			Hazard().pulsar(pShip);
+			pulsar = true;//turning the text for the pulsar event on
+			
+		}
+		if (rng == 5) {
+			Hazard().antiShipBattery(pShip);
+			antiShipBattery = true;//turning the text for the antiShipBattery event on
+			
+		}
+		if (rng == 6) {
+			Hazard().asteroidField(pShip);
+			asteroidField = true;//turning the text for the asteroid field event on
+			
+		}
+	}
 
 	/* you should probably update all of the sprites in a list just like the drawing */
 	/* maybe two lists, one for physics updates and another for sprite animation frame update */

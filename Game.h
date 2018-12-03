@@ -85,6 +85,14 @@ public:
 	Game(void);
 	~Game(void);
 	void initializeGame();
+	bool nebula = false;
+	bool ionStorm = false;
+	bool giantStar = false;
+	bool asteroidField = false;
+	bool pulsar = false;
+	bool antiShipBattery = false;
+	bool enemyShip = false;
+	int elapsedTime = 0;
 
 	/* convenience functions */
 	// screen size is the apparent size in pixels

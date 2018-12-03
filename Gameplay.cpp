@@ -220,9 +220,7 @@ bool Gameplay::gameLoop()
 					}
 					*/
 				}
-				
-
-				
+			
 			}
 			
 		}
