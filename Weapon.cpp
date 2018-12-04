@@ -62,7 +62,7 @@ std::string Weapon::toString()
 	std::string str;
 	str = "Weapon - Type: " + getType() + ", Name: " + getName() + " | Success Rate: " + std::to_string(getAccuracy()) + "/10 , Charge Time: " + std::to_string(getChargeTime()) + " | ";
 	str += " Hull Damage: " + std::to_string(getHullDam()) + ", Shield Damage: " + std::to_string(getShieldDam()) + " | ";
-	str += "Fire Chance: " + std::to_string(getChanceFire()) + " /10, Breach Chance: " + std::to_string(getChanceBreach()) + "/10, Stun Chance: " + std::to_string(getChanceStun());
+	str += "Fire Chance: " + std::to_string(getChanceFire()) + " /10, Breach Chance: " + std::to_string(getChanceBreach()) + "/10, Stun Chance: " + std::to_string(getChanceStun()) + "/10";
 	
 	return str;
 }

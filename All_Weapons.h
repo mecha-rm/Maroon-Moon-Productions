@@ -27,15 +27,15 @@ public:
 	// Missle weapons have a higher chance of causing effects
 	//Missile Weapons - Require Missiles as ammo, ignore shields
 		//Test Missile
-	const Weapon missile_test = Weapon("TEST_MISSILE", "Missile", 12, 1, 10, 2, 5, 20, 10, 2, 2, 0);
+	const Weapon missile_test = Weapon("TEST_MISSILE", "Missile", 12, 1, 10, 2, 5, 20, 10, 2, 8, 0);
 	//Artemis
-	Weapon missile_artemis = Weapon("Artemis", "Missile", 11, 1, 9, 2, 5, 0, 0, 1, 1, 0);
+	Weapon missile_artemis = Weapon("Artemis", "Missile", 11, 1, 9, 2, 5, 0, 0, 1, 8, 0);
 	//Hermes
-	const Weapon missle_hermes = Weapon("Hermes", "Missle", 14, 1, 10, 3, 3, 3, 3, 3, 2, 1);
+	const Weapon missle_hermes = Weapon("Hermes", "Missle", 14, 1, 10, 3, 3, 3, 3, 3, 9, 1);
 	//Breach
 	const Weapon missle_breach = Weapon("Breach", "Missle", 22, 1, 10, 4, 4, 4, 4, 3, 8, 1);
 	//Swarm
-	const Weapon missle_swarm = Weapon("Swarm", "Missle", 17, 2, 10, 2, 2, 2, 2, 1, 3, 1);
+	const Weapon missle_swarm = Weapon("Swarm", "Missle", 17, 3, 10, 2, 2, 2, 2, 1, 5, 1);
 
 
 	// Bomb Weapons have a higher chance of causing special effects
@@ -43,9 +43,11 @@ public:
 		//Test Bomb
 	const Weapon bomb_test = Weapon("TEST_BOMB", "Bomb", 15, 1, 10, 10, 5, 20, 10, 2, 2, 0);
 	//Small Bomb
+	// const Weapon bomb_small = Weapon("Small Bomb", "Bomb", 10, 1, 9, )
 	const Weapon bomb_small = Weapon("Small Bomb", "Bomb", 10, 1, 9, 4, 5, 20, 2, 1, 0, 0);
-	// Fire Bomb
-	const Weapon bomb_fire = Weapon("Fire Bomb", "Bomb", 15, 1, 8, 8, 2, 20, 2, 9, 0, 0);
+
+	// FIre Bomb	
+	const Weapon bomb_fire = Weapon("Fire Bomb", "Bomb", 15, 1, 3, 5, 2, 20, 2, 9, 0, 0);
 	// Breach Bomb I
 	const Weapon bomb_breach_i = Weapon("Breach Bomb I", "Bomb", 9, 1, 7, 1, 1, 20, 1, 0, 9, 0);
 	// Stun Bomb

@@ -16,11 +16,11 @@ References:
  */
 
 #include <windows.h>
+#include <mmsystem.h> // used for music
 #include "Game.h"
 
 #include <random>
 #include <ctime>
-
 /******************************************/
 /* GLOBAL VARIABLES */
 /******************************************/
@@ -142,7 +142,8 @@ void MouseMotionCallbackFunction(int x, int y)
  */
 int main(int argc, char **argv)
 {
-	srand(time(0));
+	srand(time(0)); // seeding the randomizer
+	PlaySound(TEXT("audio/FTL.wav"), NULL, SND_LOOP | SND_ASYNC); // starts playing the song and looping it.
 
 	/* initialize the window and OpenGL properly */
 	glutInit(&argc,argv);

@@ -180,12 +180,14 @@ void Game::DrawGame()
 	drawTestPrimitives(); 
 	setColor(255, 255, 255);
 
+	
+
 	if (battle)
 	{
 		// printing player stats
 		drawText("Name: " + Gameplay::getPlayer()->getName(), 600.0F, 140.0F);
 		drawText("Ship HP: " + Gameplay::getPlayer()->getHealthBar(), 600.0, 116.0F);
-		drawText("Max Shield HP: " + std::to_string(Gameplay::getPlayer()->getShield()), 600.0F, 92.0F);
+		// drawText("Max Shield HP: " + std::to_string(Gameplay::getPlayer()->getShield()), 600.0F, 92.0F);
 
 		/*
 		for (int i = 0; i < Gameplay::getPlayer()->areas.size(); i++)
@@ -197,7 +199,10 @@ void Game::DrawGame()
 		// printing enemy stats
 		drawText("Name: " + Gameplay::getEnemy()->getName(), 1300.0F, 140.0F); // printing the player stats
 		drawText("Ship HP: " + Gameplay::getEnemy()->getHealthBar(), 1300.0, 116.0F);
-		drawText("Max Shield HP: " + std::to_string(Gameplay::getEnemy()->getShield()), 1300.0F, 92.0F);
+		// drawText("Max Shield HP: " + std::to_string(Gameplay::getEnemy()->getShield()), 1300.0F, 92.0F);
+	
+		drawText("FTL: Faster Than Light (Text + SpriteLib Edition)", 700.0F, 960.0F);
+		drawText("Fight: " + std::to_string(gp.getBattle()), 1700.0F, 960.0F);
 	}
 
 	setColor(255, 0, 0);
@@ -367,7 +372,15 @@ void Game::update()
 		// winner = true;
 		if (winner == true) // going onto the next fight
 		{
-			gp.nextBattle(); // moves on to the next battle
+			if (gp.getPlayerWins() == false) // if the player has lost, the game ends.
+			{
+				// fast-forwards through the rest of the battles
+				gp.setBattle(11);
+			}
+			else
+			{
+				gp.nextBattle(); // moves on to the next battle
+			}
 			opponent->loadSpriteSheet(gp.getEnemy()->getImagePath().c_str()); // setting a new image for the entity
 			
 		}
@@ -518,14 +531,14 @@ void Game::keyboardDown(unsigned char key, int mouseX, int mouseY)
 		player->force.set(0, 0, 0);
 		break;
 	case 13: // enter key
-		// if (battle == false && Gameplay::getPlay() == true) // starts the battle if 'play' is equal to true.
-		// {
+		if (battle == false && Gameplay::getPlay() == true) // starts the battle if 'play' is equal to true.
+		{
 			startBattle(true);
-		//}
-		// else
-		//{
-			//exit(1); // exits the game.
-		//}
+		}
+		else
+		{
+			exit(1); // exits the game.
+		}
 		
 		break;
 	case 32: // the space bar

@@ -15,7 +15,7 @@
 
 // Gameplay is playing by default
 bool Gameplay::play = true;
-unsigned int Gameplay::battle = 10;
+unsigned int Gameplay::battle = 1;
 bool Gameplay::playerWins = false;
 
 // player ship and enemy ship
@@ -121,7 +121,7 @@ void Gameplay::powerUp()
 		std::cout << "3) " << w3.toString() << std::endl;
 		std::cout << "4) Restore " << std::to_string(hpRestore) << " HP to the ship." << std::endl;
 		std::cout << "5) Increase maximum health by " << std::to_string(hpIncrease) << " , and repair " << std::to_string(hpRestore) << " damage to your ship's hull." << std::endl;
-		std::cout << "6) Put shields up in " << rooms << " random rooms." << std::endl;
+		std::cout << "6) Put shields up in " << rooms << " random room(s)." << std::endl;
 		std::cout << "7) I don't need anything." << std::endl;
 		std::cout << "8) END GAME" << std::endl;
 
@@ -362,7 +362,7 @@ bool Gameplay::gameLoop()
 			
 		}
 
-		std::cout << std::endl;
+		// std::cout << std::endl;
 
 		// Fires off enenmy weapons that are charged
 		for (int i = 0; i < enemy->weapons.size(); i++)
@@ -375,16 +375,23 @@ bool Gameplay::gameLoop()
 					
 					randInt = rand() % pShip->areas.size(); // gets a random room
 
-					if (pShip->areas.at(randInt)->getShield() > 0) // If a shield is up.
+					if (util::Utilities::equalsIgnoreCase(enemy->weapons.at(i).getType(), "shield")) // the enemy used a shield.
+					{
+						randInt = rand() % enemy->areas.size(); // chooses a random room to raise the shield in.
+						enemy->areas.at(randInt)->setShield(enemy->areas.at(randInt)->getShield() + enemy->getShield()); // adds to the enemy's shield.
+						std::cout << "The enemy has risen a shield in Room " << std::string(1, enemy->areas.at(randInt)->getID()) << "! It now has a value of " << std::to_string(enemy->areas.at(randInt)->getShield()) << std::endl;
+					}
+					else if (pShip->areas.at(randInt)->getShield() > 0) // If a shield is up.
 					{
 						pShip->areas.at(randInt)->setShield(pShip->areas.at(randInt)->getShield() - enemy->weapons.at(i).getShieldDam()); // damanges the player's shield.
 						std::cout << "It hit the shield in area " << std::string(1, pShip->areas.at(randInt)->getID()) << "! It now has a value of " << pShip->areas.at(randInt)->getShield() << ".";
 					}
-					else
+					else if (pShip->areas.at(randInt)->getShield() <= 0)
 					{
 						pShip->setHull(pShip->getHull() - enemy->weapons.at(i).getHullDam()); // damanging the player
 						std::cout << "The enemy hit the hull of the ship for " << enemy->weapons.at(i).getHullDam() << " damage!" << std::endl;
 					}
+					
 
 					enemy->weapons.at(i).setCharge(0);
 
@@ -418,8 +425,8 @@ bool Gameplay::gameLoop()
 			std::cout << std::endl;
 			std::cout << "Select a weapon to use \n-----------------------------------------" << std::endl;
 
-			std::cout << "X) Exit Game" << std::endl;
-			std::cout << "S) Skip Turn" << std::endl;
+			std::cout << "X) Exit Game\n---------------------------" << std::endl;
+			std::cout << "S) Skip Turn\n---------------------------" << std::endl;
 			// prints the options
 			for (int i = 0; i < pShip->weapons.size(); i++)
 			{
@@ -427,6 +434,7 @@ bool Gameplay::gameLoop()
 				if (pShip->weapons.at(i).isAvailable())
 				{
 					std::cout << i + 1 << ") " << pShip->weapons.at(i).toString() << std::endl;
+					std::cout << "---------------------------" << std::endl;
 				}
 				
 			}
@@ -578,7 +586,7 @@ bool Gameplay::gameLoop()
 		
 		if(pause)
 			std::system("pause"); // something else also uses 'system', so the reference needed to be specified.
-		// std::system("CLS");
+		std::system("CLS");
 	
 	}while (battleLoop == true && enemy->getHull() > 0 && pShip->getHull() > 0);
 
@@ -639,8 +647,8 @@ Ship * Gameplay::createShip(int type)
 		tempShip->setImagePath("images/ImgDmp/GDW3-FTL-Kestrel Labeled (with Doors).png");
 			// Based on Layout A of the default ship, the Kestrel Cruiser (https://ftl.fandom.com/wiki/The_Kestrel_Cruiser)
 		// Layout A
-		tempShip->setHull(30);
-		tempShip->setMaxHull(tempShip->getHull()); // getting the starting hull value, treating it as the maximum.
+		tempShip->setMaxHull(40); // getting the maximum hull value
+		tempShip->setHull(tempShip->getMaxHull());
 		tempShip->setShield(2);
 		// tempShip->setReactor(8);
 		// tempShip->setOxygen(1);
@@ -666,7 +674,7 @@ Ship * Gameplay::createShip(int type)
 		tempShip = new Ship("Enemy Scout Type 1");
 		tempShip->setImagePath("images/ImgDmp/GDW3-FTL-Enemy-Scout Labeled.png"); // sets the image path of the ship
 		tempShip->setShield(2);
-		tempShip->setHull(1);
+		tempShip->setHull(15);
 		tempShip->setMaxHull(tempShip->getHull()); // getting the starting hull value, treating it as the maximum.
 		tempShip->setShield(1);
 		// tempShip->setReactor(8);
@@ -700,8 +708,8 @@ Ship * Gameplay::createShip(int type)
 		tempShip = new Ship("Enemy Scout Type 2");
 		tempShip->setImagePath("images/ImgDmp/GDW3-FTL-Enemy-Scout T-02.png"); // sets the image path of the ship
 		tempShip->setShield(2);
-		tempShip->setHull(20);
-		tempShip->setMaxHull(tempShip->getHull()); // getting the starting hull value, treating it as the maximum.
+		tempShip->setMaxHull(20); // getting the maximum hull value
+		tempShip->setHull(tempShip->getMaxHull());
 		tempShip->setShield(1);
 
 		for (int i = 0; i < 6; i++) // making 16 rooms, starting at 'A' and ending at 'F'.
@@ -719,8 +727,8 @@ Ship * Gameplay::createShip(int type)
 		tempShip = new Ship("Enemy Scout Type 3");
 		tempShip->setImagePath("images/ImgDmp/GDW3-FTL-Enemy-Scout T-03.png"); // sets the image path of the ship
 		tempShip->setShield(1);
-		tempShip->setHull(20);
-		tempShip->setMaxHull(tempShip->getHull()); // getting the starting hull value, treating it as the maximum.
+		tempShip->setMaxHull(25); // getting the maximum hull value
+		tempShip->setHull(tempShip->getMaxHull());
 
 		for (int i = 0; i < 6; i++) // making 16 rooms, starting at 'A' and ending at 'F'.
 		{
@@ -737,8 +745,8 @@ Ship * Gameplay::createShip(int type)
 		tempShip = new Ship("Enemy Scout Type 4");
 		tempShip->setImagePath("images/ImgDmp/GDW3-FTL-Enemy-Scout T-04.png"); // sets the image path of the ship
 		tempShip->setShield(2);
-		tempShip->setHull(20);
-		tempShip->setMaxHull(tempShip->getHull()); // getting the starting hull value, treating it as the maximum.
+		tempShip->setMaxHull(20); // getting the maximum hull value
+		tempShip->setHull(tempShip->getMaxHull());
 
 		for (int i = 0; i < 6; i++) // making 16 rooms, starting at 'A' and ending at 'F'.
 		{
@@ -756,12 +764,12 @@ Ship * Gameplay::createShip(int type)
 		tempShip = new Ship("Enemy Scout Type 5");
 		tempShip->setImagePath("images/ImgDmp/GDW3-FTL-Enemy-Scout T-05.png"); // sets the image path of the ship
 		tempShip->setShield(3);
-		tempShip->setHull(13);
-		tempShip->setMaxHull(tempShip->getHull()); // getting the starting hull value, treating it as the maximum.
+		tempShip->setMaxHull(10); // getting the maximum hull value
+		tempShip->setHull(tempShip->getMaxHull());
 
 		for (int i = 0; i < 6; i++) // making 16 rooms, starting at 'A' and ending at 'F'.
 		{
-			tempShip->areas.push_back(new Room(65 + i, rand() % 3, "NULL", 1));
+			tempShip->areas.push_back(new Room(65 + i, rand() % 3 + 3, "NULL", 1));
 		}
 
 
@@ -774,8 +782,8 @@ Ship * Gameplay::createShip(int type)
 		tempShip = new Ship("Enemy Scout Type 6");
 		tempShip->setImagePath("images/ImgDmp/GDW3-FTL-Enemy-Scout T-06.png"); // sets the image path of the ship
 		tempShip->setShield(2);
-		tempShip->setHull(25);
-		tempShip->setMaxHull(tempShip->getHull()); // getting the starting hull value, treating it as the maximum.
+		tempShip->setMaxHull(25); // getting the maximum hull value
+		tempShip->setHull(tempShip->getMaxHull());
 
 		for (int i = 0; i < 6; i++) // making 16 rooms, starting at 'A' and ending at 'F'.
 		{
@@ -792,17 +800,17 @@ Ship * Gameplay::createShip(int type)
 	case 7:
 		tempShip = new Ship("Enemy Scout Type 7");
 		tempShip->setImagePath("images/ImgDmp/GDW3-FTL-Enemy-Scout T-07.png"); // sets the image path of the ship
-		tempShip->setShield(1);
-		tempShip->setHull(30);
-		tempShip->setMaxHull(tempShip->getHull()); // getting the starting hull value, treating it as the maximum.
+		tempShip->setShield(5);
+		tempShip->setMaxHull(30); // getting the maximum hull value
+		tempShip->setHull(tempShip->getMaxHull());
 
 		for (int i = 0; i < 6; i++) // making 16 rooms, starting at 'A' and ending at 'F'.
 		{
-			tempShip->areas.push_back(new Room(65 + i, rand() % 3, "NULL", 1));
+			tempShip->areas.push_back(new Room(65 + i, tempShip->getShield(), "NULL", 1));
 		}
 
-
-		tempShip->weapons.push_back(All_Weapons().getRandomWeapon());
+		tempShip->weapons.push_back(All_Weapons().laser_burst_i);
+		tempShip->weapons.push_back(All_Weapons().shield_gambit);
 		tempShip->weapons.push_back(All_Weapons().getRandomWeapon());
 		tempShip->weapons.push_back(All_Weapons().getRandomWeapon()); // gives the ship one random weapon
 		break;
@@ -831,8 +839,8 @@ Ship * Gameplay::createShip(int type)
 		tempShip = new Ship("Enemy Scout Type 9");
 		tempShip->setImagePath("images/ImgDmp/GDW3-FTL-Enemy-Scout T-09.png"); // sets the image path of the ship
 		tempShip->setShield(3);
-		tempShip->setHull(20);
-		tempShip->setMaxHull(tempShip->getHull()); // getting the starting hull value, treating it as the maximum.
+		tempShip->setMaxHull(20); // getting the maximum hull value
+		tempShip->setHull(tempShip->getMaxHull());
 		tempShip->setShield(1);
 
 		for (int i = 0; i < 6; i++) // making 16 rooms, starting at 'A' and ending at 'F'.
@@ -858,8 +866,8 @@ Ship * Gameplay::createShip(int type)
 
 		// Based on Layout A of the default ship, the Kestrel Cruiser (https://ftl.fandom.com/wiki/The_Kestrel_Cruiser)
 		// Layout A
-		tempShip->setHull(30);
-		tempShip->setMaxHull(tempShip->getHull()); // getting the starting hull value, treating it as the maximum.
+		tempShip->setMaxHull(45); // getting the maximum hull value
+		tempShip->setHull(tempShip->getMaxHull());
 		tempShip->setShield(3);
 		tempShip->setReactor(8);
 

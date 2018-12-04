@@ -9,7 +9,7 @@ void Hazard::giantStar(Ship playerShip) {
 
 	int room = rand() % 17 + 1;
 	setRandomRoom(room);
-	playerShip.setHull(playerShip.getHull() - 2);//applying damage to the ship
+	playerShip.shieldToHealth(2);//applying damage to the ship
 
 }
 void Hazard::nebula(Ship playerShip) {
@@ -22,7 +22,7 @@ void Hazard::asteroidField(Ship playerShip) {
 
 	//This hazard deals either removes 1 layer of shield if the player has one or takes 1
 	//damage off the hull's total hp
-	playerShip.setHull(playerShip.getHull() - 3);//applying damage to the ship
+	playerShip.shieldToHealth(3);//applying damage to the ship
 }
 void Hazard::pulsar(Ship playerShip) {
 
@@ -34,14 +34,14 @@ void Hazard::antiShipBattery(Ship playerShip) {
 
 	int room = rand() % playerShip.areas.size();
 	setRandomRoom(room);
-	playerShip.setHull(playerShip.getHull() - 4);//applying damage to the ship
+	playerShip.shieldToHealth(4);//applying damage to the ship
 
 }
 void Hazard::plasmaStorm(Ship playerShip) {
 
 	int room = rand() % playerShip.areas.size();
 	setRandomRoom(room);
-	playerShip.setHull(playerShip.getHull() - 3);//applying damage to the ship
+	playerShip.shieldToHealth(3);//applying damage to the ship
 
 }
 /*void Hazard::enemyShip() {
