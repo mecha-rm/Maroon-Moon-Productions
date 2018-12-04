@@ -18,6 +18,8 @@ public:
 	void setSystem(std::string);
 	void setOxygen(int);
 	void setShield(int);
+	
+	std::string toString();
 
 	// void addCrewMember(CrewMember * member); // adds a crew member to the room
 	// void removeCrewMember(unsigned int index); // removes a crew member from the room

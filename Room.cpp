@@ -36,6 +36,14 @@ void Room::setShield(int shield)
 	}
 }
 
+// Returns the room as a string.
+std::string Room::toString()
+{
+	std::string tempStr = "";
+	tempStr = "ID: " + std::string(1, ID) + " | Shield: " + std::to_string(shield);
+	return tempStr;
+}
+
 /*
 // adds a crew member pointer
 void Room::addCrewMember(CrewMember * member) { crew.push_back(member); }

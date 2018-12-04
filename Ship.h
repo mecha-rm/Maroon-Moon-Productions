@@ -16,6 +16,7 @@ public:
 
 	// getters
 	std::string getName();
+	std::string getImagePath();
 	int getHull();
 	int getMaxHull();
 	int getShield();
@@ -39,6 +40,7 @@ public:
 	bool getSensor();
 
 	// setters
+	void setImagePath(std::string imagePath);
 	void setHull(int);
 	void setMaxHull(int);
 	void setShield(int);
@@ -117,6 +119,7 @@ public:
 	std::vector<Room *> areas; // the room of the ship
 
 private:
+	std::string imagePath; // the file path of the image representing the  object
 
 	//resources
 	int hull = 0; // the ship's physical health

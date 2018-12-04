@@ -1,6 +1,5 @@
 #include "Game.h"
 #include "drawPrimitives.h"
-#include "Gameplay.h"
 
 using namespace std;
 
@@ -43,20 +42,19 @@ void Game::initializeGame()
 {
 	// The player's sprite
 	/* this is a sprite without any animations, it is just an image */
-	player = new Sprite("images/ImgDmp/GDW3-FTL-Kestrel Labeled.png");
+	player = new Sprite(Gameplay::getPlayer()->getImagePath());
 	player->setNumberOfAnimations(1);
 	player->setSpriteFrameSize(1400, 876);
 	player->addSpriteAnimFrame(0,0,0);
-	player->setPosition(-168.0F, 62.0F);
+	player->setPosition(-164.0F, 122.0F);
 	player->setCenter(player->sz.width/2, player->sz.height/2); // center of the sprites origin for rotation
 	player->setLayerID(2);
 	player->setCenter();
 	player->setRadius(player->sz.width / 2);
-
 	/* add it to our list so we can draw it */
 	this->addSpriteToDrawList(player);
 	
-	// Ship dooes
+	// Ship dooRS
 	/*
 	opponent = new Sprite("images/ImgDmp/spaceship.png");
 	opponent->setNumberOfAnimations(1);
@@ -69,6 +67,7 @@ void Game::initializeGame()
 	opponent->setRadius(148 / 2);
 	*/
 
+	/*
 	doors = new Sprite("images/ImgDmp/GDW3-FTL-Doors-Closed.png");
 	doors->setNumberOfAnimations(1);
 	doors->setSpriteFrameSize(1400, 876);
@@ -80,12 +79,13 @@ void Game::initializeGame()
 	doors->setRadius(doors->sz.width / 2);
 
 	this->addSpriteToDrawList(doors);
+	*/
 
-	opponent = new Sprite("images/ImgDmp/GDW3-FTL-Enemy-Scout Labeled.png");
+	opponent = new Sprite(Gameplay::getEnemy()->getImagePath());
 	opponent->setNumberOfAnimations(1);
 	opponent->setSpriteFrameSize(438, 700);
 	opponent->addSpriteAnimFrame(0, 0, 0);
-	opponent->setPosition(1400, 140);
+	opponent->setPosition(1400, 200);
 	opponent->setCenter(opponent->sz.width / 2, opponent->sz.height / 2); // center of the sprites origin for rotation
 	opponent->setLayerID(2);
 	opponent->setCenter();
@@ -93,7 +93,7 @@ void Game::initializeGame()
 
 	this->addSpriteToDrawList(opponent);
 
-	
+	/*
 	hud = new Sprite("images/ImgDmp/GDW3-FTL-HUD.png");
 	hud->setNumberOfAnimations(1);
 	hud->setSpriteFrameSize(1920, 1080);
@@ -104,7 +104,8 @@ void Game::initializeGame()
 	hud->setRadius(hud->sz.width / 1);
 	
 	// this->addSpriteToDrawList(hud);
-	
+	*/
+
 	/* add it to our list so we can draw it */
 	//this->addSpriteToDrawList(opponent);
 
@@ -120,10 +121,9 @@ void Game::initializeGame()
 	this->addSpriteToDrawList(textBox);
 
 	///* load the background */
-	bg = new HorizontalScrollingBackground("images/Backgrounds/backGround.png",stateInfo.windowWidth,stateInfo.windowHeight);
+	bg = new HorizontalScrollingBackground("images/Backgrounds/GDW3-FTL-Background-Planet-2.png",stateInfo.windowWidth,stateInfo.windowHeight);
 	this->addSpriteToDrawList(bg);
 	bg->setLayerID(0);
-
 }
 
 /* draw()
@@ -177,91 +177,95 @@ void Game::DrawGame()
 	drawSprites();
 
 	glDisable(GL_TEXTURE_2D);
-	drawTestPrimitives();
-	setColor(0, 0, 255);
-
-	Hazard hazard;
-	//random event text!
-	if (nebula) {
-		drawText(hazard.nebulaText, 200.0, 900.0F);//printing the text to the screen
-		enemyShip = false;//turning the other texts off just in case
-		giantStar = false;
-		antiShipBattery = false;
-		pulsar = false;
-		asteroidField = false;
-		ionStorm = false;
-		//nebula = false;
-	}
-	if (ionStorm) {
-		drawText(hazard.ionStormText, 200.0, 900.0F);
-		enemyShip = false;
-		giantStar = false;
-		antiShipBattery = false;
-		pulsar = false;
-		asteroidField = false;
-		//ionStorm = false;
-		nebula = false;
-	}
-	if (asteroidField) {
-		drawText(hazard.asteroidFieldText, 200.0, 1000.0F);
-		enemyShip = false;
-		giantStar = false;
-		antiShipBattery = false;
-		pulsar = false;
-		//asteroidField = false;
-		ionStorm = false;
-		nebula = false;
-	}
-	if (pulsar) {
-		drawText(hazard.pulsarText, 200.0, 900.0F);
-		enemyShip = false;
-		giantStar = false;
-		antiShipBattery = false;
-		//pulsar = false;
-		asteroidField = false;
-		ionStorm = false;
-		nebula = false;
-	}
-	if (antiShipBattery) {
-		drawText(hazard.antiShipBatteryText, 200.0, 900.0F);
-		enemyShip = false;
-		giantStar = false;
-		//antiShipBattery = false;
-		pulsar = false;
-		asteroidField = false;
-		ionStorm = false;
-		nebula = false;
-	}
-	if (giantStar) {
-		drawText(hazard.giantStarText, 200.0, 900.0F);
-		enemyShip = false;
-		//giantStar = false;
-		antiShipBattery = false;
-		pulsar = false;
-		asteroidField = false;
-		ionStorm = false;
-		nebula = false;
-	}
+	drawTestPrimitives(); 
+	setColor(255, 255, 255);
 
 	if (battle)
 	{
 		// printing player stats
-		drawText("Name: " + Gameplay::getPlayer()->getName(), 600.0F, 180.0F);
-		drawText("Hull: " + Gameplay::getPlayer()->getHealthBar(), 600.0, 156.0F);
-		drawText("Shield: " + std::to_string(Gameplay::getPlayer()->getShield()), 600.0F, 132.0F);
+		drawText("Name: " + Gameplay::getPlayer()->getName(), 600.0F, 140.0F);
+		drawText("Ship HP: " + Gameplay::getPlayer()->getHealthBar(), 600.0, 116.0F);
+		drawText("Max Shield HP: " + std::to_string(Gameplay::getPlayer()->getShield()), 600.0F, 92.0F);
 
+		/*
 		for (int i = 0; i < Gameplay::getPlayer()->areas.size(); i++)
 		{
-
+			drawText("Room: " + std::to_string(Gameplay::getPlayer()->areas.at(i)->getID()) + " - Shield: " + std::to_string(Gameplay::getPlayer()->areas.at(i)->getShield()), 600.0F, 110.0F - 22.0F * i);
 		}
+		*/
 
 		// printing enemy stats
-		drawText("Name: " + Gameplay::getEnemy()->getName(), 1200.0F, 180.0F); // printing the player stats
-		drawText("Hull: " + Gameplay::getEnemy()->getHealthBar(), 1200.0, 156.0F);
-		drawText("Shield: " + std::to_string(Gameplay::getEnemy()->getShield()), 1200.0F, 132.0F);
+		drawText("Name: " + Gameplay::getEnemy()->getName(), 1300.0F, 140.0F); // printing the player stats
+		drawText("Ship HP: " + Gameplay::getEnemy()->getHealthBar(), 1300.0, 116.0F);
+		drawText("Max Shield HP: " + std::to_string(Gameplay::getEnemy()->getShield()), 1300.0F, 92.0F);
 	}
 
 	setColor(255, 0, 0);
+
+	/*
+	random event text!
+			if (nebula) {
+				drawText(hazard.nebulaText, 200.0, 900.0F);//printing the text to the screen
+				enemyShip = false;//turning the other texts off just in case
+				giantStar = false;
+				antiShipBattery = false;
+				pulsar = false;
+				asteroidField = false;
+				ionStorm = false;
+				//nebula = false;
+			}
+		if (ionStorm) {
+			drawText(hazard.ionStormText, 200.0, 900.0F);
+			enemyShip = false;
+			giantStar = false;
+			antiShipBattery = false;
+			pulsar = false;
+			asteroidField = false;
+			//ionStorm = false;
+			nebula = false;
+		}
+		if (asteroidField) {
+			drawText(hazard.asteroidFieldText, 200.0, 1000.0F);
+			enemyShip = false;
+			giantStar = false;
+			antiShipBattery = false;
+			pulsar = false;
+			//asteroidField = false;
+			ionStorm = false;
+			nebula = false;
+		}
+		if (pulsar) {
+			drawText(hazard.pulsarText, 200.0, 900.0F);
+			enemyShip = false;
+			giantStar = false;
+			antiShipBattery = false;
+			//pulsar = false;
+			asteroidField = false;
+			ionStorm = false;
+			nebula = false;
+		}
+		if (antiShipBattery) {
+			drawText(hazard.antiShipBatteryText, 200.0, 900.0F);
+			enemyShip = false;
+			giantStar = false;
+			//antiShipBattery = false;
+			pulsar = false;
+			asteroidField = false;
+			ionStorm = false;
+			nebula = false;
+		}
+		if (giantStar) {
+			drawText(hazard.giantStarText, 200.0, 900.0F);
+			enemyShip = false;
+			//giantStar = false;
+			antiShipBattery = false;
+			pulsar = false;
+			asteroidField = false;
+			ionStorm = false;
+			nebula = false;
+		}
+	*/
+	
 	//drawCircle(10, player->radius, player->center.x, player->center.y);
 	//drawCircle(10, opponent->radius, opponent->center.x, opponent->center.y);
 
@@ -308,10 +312,12 @@ void Game::drawTestPrimitives()
 	/* draw line */
 	if (input.mouseDown)
 	{
+		/*
 		setLineWidth(5.f);
 		setColor(1, 0, 0);
 		drawLine(input.clickX, input.clickY, input.currentX, input.currentY);
 		setLineWidth(1.f);
+		*/
 	}
 }
 
@@ -323,9 +329,10 @@ void Game::startBattle(bool battle)
 	{
 		textBox->setPosition(-3000, -3000); // moves the textbox off screen.
 	}
+	// If you're setting battle to 'false', the textbox is brought back.
 	else if (battle == false && this->battle == true)
 	{
-
+		textBox->setPosition(80, 25);
 	}
 	
 	// textBox->setLayerID(0);
@@ -343,69 +350,60 @@ void Game::startBattle(bool battle)
 */
 void Game::update()
 {
-	float dt = updateTimer->getElapsedTimeSeconds();
+	bool winner = false; // becomes 'true' when the fight has been won.
 	// update our clock so we have the delta time since the last update
-	elapsedTime = elapsedTime + (dt * 1000);//my own makeshift timer
 	updateTimer->tick();
 
-	if (elapsedTime % 300 == 10) {//stays on screen for a certain amount of time
-		enemyShip = false;//turns all the texts off the screen
-		giantStar = false;
-		antiShipBattery = false;
-		pulsar = false;
-		asteroidField = false;
-		ionStorm = false;
-		nebula = false;
-	
-	}
-
-	//Random Event Text
-	if (elapsedTime % 600 == 1) { //after 80 seconds? I think about that
-
-		int rng = rand() % 10 + 1;//rng is fun
-
-		if (rng == 1) {
-			Hazard().giantStar(pShip);//sending the player's ship object to Hazard.cpp where the hull's health is changed
-			giantStar = true;//turning the text for the giant star event on in the draw() method
-
-		}
-		if (rng == 2) {
-			Hazard().nebula(pShip);
-			nebula = true;//turning the text for the nebula event on
-		
-		}
-		if (rng == 3) {
-			Hazard().plasmaStorm(pShip);
-			ionStorm = true;//turning the text for the plasma/ion storm event on
-			
-		}
-		if (rng == 4) {
-			Hazard().pulsar(pShip);
-			pulsar = true;//turning the text for the pulsar event on
-			
-		}
-		if (rng == 5) {
-			Hazard().antiShipBattery(pShip);
-			antiShipBattery = true;//turning the text for the antiShipBattery event on
-			
-		}
-		if (rng == 6) {
-			Hazard().asteroidField(pShip);
-			asteroidField = true;//turning the text for the asteroid field event on
-			
-		}
-	}
 
 	/* you should probably update all of the sprites in a list just like the drawing */
 	/* maybe two lists, one for physics updates and another for sprite animation frame update */
 	player->update(updateTimer->getElapsedTimeSeconds());
-	//opponent->update(updateTimer->getElapsedTimeSeconds());
+	opponent->update(updateTimer->getElapsedTimeSeconds());
 
 	// calls gp to continue the loop for the game.
 	if (battle) // loads up the graphics before the game loop starts
 	{
-		gp.gameLoop();
+		winner = gp.gameLoop();
+		// winner = true;
+		if (winner == true) // going onto the next fight
+		{
+			gp.nextBattle(); // moves on to the next battle
+			opponent->loadSpriteSheet(gp.getEnemy()->getImagePath().c_str()); // setting a new image for the entity
+			
+		}
+
+		/*
+		for (int i = 0; i < gp.getPlayer()->weapons.size(); i++)
+		{
+
+			std::cout << gp.getPlayer()->weapons.at(i).getName() + " | " + std::to_string(gp.getPlayer()->weapons.at(i).getCharge()) + " | ";
+		}
+		*/
 	}
+
+	if (gp.getBattle() >= 10 && winner == true) // if the battle is greater than '10', then the game is over.
+	{
+		battle = false; // the battles are over
+		gp.setPlay(false);
+		startBattle(false); // stops the battle and moves the textbox back on screen.
+		
+		textBox->setPosition(80, 25);
+		// std::cout << Gameplay::getEnemy()->getHull() << std::endl;
+		if (gp.getPlayerWins() == false) // if the player has lost
+		{
+			textBox->loadSpriteSheet("images/ImgDmp/FTL - Lose Screen.png");
+		}
+		else if (gp.getPlayerWins() == true) // if the enemy has lost
+		{
+			textBox->loadSpriteSheet("images/ImgDmp/FTL - Win Screen.png");
+		}
+		else
+		{
+			textBox->loadSpriteSheet("images/ImgDmp/FTL - Neutral Screen.png");
+		}
+	}
+
+
 	// textBox->setPosition(-3000, -3000);
 	// textBox->setPosition(textBox->position.x += 1, textBox->position.y += 1);
 
@@ -423,6 +421,55 @@ void Game::update()
 		press = false;
 		*/
 	}
+
+	/*
+		if (elapsedTime % 300 == 10) {//stays on screen for a certain amount of time 
+		enemyShip = false;//turns all the texts off the screen 
+		giantStar = false; 
+		antiShipBattery = false; 
+		pulsar = false; 
+		asteroidField = false; 
+		ionStorm = false; 
+		nebula = false; 
+	 
+	} 
+ 
+	//Random Event Text 
+	if (elapsedTime % 600 == 1) { //after 80 seconds? I think about that 
+ 
+		int rng = rand() % 10 + 1;//rng is fun 
+ 
+		if (rng == 1) { 
+			Hazard().giantStar(pShip);//sending the player's ship object to Hazard.cpp where the hull's health is changed 
+			giantStar = true;//turning the text for the giant star event on in the draw() method 
+ 
+		} 
+		if (rng == 2) { 
+			Hazard().nebula(pShip); 
+			nebula = true;//turning the text for the nebula event on 
+		 
+		} 
+		if (rng == 3) { 
+			Hazard().plasmaStorm(pShip); 
+			ionStorm = true;//turning the text for the plasma/ion storm event on 
+			 
+		} 
+		if (rng == 4) { 
+			Hazard().pulsar(pShip); 
+			pulsar = true;//turning the text for the pulsar event on 
+			 
+		} 
+		if (rng == 5) { 
+			Hazard().antiShipBattery(pShip); 
+			antiShipBattery = true;//turning the text for the antiShipBattery event on 
+			 
+		} 
+		if (rng == 6) { 
+			Hazard().asteroidField(pShip); 
+			asteroidField = true;//turning the text for the asteroid field event on 
+			 
+	*/
+
 }
 
 /* 
@@ -471,7 +518,15 @@ void Game::keyboardDown(unsigned char key, int mouseX, int mouseY)
 		player->force.set(0, 0, 0);
 		break;
 	case 13: // enter key
-		startBattle(true);
+		// if (battle == false && Gameplay::getPlay() == true) // starts the battle if 'play' is equal to true.
+		// {
+			startBattle(true);
+		//}
+		// else
+		//{
+			//exit(1); // exits the game.
+		//}
+		
 		break;
 	case 32: // the space bar
 		break;

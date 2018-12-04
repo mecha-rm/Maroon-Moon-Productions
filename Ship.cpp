@@ -27,7 +27,13 @@ Ship::Ship(Ship & ship) : shipMapWidth(6), shipMapLength(15)
 */
 
 //Setters 
-void Ship::setHull(int hull) { this->hull = hull; }
+void Ship::setImagePath(std::string imagePath) { this->imagePath = imagePath; }
+void Ship::setHull(int hull) 
+{
+	// For the hull would be put above its max, it is set to its max value. If not, its set to the value provided.
+	(hull > maxHull) ? this->hull = maxHull : this->hull = hull;
+}
+
 void Ship::setMaxHull(int maxHull) { this->maxHull = maxHull; }
 void Ship::setShield(int shield) { this->shield = shield; }
 void Ship::setShieldMax(int shieldMax) { this->shieldMax = shieldMax; }
@@ -52,7 +58,9 @@ void Ship::setSensor(bool sensor) { this->sensor = sensor; }
 
 //Getters
 std::string Ship::getName() { return shipName; }
+std::string Ship::getImagePath() { return imagePath; }
 int Ship::getHull() { return hull; }
+
 int Ship::getMaxHull() { return maxHull; }
 int Ship::getShield() { return shield; }
 int Ship::getShieldMax() { return shieldMax; }
@@ -457,7 +465,7 @@ std::string Ship::getHealthBar()
 	for (int i = 0; i < maxHull; i++)
 		i < hull ? tempStr += "/" : tempStr += " ";
 
-	tempStr = "HULL HP (" + std::to_string(hull) + "/" + std::to_string(maxHull) + ") [" + tempStr + "]";
+	tempStr = "(" + std::to_string(hull) + "/" + std::to_string(maxHull) + ") [" + tempStr + "]";
 	return tempStr;
 }
 // Ship toString

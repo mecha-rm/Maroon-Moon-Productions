@@ -32,14 +32,14 @@ void Hazard::pulsar(Ship playerShip) {
 }
 void Hazard::antiShipBattery(Ship playerShip) {
 
-	int room = rand() % 17 + 1;
+	int room = rand() % playerShip.areas.size();
 	setRandomRoom(room);
 	playerShip.shieldToHealth(4);//applying damage to the ship
 
 }
 void Hazard::plasmaStorm(Ship playerShip) {
 
-	int room = rand() % 17 + 1;
+	int room = rand() % playerShip.areas.size();
 	setRandomRoom(room);
 	playerShip.shieldToHealth(3);//applying damage to the ship
 

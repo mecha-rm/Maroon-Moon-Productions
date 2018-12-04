@@ -19,7 +19,7 @@ public:
 	void pulsar(Ship);
 	void antiShipBattery(Ship);
 	void plasmaStorm(Ship);
-	void enemyShip(Ship);
+	// void enemyShip(Ship);
 
 	int getDamage();
 	int getRandomRoom();

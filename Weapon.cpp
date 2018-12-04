@@ -60,8 +60,9 @@ bool Weapon::isCharged() { return (charge >= CHARGETIME); }
 std::string Weapon::toString()
 {
 	std::string str;
-	str = "Weapon - Type: " + getType() + ", " + getName() + " | Accuray: " + std::to_string(getAccuracy()) + "/10 , Charge Time: " + std::to_string(getChargeTime()) + ", Current Charge: " + std::to_string(charge) + " | ";
-	str += " Hull Damage: " + std::to_string(getHullDam()) + " , Shield Damage: " + std::to_string(getShieldDam()) + " , " + std::to_string(getSysDam());
+	str = "Weapon - Type: " + getType() + ", Name: " + getName() + " | Success Rate: " + std::to_string(getAccuracy()) + "/10 , Charge Time: " + std::to_string(getChargeTime()) + " | ";
+	str += " Hull Damage: " + std::to_string(getHullDam()) + ", Shield Damage: " + std::to_string(getShieldDam()) + " | ";
+	str += "Fire Chance: " + std::to_string(getChanceFire()) + " /10, Breach Chance: " + std::to_string(getChanceBreach()) + "/10, Stun Chance: " + std::to_string(getChanceStun());
 	
 	return str;
 }

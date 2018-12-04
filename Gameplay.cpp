@@ -15,6 +15,9 @@
 
 // Gameplay is playing by default
 bool Gameplay::play = true;
+unsigned int Gameplay::battle = 10;
+bool Gameplay::playerWins = false;
+
 // player ship and enemy ship
 Ship * Gameplay::pShip = new Ship(); // inital values
 Ship * Gameplay::enemy = new Ship(); // inital values
@@ -22,7 +25,7 @@ Ship * Gameplay::enemy = new Ship(); // inital values
 Gameplay::Gameplay() 
 {
 	pShip = createShip(0);
-	enemy = createShip(1);
+	enemy = createShip(battle);
 }
 
 void Gameplay::rules(int res)
@@ -71,6 +74,134 @@ void Gameplay::rules(int res)
 	}
 }
 
+// A '0' or less for the player's rooms, a '1' or more for the enemy's rooms
+void Gameplay::printRooms(int object)
+{
+	if (object <= 0)
+	{
+		for (int i = 0; i < pShip->areas.size(); i++)
+		{
+			std::cout << pShip->areas.at(i)->toString() << std::endl;
+		}
+	}
+	else if (object > 0)
+	{
+		for (int i = 0; i < enemy->areas.size(); i++)
+		{
+			std::cout << enemy->areas.at(i)->toString() << std::endl;
+		}
+	}
+}
+
+// Gives the user something between battles.
+void Gameplay::powerUp()
+{
+	std::string input("");
+
+	// gets three random weapons.
+	Weapon w1 = All_Weapons().getRandomWeapon();
+	Weapon w2 = All_Weapons().getRandomWeapon();
+	Weapon w3 = All_Weapons().getRandomWeapon();
+	// restoring hp
+	int hpRestore = rand() % 16 + 5; // 5 to 20
+	// inceasing maximum hp
+	int hpIncrease = ceil((float)hpRestore / 2.0F); // increasing the maximum hp of the user.
+	// rooms
+	int rooms = rand() % pShip->areas.size(); // chooses how many rooms to give a shield to
+	// A random integer.
+	int randInt = 0;
+
+	std::cout << "\nYou have won this round, and are going onto the next round! What would you like to take?" << std::endl;
+	do
+	{
+		// Options
+		std::cout << "Select an option using a cooresponding number: " << std::endl;
+		std::cout << "1) " << w1.toString() << std::endl;
+		std::cout << "2) " << w2.toString() << std::endl;
+		std::cout << "3) " << w3.toString() << std::endl;
+		std::cout << "4) Restore " << std::to_string(hpRestore) << " HP to the ship." << std::endl;
+		std::cout << "5) Increase maximum health by " << std::to_string(hpIncrease) << " , and repair " << std::to_string(hpRestore) << " damage to your ship's hull." << std::endl;
+		std::cout << "6) Put shields up in " << rooms << " random rooms." << std::endl;
+		std::cout << "7) I don't need anything." << std::endl;
+		std::cout << "8) END GAME" << std::endl;
+
+		std::cout << "\nOption: ";
+		std::getline(std::cin, input);
+		std::cout << std::endl;
+		
+		// Gives the user weapon 1.
+		if (input == "1")
+		{
+			pShip->weapons.push_back(w1);
+			std::cout << "Received " << w1.getName() << "." << std::endl;
+		}
+		// Gives the user weapon 2.
+		else if (input == "2")
+		{
+			pShip->weapons.push_back(w2);
+			std::cout << "Received " << w2.getName() << "." << std::endl;
+
+		}
+		// Givs the user weapon 3.
+		else if (input == "3")
+		{
+			pShip->weapons.push_back(w3);
+			std::cout << "Received " << w3.getName() << "." << std::endl;
+
+		}
+		// Restores health.
+		else if (input == "4")
+		{
+			pShip->setHull(pShip->getHull() + hpRestore);
+			std::cout << "Health restored by " << std::to_string(hpIncrease) << ". Your ship's health is now " << std::to_string(pShip->getHull()) << std::endl;
+		}
+		// Increases max health, and gives some health.
+		else if (input == "5")
+		{
+			pShip->setMaxHull(pShip->getMaxHull() + hpIncrease); // increases the max hull
+			pShip->setHull(pShip->getHull() + hpRestore); // restores the current hull
+			std::cout << "Your ship's maximum health was raised to " << pShip->getMaxHull() << ", and your ship's current health is now " << pShip->getHull() << "!" << std::endl;
+		}
+		// Raises shields.
+		else if (input == "6")
+		{
+			for (int i = 1; i <= rooms; i++)
+			{
+				randInt = rand() % pShip->areas.size();
+				pShip->areas.at(randInt)->setShield(pShip->areas.at(randInt)->getShield() + pShip->getShield()); // gives a shield to the random room.
+				std::cout << "A shield was raised in area " << std::string(1, pShip->areas.at(randInt)->getID()) << std::endl;
+			}
+			std::cout << std::endl;
+		}
+		// Gets nothing.
+		else if (input == "7")
+		{
+			std::cout << "Alright. Let's go on to the next stage then!" << std::endl;
+		}
+		// Ends the game.
+		else if (input == "8")
+		{
+			std::cout << "Okay. Ending game" << std::endl;
+			exit(1);
+		}
+		else
+		{
+			std::cout << "Invalid Input. Try Again." << std::endl;
+			std::cout << std::endl;
+			input = "";
+		}
+	} while (input == "");
+	
+}
+
+// Goes on to the next battle
+void Gameplay::nextBattle()
+{
+	battle++;
+	enemy = Gameplay().createShip((signed)battle); // setting the new enemy
+	Gameplay().powerUp(); // gives the ship a powerup.
+}
+
 // Gameplay Loop
 bool Gameplay::gameLoop()
 {
@@ -108,6 +239,14 @@ bool Gameplay::gameLoop()
 			enemy->printStats();
 		}
 
+		std::cout << std::endl;
+		std::cout << "PLAYER ROOMS\n--------------" << std::endl;
+		printRooms(-1);
+
+		std::cout << std::endl;
+		std::cout << "ENEMY ROOMS\n--------------" << std::endl;
+		printRooms(1);
+
 		// Fires off any weapons already charged
 		for (int i = 0; i < pShip->weapons.size(); i++)
 		{
@@ -117,15 +256,38 @@ bool Gameplay::gameLoop()
 				// fires the weapon 'x' amount of times based on how many shots there are.
 				for (int shot = 1; shot <= pShip->weapons.at(i).getShots(); shot++)
 				{
-					std::cout << "Weapon " << pShip->weapons.at(i).getName() << " has been fired! " << std::endl;
+					std::cout << std::endl;
+					// Prints a different message based on what type of weapon it is.
+					if (util::Utilities::equalsIgnoreCase(pShip->weapons.at(i).getType(), "shield"))
+					{
+						std::cout << "Barrier " << pShip->weapons.at(i).getName() << " has been activated! " << std::endl;
+					}
+					else
+					{
+						std::cout << "Weapon " << pShip->weapons.at(i).getName() << " has been fired! " << std::endl;
+					}
+
 
 					// If the weapon's accuracy is less than what the randomizer gets, the weapon misses.
 					if (pShip->weapons.at(i).getAccuracy() < rand() % 10 + 1)
 					{
-						std::cout << "The " << pShip->weapons.at(i).getName() << " missed! " << std::endl;
+						std::cout << "The " << pShip->weapons.at(i).getName() << " failed! " << std::endl;
 						pShip->weapons.at(i).setCharge(0);
 						continue;
 					}
+
+					
+					// If the weapon is a shield
+					if (util::Utilities::equalsIgnoreCase(pShip->weapons.at(i).getType(), "shield"))
+					{
+						randInt = rand() % pShip->areas.size(); // picks a random room
+						pShip->areas.at(randInt)->setShield(pShip->areas.at(randInt)->getShield() + pShip->getShield()); // adds to the room's current shield.
+						std::cout << "A shield was raised in room " << pShip->areas.at(randInt)->getID() << "! It now has a shield value of " << pShip->areas.at(randInt)->getShield() << std::endl;
+						pShip->weapons.at(i).setCharge(0);
+
+						continue; // goes back to the start of the loop, since it won't be using anything below.
+					}
+					
 
 					randInt = rand() % 10 + 1; // generated a random number for seeing if a certain chance event happens.
 					// Causes extra damage if true
@@ -134,6 +296,7 @@ bool Gameplay::gameLoop()
 						std::cout << "A brief fire was started! The damage was increased!" << std::endl;
 						multiply = 2;
 					}
+					
 					// Causes the shield to be destroyed in that area.
 					if (pShip->weapons.at(i).getChanceBreach() >= randInt)
 					{
@@ -150,6 +313,7 @@ bool Gameplay::gameLoop()
 						}
 
 					}
+					
 					// Causes one of the enemy's weapons to lose its charge.
 					if (pShip->weapons.at(i).getChanceStun() >= randInt)
 					{
@@ -181,7 +345,7 @@ bool Gameplay::gameLoop()
 							else if (enemy->areas.at(j)->getShield() <= 0)
 							{
 								enemy->setHull(enemy->getHull() - pShip->weapons.at(i).getHullDam() * multiply);
-								std::cout << std::to_string(pShip->weapons.at(i).getHullDam() * multiply) << " damage has been done to te hull!" << std::endl;
+								std::cout << std::to_string(pShip->weapons.at(i).getHullDam() * multiply) << " damage has been done to the hull!" << std::endl;
 							}
 
 							break;
@@ -208,7 +372,20 @@ bool Gameplay::gameLoop()
 				for (int shot = 1; shot <= enemy->weapons.at(i).getShots(); shot++)
 				{
 					std::cout << "The enemy has used " << enemy->weapons.at(i).getName() << "!" << std::endl;
-					pShip->setHull(pShip->getHull() - enemy->weapons.at(i).getHullDam()); // damanging the player
+					
+					randInt = rand() % pShip->areas.size(); // gets a random room
+
+					if (pShip->areas.at(randInt)->getShield() > 0) // If a shield is up.
+					{
+						pShip->areas.at(randInt)->setShield(pShip->areas.at(randInt)->getShield() - enemy->weapons.at(i).getShieldDam()); // damanges the player's shield.
+						std::cout << "It hit the shield in area " << std::string(1, pShip->areas.at(randInt)->getID()) << "! It now has a value of " << pShip->areas.at(randInt)->getShield() << ".";
+					}
+					else
+					{
+						pShip->setHull(pShip->getHull() - enemy->weapons.at(i).getHullDam()); // damanging the player
+						std::cout << "The enemy hit the hull of the ship for " << enemy->weapons.at(i).getHullDam() << " damage!" << std::endl;
+					}
+
 					enemy->weapons.at(i).setCharge(0);
 
 					/*
@@ -220,7 +397,9 @@ bool Gameplay::gameLoop()
 					}
 					*/
 				}
-			
+				
+
+				
 			}
 			
 		}
@@ -236,7 +415,6 @@ bool Gameplay::gameLoop()
 		// Lists available options and asks for input
 		if (!noOptions)
 		{
-
 			std::cout << std::endl;
 			std::cout << "Select a weapon to use \n-----------------------------------------" << std::endl;
 
@@ -252,7 +430,6 @@ bool Gameplay::gameLoop()
 				}
 				
 			}
-				
 
 			do
 			{
@@ -303,10 +480,19 @@ bool Gameplay::gameLoop()
 					continue;
 				}
 
+				pShip->weapons.at(index - 1).increaseCharge(); // increases the charge by '1'.
 				// starts charging the weapon for use.
 				std::cout << "Charging of Weapon #" << input << " (" << pShip->weapons.at(index - 1).getName() << ") has begun!" << std::endl;
-				pShip->weapons.at(index - 1).increaseCharge(); // increases the charge by '1'.
-				// asking the user what room they want to target
+				
+				// If the weapon is a shield
+				if (util::Utilities::equalsIgnoreCase(pShip->weapons.at(index - 1).getType(), "shield"))
+				{
+					pShip->weapons.at(index - 1).setTarget('A');
+					continue;
+				}
+					
+
+				// asking the user what room they want to target. Since the shield activates over a random room, those don't ask for the room to target.
 				do
 				{
 					// Asking the user to target a room.
@@ -381,7 +567,10 @@ bool Gameplay::gameLoop()
 		// Chooses a random weapon if one is available.
 		if (!availableWeapons.empty()) // sees if there are weapons to choose from
 		{
+			// randInt = rand() % availableWeapons.size(); // gets a random value
+			// availableWeapons.at(randInt)->setTarget(pShip->areas.at(rand() % pShip->areas.size())->getID()); // chooses a random room to target.
 			availableWeapons.at(rand() % availableWeapons.size())->increaseCharge(); // starts charging a random weapon.
+			
 			availableWeapons.clear(); // removes all weapons from the 'usable' weapons list.
 		}
 
@@ -389,96 +578,311 @@ bool Gameplay::gameLoop()
 		
 		if(pause)
 			std::system("pause"); // something else also uses 'system', so the reference needed to be specified.
-		std::system("CLS");
+		// std::system("CLS");
 	
 	}while (battleLoop == true && enemy->getHull() > 0 && pShip->getHull() > 0);
-	
-	return false;
+
+	// Returns 'true' if one of the ships are dead
+	if (enemy->getHull() <= 0 || pShip->getHull() <= 0)
+	{
+		if (pShip->getHull() <= 0) // if the player has lost
+		{
+			setPlayerWins(false);
+		}
+		else if (enemy->getHull() <= 0) // the enemy has lost.
+		{
+			setPlayerWins(true);
+		}
+		return true; // the player won the fight.
+	}
+	// setPlayerWins(true);
+	return false; // the player 
 }
 
+// Gets whether or not the game is being played.
+bool Gameplay::getPlay() { return play; }
+
+// Sets play to 'true' or 'false' based on what's provided.
+void Gameplay::setPlay(bool playGame) { play = playGame; }
+
+// Gets the battle number
+unsigned int Gameplay::getBattle() { return battle; }
+
+// Sets the battle number
+void Gameplay::setBattle(unsigned int battle) { this->battle = battle; }
+
+// Returns the player ship; there should only be one.
+Ship * Gameplay::getPlayer() { return pShip; }
+
+// Determines whether the player has o
+bool Gameplay::getPlayerWins() { return playerWins; }
+
+void Gameplay::setPlayerWins(bool pWins) { playerWins = pWins; }
+
+// Returns the enemy ship; there should only be one.
+Ship * Gameplay::getEnemy() { return enemy; }
+
+
+
+// Creates a ship
 Ship * Gameplay::createShip(int type)
 {
 	Ship * tempShip;
 
-	
-	switch(type)
+
+	switch (type)
 	{
-		// Returns the player ship
-	case 1:
-		tempShip = new Ship("Enemy Scout");
-		tempShip->setShield(2);
-		tempShip->setHull(15);
-		tempShip->setMaxHull(tempShip->getHull()); // getting the starting hull value, treating it as the maximum.
-		tempShip->setShield(2);
-		tempShip->setReactor(8);
-
-		// Adding all of the rooms for the ship (A to F)
-		for (int i = 0; i < 7; i++) // making 16 rooms, starting at 'A'.
-		{
-			tempShip->areas.push_back(new Room(65 + i, 3, "NULL", 1));
-		}
-
-		// Adding all the crew members.
-		for (int i = 0; i < tempShip->getCrewMembers(); i++) // making three human crew members
-		{
-			tempShip->addCrewMember("human", 'A');
-		}
-
-
-		tempShip->weapons.push_back(All_Weapons().missile_artemis);
-		tempShip->weapons.push_back(All_Weapons().laser_burst_ii);
-
-		tempShip->setOxygen(1);
-		tempShip->setShield(2);
-		tempShip->setEngineLevel(2);
-		tempShip->setFuel(16);
-		
-		break;
-
-	case 2:
-		tempShip = new Ship();
-		break;
-
-	// Player Ship
-	default:
+	// Returns the player ship
+	case 0:
 		// Based on Layout A of the Kestrel
 		tempShip = new Ship("The Kestrel"); // the default ship is the player's ship
+		tempShip->setImagePath("images/ImgDmp/GDW3-FTL-Kestrel Labeled (with Doors).png");
 			// Based on Layout A of the default ship, the Kestrel Cruiser (https://ftl.fandom.com/wiki/The_Kestrel_Cruiser)
 		// Layout A
 		tempShip->setHull(30);
 		tempShip->setMaxHull(tempShip->getHull()); // getting the starting hull value, treating it as the maximum.
 		tempShip->setShield(2);
-		tempShip->setReactor(8);
-		
+		// tempShip->setReactor(8);
+		// tempShip->setOxygen(1);
+		// tempShip->setEngineLevel(2);
+		// tempShip->setFuel(16);
+
 		// Adding all of the rooms for the Kestrel.
-		for (int i = 0; i < 17; i++) // making 16 rooms, starting at 'A' and going to 'P'.
+		for (int i = 0; i < 18; i++) // making 18 rooms, starting at 'A' and going to 'R'.
 		{
 			tempShip->areas.push_back(new Room(65 + i, 0, "NULL", 1));
 		}
 
+		tempShip->setRooms(tempShip->areas.size()); // getting the number of rooms
+
+		tempShip->weapons.push_back(All_Weapons().missile_artemis); // starting missle
+		tempShip->weapons.push_back(All_Weapons().shield_basic); // starting shield
+		tempShip->weapons.push_back(All_Weapons().laser_burst_ii); // starting laser
+		tempShip->weapons.push_back(All_Weapons().bomb_small); // starting laser
+
+		break;
+	// Enemy Ship 1
+	case 1:
+		tempShip = new Ship("Enemy Scout Type 1");
+		tempShip->setImagePath("images/ImgDmp/GDW3-FTL-Enemy-Scout Labeled.png"); // sets the image path of the ship
+		tempShip->setShield(2);
+		tempShip->setHull(1);
+		tempShip->setMaxHull(tempShip->getHull()); // getting the starting hull value, treating it as the maximum.
+		tempShip->setShield(1);
+		// tempShip->setReactor(8);
+
+		// tempShip->setOxygen(1);
+		// tempShip->setEngineLevel(2);
+		// tempShip->setFuel(16);
+
+		// Adding all of the rooms for the ship (A to G)
+		for (int i = 0; i < 6; i++) // making 16 rooms, starting at 'A' and ending at 'F'.
+		{
+			tempShip->areas.push_back(new Room(65 + i, 0, "NULL", 1));
+		}
+		/*
 		// Adding all the crew members.
 		for (int i = 0; i < tempShip->getCrewMembers(); i++) // making three human crew members
 		{
 			tempShip->addCrewMember("human", 'A');
 		}
+		*/
 
-
+		// Giving the enemy ship weaons
 		tempShip->weapons.push_back(All_Weapons().missile_artemis);
-		tempShip->weapons.push_back(All_Weapons().laser_burst_ii);
+		tempShip->weapons.push_back(All_Weapons().laser_burst_i);
+		tempShip->weapons.push_back(All_Weapons().shield_basic);
 
-		tempShip->setOxygen(1);
+
+		break;
+
+	case 2:
+		tempShip = new Ship("Enemy Scout Type 2");
+		tempShip->setImagePath("images/ImgDmp/GDW3-FTL-Enemy-Scout T-02.png"); // sets the image path of the ship
 		tempShip->setShield(2);
-		tempShip->setEngineLevel(2);
-		tempShip->setFuel(16);
+		tempShip->setHull(20);
+		tempShip->setMaxHull(tempShip->getHull()); // getting the starting hull value, treating it as the maximum.
+		tempShip->setShield(1);
 
+		for (int i = 0; i < 6; i++) // making 16 rooms, starting at 'A' and ending at 'F'.
+		{
+			tempShip->areas.push_back(new Room(65 + i, tempShip->getShield(), "NULL", 1));
+		}
+
+		
+		tempShip->weapons.push_back(All_Weapons().missle_breach);
+		tempShip->weapons.push_back(All_Weapons().laser_burst_ii);
+		tempShip->weapons.push_back(All_Weapons().shield_alpha);
+		break;
+
+	case 3:
+		tempShip = new Ship("Enemy Scout Type 3");
+		tempShip->setImagePath("images/ImgDmp/GDW3-FTL-Enemy-Scout T-03.png"); // sets the image path of the ship
+		tempShip->setShield(1);
+		tempShip->setHull(20);
+		tempShip->setMaxHull(tempShip->getHull()); // getting the starting hull value, treating it as the maximum.
+
+		for (int i = 0; i < 6; i++) // making 16 rooms, starting at 'A' and ending at 'F'.
+		{
+			tempShip->areas.push_back(new Room(65 + i, rand() % 3, "NULL", 1));
+		}
+
+
+		tempShip->weapons.push_back(All_Weapons().missle_hermes);
+		tempShip->weapons.push_back(All_Weapons().laser_dual);
+		tempShip->weapons.push_back(All_Weapons().shield_beta);
+		tempShip->weapons.push_back(All_Weapons().getRandomWeapon()); // gives the ship one random weapon
+		break;
+	case 4:
+		tempShip = new Ship("Enemy Scout Type 4");
+		tempShip->setImagePath("images/ImgDmp/GDW3-FTL-Enemy-Scout T-04.png"); // sets the image path of the ship
+		tempShip->setShield(2);
+		tempShip->setHull(20);
+		tempShip->setMaxHull(tempShip->getHull()); // getting the starting hull value, treating it as the maximum.
+
+		for (int i = 0; i < 6; i++) // making 16 rooms, starting at 'A' and ending at 'F'.
+		{
+			tempShip->areas.push_back(new Room(65 + i, rand() % 3, "NULL", 1));
+		}
+
+
+		tempShip->weapons.push_back(All_Weapons().getRandomWeapon());
+		tempShip->weapons.push_back(All_Weapons().getRandomWeapon());
+		tempShip->weapons.push_back(All_Weapons().getRandomWeapon());
+		tempShip->weapons.push_back(All_Weapons().getRandomWeapon()); // gives the ship one random weapon
+		break;
+
+	case 5:
+		tempShip = new Ship("Enemy Scout Type 5");
+		tempShip->setImagePath("images/ImgDmp/GDW3-FTL-Enemy-Scout T-05.png"); // sets the image path of the ship
+		tempShip->setShield(3);
+		tempShip->setHull(13);
+		tempShip->setMaxHull(tempShip->getHull()); // getting the starting hull value, treating it as the maximum.
+
+		for (int i = 0; i < 6; i++) // making 16 rooms, starting at 'A' and ending at 'F'.
+		{
+			tempShip->areas.push_back(new Room(65 + i, rand() % 3, "NULL", 1));
+		}
+
+
+		tempShip->weapons.push_back(All_Weapons().getRandomWeapon());
+		tempShip->weapons.push_back(All_Weapons().getRandomWeapon());
+		tempShip->weapons.push_back(All_Weapons().getRandomWeapon());
+		tempShip->weapons.push_back(All_Weapons().getRandomWeapon()); // gives the ship one random weapon
+		break;
+	case 6:
+		tempShip = new Ship("Enemy Scout Type 6");
+		tempShip->setImagePath("images/ImgDmp/GDW3-FTL-Enemy-Scout T-06.png"); // sets the image path of the ship
+		tempShip->setShield(2);
+		tempShip->setHull(25);
+		tempShip->setMaxHull(tempShip->getHull()); // getting the starting hull value, treating it as the maximum.
+
+		for (int i = 0; i < 6; i++) // making 16 rooms, starting at 'A' and ending at 'F'.
+		{
+			tempShip->areas.push_back(new Room(65 + i, tempShip->getShield(), "NULL", 1));
+		}
+
+
+		tempShip->weapons.push_back(All_Weapons().getRandomWeapon());
+		tempShip->weapons.push_back(All_Weapons().getRandomWeapon());
+		tempShip->weapons.push_back(All_Weapons().getRandomWeapon());
+		tempShip->weapons.push_back(All_Weapons().getRandomWeapon());
+		tempShip->weapons.push_back(All_Weapons().getRandomWeapon()); // gives the ship one random weapon
+		break;
+	case 7:
+		tempShip = new Ship("Enemy Scout Type 7");
+		tempShip->setImagePath("images/ImgDmp/GDW3-FTL-Enemy-Scout T-07.png"); // sets the image path of the ship
+		tempShip->setShield(1);
+		tempShip->setHull(30);
+		tempShip->setMaxHull(tempShip->getHull()); // getting the starting hull value, treating it as the maximum.
+
+		for (int i = 0; i < 6; i++) // making 16 rooms, starting at 'A' and ending at 'F'.
+		{
+			tempShip->areas.push_back(new Room(65 + i, rand() % 3, "NULL", 1));
+		}
+
+
+		tempShip->weapons.push_back(All_Weapons().getRandomWeapon());
+		tempShip->weapons.push_back(All_Weapons().getRandomWeapon());
+		tempShip->weapons.push_back(All_Weapons().getRandomWeapon()); // gives the ship one random weapon
+		break;
+	case 8:
+		tempShip = new Ship("Enemy Scout Type 8");
+		tempShip->setImagePath("images/ImgDmp/GDW3-FTL-Enemy-Scout T-08.png"); // sets the image path of the ship
+		tempShip->setShield(1);
+		tempShip->setHull(25);
+		tempShip->setMaxHull(tempShip->getHull()); // getting the starting hull value, treating it as the maximum.
+
+		for (int i = 0; i < 6; i++) // making 16 rooms, starting at 'A' and ending at 'F'.
+		{
+			tempShip->areas.push_back(new Room(65 + i, tempShip->getShield(), "NULL", 1));
+		}
+
+
+		tempShip->weapons.push_back(All_Weapons().getRandomWeapon());
+		tempShip->weapons.push_back(All_Weapons().getRandomWeapon());
+		tempShip->weapons.push_back(All_Weapons().getRandomWeapon());
+		tempShip->weapons.push_back(All_Weapons().getRandomWeapon());
+		tempShip->weapons.push_back(All_Weapons().getRandomWeapon());
+		tempShip->weapons.push_back(All_Weapons().getRandomWeapon());
+		tempShip->weapons.push_back(All_Weapons().getRandomWeapon()); // gives the ship one random weapon
+		break;
+	case 9:
+		tempShip = new Ship("Enemy Scout Type 9");
+		tempShip->setImagePath("images/ImgDmp/GDW3-FTL-Enemy-Scout T-09.png"); // sets the image path of the ship
+		tempShip->setShield(3);
+		tempShip->setHull(20);
+		tempShip->setMaxHull(tempShip->getHull()); // getting the starting hull value, treating it as the maximum.
+		tempShip->setShield(1);
+
+		for (int i = 0; i < 6; i++) // making 16 rooms, starting at 'A' and ending at 'F'.
+		{
+			tempShip->areas.push_back(new Room(65 + i, tempShip->getShield(), "NULL", 1));
+		}
+
+		tempShip->weapons.push_back(All_Weapons().laser_dual); // laser
+		tempShip->weapons.push_back(All_Weapons().bomb_small); // laser
+		tempShip->weapons.push_back(All_Weapons().shield_gambit);
+		tempShip->weapons.push_back(All_Weapons().getRandomWeapon());
+		tempShip->weapons.push_back(All_Weapons().getRandomWeapon());
+		tempShip->weapons.push_back(All_Weapons().getRandomWeapon());
+		tempShip->weapons.push_back(All_Weapons().getRandomWeapon()); // gives the ship one random weapon
+		break;
+
+	// The final boss; also serves as default.
+	case 10:
+	default:
+		// Based on Layout A of the Kestrel
+		tempShip = new Ship("Kestrel MKII"); // the default ship is the player's ship
+		tempShip->setImagePath("images/ImgDmp/GDW3-FTL-Kestrel -Final Boss Labeled (with Doors) (Small).png");
+
+		// Based on Layout A of the default ship, the Kestrel Cruiser (https://ftl.fandom.com/wiki/The_Kestrel_Cruiser)
+		// Layout A
+		tempShip->setHull(30);
+		tempShip->setMaxHull(tempShip->getHull()); // getting the starting hull value, treating it as the maximum.
+		tempShip->setShield(3);
+		tempShip->setReactor(8);
+
+		// Adding all of the rooms for the Kestrel.
+		for (int i = 0; i < 18; i++) // making 18 rooms, starting at 'A' and going to 'R'.
+		{
+			tempShip->areas.push_back(new Room(65 + i, 0, "NULL", 1));
+		}
+
+		tempShip->weapons.push_back(All_Weapons().laser_burst_ii); // laser
+		tempShip->weapons.push_back(All_Weapons().missile_artemis); // missle
+		tempShip->weapons.push_back(All_Weapons().shield_omega); // shield
+		tempShip->weapons.push_back(All_Weapons().bomb_crystal_lock); // bomb
+
+		// Gets 5 random weapons
+		tempShip->weapons.push_back(All_Weapons().getRandomWeapon());
+		tempShip->weapons.push_back(All_Weapons().getRandomWeapon());
+		tempShip->weapons.push_back(All_Weapons().getRandomWeapon());
+		tempShip->weapons.push_back(All_Weapons().getRandomWeapon());
+		tempShip->weapons.push_back(All_Weapons().getRandomWeapon());
+		
 		break;
 	}
 
 	return tempShip;
 }
-
-// Returns the player ship; there should only be one.
-Ship * Gameplay::getPlayer() { return pShip; }
-
-// Returns the enemy ship; there should only be one.
-Ship * Gameplay::getEnemy() { return enemy; }
