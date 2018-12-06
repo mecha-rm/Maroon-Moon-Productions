@@ -1,3 +1,4 @@
+// Used for rooms on a ship.
 #include <iostream>
 #include "Room.h"
 
@@ -6,25 +7,21 @@
 Room::Room(char ID, int shield, std::string system, int oxygen) : ID(ID), shield(shield), system(system), oxygen(oxygen) {}
 
 //Getters
+char Room::getID() { return ID; } // returns the ID letter of the room
 
-char Room::getID() { return ID; }
-// Returns the amount of people in the room.
-int Room::getAmountOfCrewMembers() 
-{ 
-	return amountOfCrewMembers;
-	// return crew.size(); 
-}
-
-
-std::string Room::getSystem() { return system; }
-int Room::getOxygen() { return oxygen; }
-int Room::getShield() { return shield; }
+// Unused Functions
+int Room::getAmountOfCrewMembers() { return amountOfCrewMembers; } // returns the amount of crew members (unused)
+std::string Room::getSystem() { return system; } // gets the room's system (unused)
+int Room::getOxygen() { return oxygen; } // gets the oxygen level (unused)
+int Room::getShield() { return shield; }  // gets the shielding amount (unused)
 
 //Setters
-void Room::setAmountOfCrewMemebers(int amountOfCrewMembers) { this->amountOfCrewMembers = amountOfCrewMembers; }
+void Room::setAmountOfCrewMemebers(int amountOfCrewMembers) { this->amountOfCrewMembers = amountOfCrewMembers; } // sets the amount of crew members in the room (unused)
 void Room::setSystem(std::string system) { this->system = system; } // sets the shield over the room
-void Room::setOxygen(int oxygen) { this->oxygen = oxygen; }
-void Room::setShield(int shield) 
+void Room::setOxygen(int oxygen) { this->oxygen = oxygen; } // sets the oxygen level (unused)
+
+// Sets the shielding amount of the room
+void Room::setShield(int shield)
 { 
 	if (shield < this->shield) // making the shield equal to 'zero' if it would be brought below zero.
 	{
@@ -36,27 +33,10 @@ void Room::setShield(int shield)
 	}
 }
 
-// Returns the room as a string.
+// Returns the room as a string, saying its ID letter and shielding amount.
 std::string Room::toString()
 {
 	std::string tempStr = "";
 	tempStr = "ID: " + std::string(1, ID) + " | Shield: " + std::to_string(shield);
 	return tempStr;
 }
-
-/*
-// adds a crew member pointer
-void Room::addCrewMember(CrewMember * member) { crew.push_back(member); }
-
-// removes a crew member at the given index
-void Room::removeCrewMember(unsigned int index)
-{
-	// If the index is out of range, a 'false' is returned
-	if (index >= crew.size())
-	{
-		return;
-	}
-
-	crew.erase(crew.begin() + index);
-}
-*/

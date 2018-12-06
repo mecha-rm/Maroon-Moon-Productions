@@ -1,4 +1,4 @@
-// Random utility functions
+// This file came with the SpriteLib download.
 #include "Utilities.h"
 
 namespace util
@@ -10,7 +10,7 @@ namespace util
 		if (str.length() == 0)
 			return str;
 
-		std::string strL;
+		std::string strL; // temporary string
 		strL.assign(str); // copies original string
 
 		for (int i = 0; i < strL.length(); i++)
@@ -28,12 +28,12 @@ namespace util
 		if (str.length() == 0)
 			return str;
 
-		std::string strL;
+		std::string strL; // temporary string
 		strL.assign(str); // copies original string
 
 		for (int i = 0; i < strL.length(); i++)
 		{
-			strL.at(i) = toupper(strL.at(i)); // converts each 'char' to its lowercase version if applicable
+			strL.at(i) = toupper(strL.at(i)); // converts each 'char' to its uppercase version if applicable
 		}
 
 		return strL;
@@ -46,7 +46,7 @@ namespace util
 		if (str.length() == 0)
 			return str;
 
-		std::string strL;
+		std::string strL; // temporary string
 		strL.assign(str); // copies original string
 
 		str = toLower(str); // makes the string all lowercase
@@ -67,6 +67,8 @@ namespace util
 	//checks to see if a string is numeric
 	bool Utilities::isNum(std::string str) {
 		std::string arr[10] = { "1","2","3","4","5","6","7","8","9","0" };
+		
+		// Checks each index of the stirng, checking if it's a whole, numeric value.
 		for (int x = 0; x < str.length(); x++) {
 			for (int y = 0; y < 10; y++) {
 				if (str.substr(x, 1) == arr[y]) {

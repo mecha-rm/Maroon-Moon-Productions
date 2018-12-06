@@ -1,3 +1,4 @@
+// Class used for creating ship objects
 #include <iostream>
 #include <windows.h>
 
@@ -7,80 +8,69 @@
 #include "CrewMember.h"
 #include "All_Weapons.h"
 
-
-// Weapon weapon(missile_test);
-// CrewMember crewMember = CrewMember("human");
-
 // constructors
-// default constructor; the ship is named 'The Kestrel' by default
+// default constructor; the ship is named 'Ship" by default
 Ship::Ship() : Ship("Ship") {}
 
-// set the ship's name; value initalization in Gameplay::createShip()
+// set the ship's name; other value initalization in Gameplay::createShip()
 Ship::Ship(std::string name) : shipName(name) {}
 
-
-/*
-Ship::Ship(Ship & ship) : shipMapWidth(6), shipMapLength(15)
-{
-	*this = ship;
-}
-*/
-
 //Setters 
-void Ship::setImagePath(std::string imagePath) { this->imagePath = imagePath; }
-void Ship::setHull(int hull) 
+void Ship::setImagePath(std::string imagePath) { this->imagePath = imagePath; } // the image path for the ship
+
+void Ship::setHull(int hull)  // the ship's hull (hp)
 {
 	// For the hull would be put above its max, it is set to its max value. If not, its set to the value provided.
 	(hull > maxHull) ? this->hull = maxHull : this->hull = hull;
 }
 
-void Ship::setMaxHull(int maxHull) { this->maxHull = maxHull; }
-void Ship::setShield(int shield) { this->shield = shield; }
-void Ship::setShieldMax(int shieldMax) { this->shieldMax = shieldMax; }
-void Ship::setReactor(int reactor) { this->reactor = reactor; }
-void Ship::setEvade(int evade) { this->evade = evade; }
-void Ship::setOxygen(int oxygen) { this->oxygen = oxygen; }
-//void Ship::setCrewMembers(int crewMembers) { this->crewMembers = crewMembers; }
-void Ship::setScrap(int scrap) { this->scrap = scrap; }
-void Ship::setFTLDrive(int ftlDrive) { this->ftlDrive = ftlDrive; }
-void Ship::setFuel(int fuel) { this->fuel = fuel; }
-void Ship::setShieldLevel(int shieldLevel) { this->shieldLevel = shieldLevel; }
-void Ship::setEngineLevel(int engineLevel) { this->engineLevel = engineLevel; }
-void Ship::setOxygenLevel(int oxygenLevel) { this->oxygenLevel = oxygenLevel; }
-void Ship::setWeaponControlLevel(int weaponControlLevel) { this->weaponControlLevel = weaponControlLevel; }
-void Ship::setMedbayLevel(int medbayLevel) { this->medbayLevel = medbayLevel; }
-void Ship::setPilotLevel(int pilotLevel) { this->pilotLevel = pilotLevel; }
-void Ship::setSensorLevel(int sensorLevel) { this->sensorLevel = sensorLevel; }
-void Ship::setDoorLevel(int doorLevel) { this->doorLevel = doorLevel; }
-void Ship::setRooms(int rooms) { this->rooms = rooms; }
-void Ship::setCrew(std::vector<CrewMember> crew) { this->crew = crew; }
-void Ship::setSensor(bool sensor) { this->sensor = sensor; }
+void Ship::setMaxHull(int maxHull) { this->maxHull = maxHull; } // max health
+void Ship::setShield(int shield) { this->shield = shield; } // ship's shield
+void Ship::setShieldMax(int shieldMax) { this->shieldMax = shieldMax; } // maximum amount a shield can cover a room for (UNUSED)
+void Ship::setReactor(int reactor) { this->reactor = reactor; } // powers weapons (UNUSED)
+void Ship::setEvade(int evade) { this->evade = evade; } // ship's evasion stats (UNUSED)
+void Ship::setOxygen(int oxygen) { this->oxygen = oxygen; } // ship's oxygen levels (UNUSED)
+void Ship::setScrap(int scrap) { this->scrap = scrap; } // ship's amount of scrap (currency) (UNUSED)
+void Ship::setFTLDrive(int ftlDrive) { this->ftlDrive = ftlDrive; } // the ship's drive used for transportation (UNUSED)
+void Ship::setFuel(int fuel) { this->fuel = fuel; } // the ship's amount of fuel (UNUSED)
 
-//Getters
+void Ship::setShieldLevel(int shieldLevel) { this->shieldLevel = shieldLevel; } // the level of the ship's shield (UNUSED)
+void Ship::setEngineLevel(int engineLevel) { this->engineLevel = engineLevel; } // the ship's engine levels (UNUSED)
+void Ship::setOxygenLevel(int oxygenLevel) { this->oxygenLevel = oxygenLevel; } // the ship's oxygen level (UNUSED)
+void Ship::setWeaponControlLevel(int weaponControlLevel) { this->weaponControlLevel = weaponControlLevel; } // the weapon control system (UNUSED)
+void Ship::setMedbayLevel(int medbayLevel) { this->medbayLevel = medbayLevel; } // the medbay level of the ship
+void Ship::setPilotLevel(int pilotLevel) { this->pilotLevel = pilotLevel; } // the level of the piloting system (UNUSED) (UNUSED)
+void Ship::setSensorLevel(int sensorLevel) { this->sensorLevel = sensorLevel; } // the sensors of the ship (UNUSED)
+void Ship::setDoorLevel(int doorLevel) { this->doorLevel = doorLevel; } // the door level of the ship (UNUSED)
+void Ship::setRooms(int rooms) { this->rooms = rooms; } // the amount of rooms a ship has
+void Ship::setCrew(std::vector<CrewMember> crew) { this->crew = crew; } // the crew of the ship (UNUSED)
+void Ship::setSensor(bool sensor) { this->sensor = sensor; } // the sensors on the ship (UNUSED)
+
+//Getters; see setters or Ship.h for description
 std::string Ship::getName() { return shipName; }
 std::string Ship::getImagePath() { return imagePath; }
 int Ship::getHull() { return hull; }
 
 int Ship::getMaxHull() { return maxHull; }
 int Ship::getShield() { return shield; }
-int Ship::getShieldMax() { return shieldMax; }
-int Ship::getReactor() { return reactor; }
-int Ship::getEvade() { return evade; }
-int Ship::getOxygen() { return oxygen; }
-int Ship::getCrewMembers() { return crewMembers; }
-int Ship::getScrap() { return scrap; }
-int Ship::getFTLDrive() { return ftlDrive; }
-int Ship::getFuel() { return fuel; }
-int Ship::getShieldLevel() { return shieldLevel; }
-int Ship::getEngineLevel() { return engineLevel; }
-int Ship::getOxygenLevel() { return oxygenLevel; }
-int Ship::getWeaponControlLevel() { return weaponControlLevel; }
-int Ship::getMedbayLevel() { return medbayLevel; }
-int Ship::getPilotLevel() { return pilotLevel; }
-int Ship::getSensorLevel() { return sensorLevel; }
-int Ship::getDoorLevel() { return doorLevel; }
+int Ship::getShieldMax() { return shieldMax; } // (UNUSED)
+int Ship::getReactor() { return reactor; } // (UNUSED)
+int Ship::getEvade() { return evade; } // (UNUSED)
+int Ship::getOxygen() { return oxygen; } // (UNUSED)
+int Ship::getCrewMembers() { return crewMembers; } // (UNUSED)
+int Ship::getScrap() { return scrap; } // (UNUSED)
+int Ship::getFTLDrive() { return ftlDrive; } // (UNUSED)
+int Ship::getFuel() { return fuel; } // (UNUSED)
+int Ship::getShieldLevel() { return shieldLevel; } // (UNUSED)
+int Ship::getEngineLevel() { return engineLevel; } // (UNUSED)
+int Ship::getOxygenLevel() { return oxygenLevel; } // (UNUSED)
+int Ship::getWeaponControlLevel() { return weaponControlLevel; } // (UNUSED)
+int Ship::getMedbayLevel() { return medbayLevel; } // (UNUSED)
+int Ship::getPilotLevel() { return pilotLevel; } // (UNUSED)
+int Ship::getSensorLevel() { return sensorLevel; } // (UNUSED)
+int Ship::getDoorLevel() { return doorLevel; } // (UNUSED)
 int Ship::getRooms() { return rooms; }
-bool Ship::getSensor() { return sensor; }
+bool Ship::getSensor() { return sensor; } // (UNUSED)
 
 // gets a crew member at the provided index
 CrewMember Ship::getCrewMember(unsigned int i) // returns the crew member at the provided index
@@ -91,19 +81,19 @@ CrewMember Ship::getCrewMember(unsigned int i) // returns the crew member at the
 	}
 	else
 	{
-		return CrewMember();
+		return CrewMember(); // returns a default crew member otherwise.
 	}
 }
 
-std::vector<CrewMember> Ship::getCrew() { return crew; }
+std::vector<CrewMember> Ship::getCrew() { return crew; } // (UNUSED)
 
-// adds a crew member; make sure all letters are lowercase
+// adds a crew member; make sure all letters are lowercase (UNUSED)
 void Ship::addCrewMember(std::string species, char room)
 {
 	// Makes the species name lowercase for string checking.
 	species = util::Utilities::toLower(species);
 	
-	// This was originally setup to add differnet crew members based on what species was given.
+	// This was originally setup to add differnet crew members based on what species was given. However, it only adds 'humans', since that's all we made by the project's end.
 	// Making a human crew member
 	if (species == "human" || species == "h")
 	{
@@ -146,13 +136,13 @@ Weapon Ship::getWeapon(unsigned int index)
 	}
 }
 
-/**/
-// returns all weapons
+// returns all weapons in a vector
 std::vector<Weapon> Ship::getWeapons() { return weapons; }
 
 // add a weapon to the vector
 void Ship::addWeapon(Weapon weapon) { weapons.push_back(weapon); }
 
+// sets the weapons on the ship 
 void Ship::setWeapons(std::vector<Weapon> newWeapons) 
 { 
 	weapons.clear();
@@ -162,16 +152,14 @@ void Ship::setWeapons(std::vector<Weapon> newWeapons)
 	}
 }
 
-
-// remove the last weapon in the vector
+// remove the last weapon in the weapon vector
 void Ship::removeWeapon() 
 { 
 	if (!weapons.empty()) // if the vector isn't empty, the weapon at the back of the stack is removed.
 		weapons.pop_back();
 }
 
-
-// remove a weapon
+// remove a weapon with a provided index
 void Ship::removeWeapon(unsigned int index)
 {
 	// using vector.erase() caused an error, so while this is less efficient, it's the best we could do in our time frame.
@@ -186,15 +174,15 @@ void Ship::removeWeapon(unsigned int index)
 	}
 	
 	weapons.clear();
-	for (int i = 0; i < tempVec.size(); i++)
+	for (int i = 0; i < tempVec.size(); i++) // puts all of the weapons back onto the now cleared weapons stack, without the weapon that the user wanted to remove.
 	{
 		weapons.push_back(tempVec.at(i));
 	}
 }
 
-
-// applies damage to the shield before the health of the ship
+// applies damage to the shield before the health of the ship; this is incomplete and unused.
 void Ship::shieldToHealth(int damage) {
+	// Commented out because it may have not been complete.
 	/*
 	for (int count = damage; count > 0; count--) {
 
@@ -221,6 +209,7 @@ void Ship::shieldToHealth(int damage) {
 
 
 //---- Below is used for mapping
+// Matches a room with the provided string if possible. If it finds a match, the index in arr2 is returned. (UNUSED)
 string Ship::roomType(string str) {
 
 	const int length = 1;
@@ -236,6 +225,7 @@ string Ship::roomType(string str) {
 	return "ERR: no match";
 }
 
+// moves the crew member from one space to another. (UNUSED)
 void Ship::crewMove() {
 	for (int x = 0; x < crew.size(); x++) {
 
@@ -248,6 +238,7 @@ void Ship::crewMove() {
 	}
 }
 
+// has the crew member look and see if a path is a viable option. (UNUSED)
 bool Ship::pathfind(int num) {
 
 	for (int x = 0; x < shipMapWidth; x++) {
@@ -259,6 +250,7 @@ bool Ship::pathfind(int num) {
 	return pathfindRec(0, crew[num].getCurrent().X, crew[num].getCurrent().Y, 0);
 }
 
+// Uses the array that sets up the walls, doors, etc. for the ship to help the crew member know where they can and can't go. (UNUSED)
 bool Ship::pathfindRec(int num, int x, int y, int level) {
 	if (crew[num].getDestination().X != x || crew[num].getDestination().Y != y) {
 		if (flipMap[y][x] != "empty" && flipMap[y][x] != "block") {
@@ -314,7 +306,7 @@ bool Ship::pathfindRec(int num, int x, int y, int level) {
 	return false;
 }
 
-// Prints the ship
+// Prints the ship in text form (UNUSED)
 void Ship::printShip() {
 	int count = 5;
 
@@ -419,56 +411,20 @@ void Ship::printShip() {
 	}
 }
 
-// Prints the stats of the ship
-void Ship::printStats()
-{	
-	/*
-	// prints the health (hull of the ship)
-	std::string tempString(" ", 30);
-	for (int i = 0; i < maxHull & i < hull; i++)
-	{
-		tempString.at(i) = '/';
-	}
-
-	std::cout << "HULL (HP) [" << tempString << "]" << std::endl;
-	*/
-
-	/*
-	std::string tempStr = "";
-	for (int i = 0; i < maxHull; i++)
-		i < hull ? tempStr += "/" : tempStr += " ";
-	
-	std::cout << "HULL HP (" << hull << "/" << maxHull << ") [" << tempStr << "]" << std::endl;
-	*/
-
-	std::cout << getHealthBar() << std::endl;
-	/*
-	std::cout << "/HL: " << hull << std::endl;
-	std::cout << "HULL (HP): [";
-	for (int i = 1; i <= hull; i++)
-	{
-		std::cout << "/";
-	}
-
-	std::cout << "]" << std::endl;
-
-	for (int i = 0; i < weapons.size(); i++)
-		std::cout << weapons.at(i).toString() << std::endl;
-
-	*/
-}
+// Prints the health of the ship in a health bar format. (UNUSED)
+void Ship::printStats() { std::cout << getHealthBar() << std::endl; }
 
 // Gets a health bar for the ship.
 std::string Ship::getHealthBar()
 {
 	std::string tempStr = "";
 	for (int i = 0; i < maxHull; i++)
-		i < hull ? tempStr += "/" : tempStr += " ";
+		i < hull ? tempStr += "/" : tempStr += " "; // prints a '/' for hit points, and a blank space for used up hit points
 
-	tempStr = "(" + std::to_string(hull) + "/" + std::to_string(maxHull) + ") [" + tempStr + "]";
+	tempStr = "(" + std::to_string(hull) + "/" + std::to_string(maxHull) + ") [" + tempStr + "]"; // adds a boarder around the health bar, as well as brackets to show the specific number of health.
 	return tempStr;
 }
-// Ship toString
+// Ship toString - prints the name, hull of the ship, and its shield
 std::string Ship::toString()
 {
 	std::string str = "";

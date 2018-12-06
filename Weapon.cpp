@@ -1,3 +1,4 @@
+// The class for weapons used by the ships
 #include <iostream>
 #include "Weapon.h"
 
@@ -14,29 +15,29 @@ Weapon::Weapon(std::string name, std::string type, int CHARGETIME, int shots, in
 Weapon::Weapon(Weapon * weapon) : Weapon(weapon->name, weapon->type, weapon->CHARGETIME, weapon->shots, weapon->accuracy, weapon->hullDam, weapon->shieldDam, weapon->crewDam, weapon->sysDam, weapon->chanceFire, weapon->chanceBreach, weapon->chanceStun) {}
 
 //Getters
-std::string Weapon::getName() { return name; }
-std::string Weapon::getType() { return type; }
-int Weapon::getChargeTime() { return CHARGETIME; }
-int Weapon::getShots() { return shots; }
-char Weapon::getTarget() { return target; }
-int Weapon::getAccuracy() { return accuracy; }
-int Weapon::getHullDam() { return hullDam; }
-int Weapon::getShieldDam() { return shieldDam; }
-int Weapon::getCrewDam() { return crewDam; }
-int Weapon::getSysDam() { return sysDam; }
-int Weapon::getChanceFire() { return chanceFire; }
-int Weapon::getChanceBreach() { return chanceBreach; }
-int Weapon::getChanceStun() { return chanceStun; }
-int Weapon::getCharge() { return charge; }
-int Weapon::getRoomHit() { return roomHit; }
-std::string Weapon::getDamageType() { return damageType; }
+std::string Weapon::getName() { return name; } // weapon's name
+std::string Weapon::getType() { return type; } // weapon's type
+int Weapon::getChargeTime() { return CHARGETIME; } // maximum amount of time it takes for a weapon to charge
+int Weapon::getShots() { return shots; } // amount of shots per charge
+char Weapon::getTarget() { return target; } // the target of the wepaon
+int Weapon::getAccuracy() { return accuracy; } // the accuracy of the weapon
+int Weapon::getHullDam() { return hullDam; } // hull damage 
+int Weapon::getShieldDam() { return shieldDam; } // shield damage
+int Weapon::getCrewDam() { return crewDam; } // crew damage (unused)
+int Weapon::getSysDam() { return sysDam; } // system damage (unused)
+int Weapon::getChanceFire() { return chanceFire; } // extra damage chance
+int Weapon::getChanceBreach() { return chanceBreach; } // shield destruction chance
+int Weapon::getChanceStun() { return chanceStun; } // electrical surge chance; this will cause a weapon of the opponent's to lose power.
+int Weapon::getCharge() { return charge; } // the current charge of the weapon
+int Weapon::getRoomHit() { return roomHit; } // the room the weapon will hit (unused)
+std::string Weapon::getDamageType() { return damageType; } // the damage type of the weapon (unused)
 
 //Setters
-void Weapon::setTarget(char target) { this->target = target; }
-void Weapon::setAccuracy(int accuracy) { this->accuracy = accuracy; }
-void Weapon::setCharge(int charge) { this->charge = charge; }
-void Weapon::setRoomHit(int roomHit) { this->roomHit = roomHit; }
-void Weapon::setDamageType(std::string damageType) { this->damageType = damageType; }
+void Weapon::setTarget(char target) { this->target = target; } // target of the weapon
+void Weapon::setAccuracy(int accuracy) { this->accuracy = accuracy; } // weapon's accuracy
+void Weapon::setCharge(int charge) { this->charge = charge; } // weapon's current charge
+void Weapon::setRoomHit(int roomHit) { this->roomHit = roomHit; } // room the weapon will hit (unused)
+void Weapon::setDamageType(std::string damageType) { this->damageType = damageType; } // the damage type of the weapon (unused)
 
 // charges the weapon by the provided amount; '1' by default
 void Weapon::increaseCharge(unsigned int amount)
@@ -56,7 +57,7 @@ bool Weapon::isCharging() { return (charge != 0 && charge < CHARGETIME); }
 // returns 'true' if the weapon is charged, false otherwise.
 bool Weapon::isCharged() { return (charge >= CHARGETIME); }
 
-// toString()
+// toString() - prints stats of the ship
 std::string Weapon::toString()
 {
 	std::string str;

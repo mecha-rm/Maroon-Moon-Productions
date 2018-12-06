@@ -1,4 +1,5 @@
 
+// Draws things to the screen. This was included with the SpriteLib download, and has not been modified by our development staff.
 #pragma once
 #include "GL/glut.h"
 #include <string>

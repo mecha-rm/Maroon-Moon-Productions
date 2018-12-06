@@ -1,3 +1,4 @@
+// The controls of the crew on the ship. Due to crew members getting cut, this is NOT used in the final game.
 #pragma once
 
 class Controls {
@@ -44,7 +45,7 @@ public:
 	int getPauseMenu();
 	int getMoveTo();
 
-	//Setters (if we want to implement changing the keybindings)
+	//Setters (if we wanted to implement changing the keybindings)
 	void setCrew1(unsigned int e);
 	void setCrew2(unsigned int e);
 	void setCrew3(unsigned int e);

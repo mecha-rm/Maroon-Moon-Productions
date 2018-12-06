@@ -1,3 +1,4 @@
+// The controls of the crew on the ship. Since crew members were not used, this was not used in the final game.
 #include "Controls.h"
 
 //Constructor - Sets default controls

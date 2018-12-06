@@ -1,4 +1,4 @@
-// Random utility functions
+// Miscellaneous utility functions
 #ifndef UTILITIES_H
 #define UTILITIES_H
 

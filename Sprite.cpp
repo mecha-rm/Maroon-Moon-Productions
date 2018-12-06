@@ -1,3 +1,4 @@
+// This came with the SpriteLib download, and was not edited at all.
 #include "Sprite.h"
 
 /* THE SPRITE CLASS DEFINITION */

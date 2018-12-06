@@ -1,3 +1,4 @@
+// Default SpriteLib file; this was not edited.
 #include "HorizontalScrollingBackground.h"
 
 HorizontalScrollingBackground::HorizontalScrollingBackground(std::string filename, int width, int height)

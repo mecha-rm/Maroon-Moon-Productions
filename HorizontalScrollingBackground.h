@@ -1,3 +1,4 @@
+// This is a default SpriteLib file, and was not edited.
 #pragma once
 #include "Sprite.h"
 #include <string>

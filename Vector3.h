@@ -1,3 +1,4 @@
+// This file came with the SpriteLib download.
 #pragma once
 class Vector3
 {

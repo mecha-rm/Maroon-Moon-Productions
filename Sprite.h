@@ -1,3 +1,4 @@
+// A SpriteLib provided file; this was not edited from its original form.
 #pragma once
 #include <windows.h>
 #include <stdio.h>

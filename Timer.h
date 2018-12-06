@@ -1,3 +1,4 @@
+// This file came with the SpriteLib download, and was not touched by our development team.
 #pragma once
 #include <string> // must be first
 #include <iostream>

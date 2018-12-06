@@ -1,3 +1,5 @@
+// This came with SpriteLib, but has been modifed to some extent. Modifications should be obvious by their comments, but an 'EXTRA' keyword will be used to make sure.
+// Lacking the 'EXTRA' keyword does not necessarily mean that the function came with SpriteLib.
 #include "Game.h"
 #include "drawPrimitives.h"
 

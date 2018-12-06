@@ -1,3 +1,5 @@
+// This was a file included in SpriteLib. We've made some modifications, but those will be specified when encountered using an 'EXTRA' keyword.
+// Even if somethign doesn't have an 'EXTRA' keyword, the comments should stil insinuate if it's something we added ourselves, or if it came with SpriteLib.
 #pragma once
 #include <windows.h>
 #include <stdio.h>
@@ -17,7 +19,7 @@
 #include <algorithm>
 #include <cmath>
 
-#include "Gameplay.h" // text vesion
+#include "Gameplay.h" // EXTRA: text vesion
 
 #ifndef M_PI
 #define M_PI 3.14159265358979323846
@@ -142,25 +144,26 @@ public:
 	/* game state info */
 	GameStateInfo stateInfo;
 
-	Gameplay gp; // the gameplay variable
-	Sprite * textBox; // the text box sprite
-	bool battle = false; // becomes 'true' when a battle is going on.
+	Gameplay gp; // EXTRA: the gameplay variable used for creating the battle loop
+	Sprite * textBox; // EXTRA: the text box sprite
+	bool battle = false; // EXTRA: becomes 'true' when a battle is going on, and false otherwise.
 
 	// here is the sprite to draw to the screen
-	Sprite *player; // the sprite of the player
-	Sprite *opponent; // the sprite of the opponent
-	
+	Sprite *player; // EXTRA: the sprite of the player
+	Sprite *opponent; // EXTRA: the sprite of the opponent
+	bool press = false; // EXTRA: used for path finding, which was not used in the final game.
 
-	Sprite * hud; // an overlay for the player
-	Sprite * doors; // another overlay for the player
-	Sprite * overlay2; // another overlay for the player
-
-	// EX 
-	// bool play;
-	bool press = false;
-	Ship pShip;
-	// Ship enemy;
-	// All_Weapons weapon = All_Weapons();
+	// EXTRA: These were going to be used for space hazards (see Hazards.h and Hazards.cpp), but were omitted.
+	/*
+	bool nebula = false;
+	bool ionStorm = false;
+	bool giantStar = false;
+	bool asteroidField = false;
+	bool pulsar = false;
+	bool antiShipBattery = false;
+	bool enemyShip = false;
+	int elapsedTime = 0;
+	*/
 
 	// the background scroller
 	HorizontalScrollingBackground *bg;
@@ -179,15 +182,4 @@ public:
 	/* timer's for rendering and animation/physics update */
 	Timer *renderingTimer;
 	Timer *updateTimer; // for physics/collisions etc.
-
-	/*
-	bool nebula = false;
-	bool ionStorm = false;
-	bool giantStar = false;
-	bool asteroidField = false;
-	bool pulsar = false;
-	bool antiShipBattery = false;
-	bool enemyShip = false;
-	int elapsedTime = 0;
-	*/
 };

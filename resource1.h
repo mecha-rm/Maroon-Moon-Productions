@@ -1,3 +1,4 @@
+// Came with SpriteLib; not modified by our team members.
 //{{NO_DEPENDENCIES}}
 // Microsoft Visual C++ generated include file.
 // Used by FlipBook1.rc
